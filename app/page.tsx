@@ -2,10 +2,13 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@clerk/nextjs";
-import { UserButton, UserProfile } from "@clerk/react";
+import { UserButton } from "@clerk/react";
+import { useClerkOnboardCheck } from "@/hooks/useClerkOnboardCheck";
 
 export default function Home() {
   const { userId} = useAuth(); 
+  const { status } = useClerkOnboardCheck();
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-background p-4 text-center">
       <div className="space-y-8">
@@ -24,8 +27,13 @@ export default function Home() {
           </Button>
         </div>
         ) : (
-          <div className="flex justify-center gap-4">
-            <UserButton/>
+          <div className="space-y-4">
+            <div className="flex justify-center gap-4">
+              <UserButton/>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              {status === "redirecting" ? "Redirecting..." : "Checking your account..."}
+            </p>
           </div>
         )
         }
