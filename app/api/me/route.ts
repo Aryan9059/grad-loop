@@ -10,10 +10,22 @@ export async function GET() {
       return NextResponse.json({ exists: false }, { status: 401 });
     }
 
-    const user = await prisma.user.findUnique({ where: { clerkId: userId } });
+    const user = await prisma.user.findUnique({
+      where: { clerkId: userId },
+      include: { profile: true },
+    });
+
+    const completed =
+      !!user &&
+      !!user.firstName &&
+      !!user.lastName &&
+      !!user.role &&
+      !!user.profile &&
+      !!user.profile.domain &&
+      user.profile.skills.length > 0;
 
     return NextResponse.json({
-      exists: !!user,
+      exists: completed,
     });
   } catch (error) {
     console.error("/api/me failed", error);
