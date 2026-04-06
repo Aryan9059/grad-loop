@@ -14,7 +14,7 @@ export default function HomePage() {
       {/* Header */}
       <div className="mb-10">
         <div className="flex items-center gap-3 mb-2">
-          <div className="p-2 rounded-xl bg-gradient-to-br from-violet-500/10 to-indigo-500/10">
+          <div className="p-2 rounded-xl bg-linear-to-br from-violet-500/10 to-indigo-500/10">
             <Home className="h-5 w-5 text-violet-600 dark:text-violet-400" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
@@ -36,7 +36,7 @@ export default function HomePage() {
               href={item.href}
               className="group relative flex items-start gap-4 p-5 rounded-xl border border-border bg-card hover:bg-accent/50 hover:border-border/80 transition-all duration-200 shadow-sm hover:shadow-md"
             >
-              <div className="flex-shrink-0 p-2.5 rounded-xl bg-muted text-muted-foreground group-hover:bg-violet-500/10 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors duration-200">
+              <div className="shrink-0 p-2.5 rounded-xl bg-muted text-muted-foreground group-hover:bg-violet-500/10 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors duration-200">
                 <Icon className="h-5 w-5" />
               </div>
               <div className="flex-1 min-w-0">

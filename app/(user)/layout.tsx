@@ -1,122 +1,208 @@
 "use client";
 
-import React, { useState } from "react";
-import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
-import { Home, Users, MessageSquareText, FileText, Briefcase, Settings, Sun, Moon } from "lucide-react";
+import React from "react";
+import {
+  Sidebar,
+  SidebarBody,
+  SidebarLink,
+  useSidebar,
+} from "@/components/ui/sidebar";
+import {
+  Home,
+  Users,
+  MessageSquareText,
+  FileText,
+  Briefcase,
+  Settings,
+  Sun,
+  Moon,
+} from "lucide-react";
 import Link from "next/link";
-import { UserButton, useUser } from "@clerk/nextjs"; 
+import { UserButton, useUser } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
+import { motion, AnimatePresence } from "framer-motion";
 
-export default function UserLayout({ children }: { children: React.ReactNode }) {
-  const [open, setOpen] = useState(false);
+export default function UserLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
+  return (
+    <Sidebar>
+      <LayoutContent pathname={pathname}>{children}</LayoutContent>
+    </Sidebar>
+  );
+}
+
+function LayoutContent({
+  children,
+  pathname,
+}: {
+  children: React.ReactNode;
+  pathname: string;
+}) {
   const { user } = useUser();
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
+  const { open } = useSidebar();
 
   React.useEffect(() => {
     setMounted(true);
   }, []);
 
   const links = [
-    { label: "Home", href: "/home", icon: <Home className="h-5 w-5 flex-shrink-0" /> },
-    { label: "Connections", href: "/connections", icon: <Users className="h-5 w-5 flex-shrink-0" /> },
-    { label: "Chats", href: "/chats", icon: <MessageSquareText className="h-5 w-5 flex-shrink-0" /> },
-    { label: "Resume analysis", href: "/resume", icon: <FileText className="h-5 w-5 flex-shrink-0" /> },
-    { label: "Opportunities", href: "/opportunities", icon: <Briefcase className="h-5 w-5 flex-shrink-0" /> },
-    { label: "Settings", href: "/settings", icon: <Settings className="h-5 w-5 flex-shrink-0" /> },
+    {
+      label: "Dashboard",
+      href: "/home",
+      icon: <Home className="h-5 w-5 shrink-0" />,
+    },
+    {
+      label: "Connections",
+      href: "/connections",
+      icon: <Users className="h-5 w-5 shrink-0" />,
+    },
+    {
+      label: "Chats",
+      href: "/chats",
+      icon: <MessageSquareText className="h-5 w-5 shrink-0" />,
+    },
+    {
+      label: "Resume analysis",
+      href: "/resume",
+      icon: <FileText className="h-5 w-5 shrink-0" />,
+    },
+    {
+      label: "Opportunities",
+      href: "/opportunities",
+      icon: <Briefcase className="h-5 w-5 shrink-0" />,
+    },
+    {
+      label: "Settings",
+      href: "/settings",
+      icon: <Settings className="h-5 w-5 shrink-0" />,
+    },
   ];
 
-  const isDark = theme === "dark";
+  const isDark = resolvedTheme === "dark";
 
   return (
-    <div className={cn("flex flex-col md:flex-row w-full flex-1 max-w-full mx-auto overflow-hidden h-screen bg-background")}>
-      <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10">
-          <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-            {/* Logo */}
-            <Link href="/home" className="font-normal flex space-x-2 items-center text-sm py-1 px-3 relative z-20">
-               <div className="h-6 w-6 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex-shrink-0 shadow-sm" />
-               <motion.span animate={{ display: open ? "inline-block" : "none", opacity: open ? 1 : 0 }} className="font-bold text-base text-foreground whitespace-pre tracking-tight">
-                 Grad Loop
-               </motion.span>
-            </Link>
+    <div className="flex flex-col md:flex-row w-full min-h-screen bg-background">
+      <SidebarBody className="px-5 py-6 flex flex-col justify-between">
+        {/* Top section */}
+        <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          {/* Logo */}
+          <Link href="/home" className="flex items-center gap-2.5 mb-1 px-1">
+            <div className="h-7 w-7 rounded-lg bg-linear-to-br from-violet-500 to-indigo-600 shrink-0 shadow-sm" />
+            {open && (
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="font-extrabold text-lg text-foreground tracking-tight whitespace-nowrap"
+              >
+                Grad Loop
+              </motion.span>
+            )}
+          </Link>
 
-            {/* Navigation Links */}
-            <div className="mt-8 flex flex-col gap-1">
-              {links.map((link, idx) => (
-                <SidebarLink
-                  key={idx}
-                  link={link}
+          {/* Navigation section */}
+          <nav className="mt-8 flex flex-col gap-0.5">
+            {open && (
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground/60 px-3 mb-2 whitespace-nowrap"
+              >
+                Menu
+              </motion.span>
+            )}
+            {links.map((link, idx) => (
+              <SidebarLink
+                key={idx}
+                link={link}
+                className={cn(
+                  pathname === link.href &&
+                    "bg-sidebar-accent text-sidebar-accent-foreground font-semibold!",
+                )}
+              />
+            ))}
+          </nav>
+        </div>
+
+        {/* Bottom section: theme toggle + user */}
+        <div className="flex flex-col gap-4 pt-4">
+          {/* Theme toggle row */}
+          {mounted && open && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="flex items-center justify-between px-3"
+            >
+              <div className="flex items-center gap-2.5 text-sidebar-foreground/70">
+                {isDark ? (
+                  <Moon className="h-4 w-4" />
+                ) : (
+                  <Sun className="h-4 w-4" />
+                )}
+                <span className="text-sm font-medium">
+                  {isDark ? "Dark" : "Light"}
+                </span>
+              </div>
+              {/* Toggle switch */}
+              <button
+                onClick={() => setTheme(isDark ? "light" : "dark")}
+                className={cn(
+                  "relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 cursor-pointer focus:outline-none",
+                  isDark ? "bg-violet-500" : "bg-border",
+                )}
+                aria-label="Toggle dark mode"
+              >
+                <span
                   className={cn(
-                    pathname === link.href && "bg-sidebar-accent text-sidebar-accent-foreground font-semibold"
+                    "inline-block h-4.5 w-4.5 transform rounded-full bg-white shadow-sm transition-transform duration-200",
+                    isDark ? "translate-x-5.5" : "translate-x-0.5",
                   )}
                 />
-              ))}
-            </div>
-          </div>
+              </button>
+            </motion.div>
+          )}
 
-          {/* Bottom section: theme toggle + user */}
-          <div className="flex flex-col gap-3 mt-auto">
-            {/* Dark mode toggle */}
-            <button
-              onClick={() => setTheme(isDark ? "light" : "dark")}
-              className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-lg w-full",
-                "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                "transition-colors duration-150 cursor-pointer"
-              )}
-              aria-label="Toggle dark mode"
-            >
-              <div className="flex-shrink-0 h-5 w-5 relative">
-                {mounted && (
-                  <motion.div
-                    key={isDark ? "moon" : "sun"}
-                    initial={{ scale: 0.5, opacity: 0, rotate: -90 }}
-                    animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                    exit={{ scale: 0.5, opacity: 0, rotate: 90 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {isDark ? (
-                      <Moon className="h-5 w-5" />
-                    ) : (
-                      <Sun className="h-5 w-5" />
-                    )}
-                  </motion.div>
-                )}
-              </div>
-              <motion.span
-                animate={{
-                  display: open ? "inline-block" : "none",
-                  opacity: open ? 1 : 0,
+          {/* Divider */}
+          <div className="border-t border-sidebar-border" />
+
+          {/* User info */}
+          <div className="flex items-center gap-3 px-2 overflow-hidden">
+            <div className="flex-shrink-0">
+              <UserButton
+                appearance={{
+                  elements: { userButtonAvatarBox: "size-9 shadow-sm" },
                 }}
-                className="text-sm font-medium whitespace-pre"
-              >
-                {isDark ? "Dark mode" : "Light mode"}
-              </motion.span>
-            </button>
-
-            {/* Divider */}
-            <div className="border-t border-sidebar-border" />
-
-            {/* User info */}
-            <div className="px-3 py-2 flex items-center justify-start cursor-pointer gap-2 overflow-hidden">
-               <div className="flex-shrink-0">
-                 <UserButton appearance={{ elements: { userButtonAvatarBox: "size-8 shadow-sm ring-1 ring-border/50" } }} /> 
-               </div>
-               <motion.span animate={{ display: open ? "inline-block" : "none", opacity: open ? 1 : 0 }} className="text-sm font-medium text-foreground whitespace-pre truncate pointer-events-none">
-                 {user?.firstName} {user?.lastName}
-               </motion.span>
+              />
             </div>
+            {open && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex flex-col min-w-0"
+              >
+                <span className="text-sm font-semibold text-foreground truncate">
+                  {user?.firstName} {user?.lastName}
+                </span>
+                {user?.primaryEmailAddress && (
+                  <span className="text-xs text-muted-foreground truncate">
+                    {user.primaryEmailAddress.emailAddress}
+                  </span>
+                )}
+              </motion.div>
+            )}
           </div>
-        </SidebarBody>
-      </Sidebar>
+        </div>
+      </SidebarBody>
 
       {/* Main content */}
-      <main className="flex flex-1 flex-col w-full h-full overflow-y-auto bg-background">
+      <main className="flex flex-1 flex-col w-full min-h-screen overflow-y-auto bg-background">
         {children}
       </main>
     </div>

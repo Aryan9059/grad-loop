@@ -5,7 +5,7 @@ export default function ChatsPage() {
     <div className="flex flex-col h-full w-full p-6 sm:p-10 overflow-y-auto">
       <div className="mb-10">
         <div className="flex items-center gap-3 mb-2">
-          <div className="p-2 rounded-xl bg-gradient-to-br from-emerald-500/10 to-teal-500/10">
+          <div className="p-2 rounded-xl bg-linear-to-br from-emerald-500/10 to-teal-500/10">
             <MessageSquareText className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
