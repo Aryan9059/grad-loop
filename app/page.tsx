@@ -11,55 +11,55 @@ export default function Home() {
   const { status } = useClerkOnboardCheck();
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background p-4 text-center selection:bg-primary/30">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.1),rgba(255,255,255,0))]" />
+    <main className="relative flex min-h-screen flex-col items-center justify-center p-6 sm:p-12 overflow-hidden">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.2),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.1),rgba(255,255,255,0))]" />
       
-      <div className="z-10 flex w-full max-w-4xl flex-col items-center gap-8 rounded-3xl border border-border bg-card p-8 shadow-2xl sm:p-16">
-        <div className="flex items-center gap-2 rounded-full border border-border bg-muted/50 px-4 py-1.5 text-sm font-medium text-primary shadow-sm">
-          <Sparkles className="size-4" />
+      <div className="z-10 flex w-full max-w-4xl flex-col items-center gap-10 rounded-[calc(var(--radius)+1.5rem)] border border-border bg-card p-10 shadow-2xl sm:p-20 transition-all duration-700 animate-in fade-in zoom-in-95">
+        <div className="flex items-center gap-2 rounded-full border border-border bg-muted/50 px-5 py-2 text-sm font-medium text-primary shadow-sm">
+          <Sparkles className="size-4 animate-pulse text-yellow-500" />
           <span>The Ultimate Alumni Network</span>
         </div>
 
-        <div className="space-y-4">
-          <h1 className="bg-linear-to-br from-foreground to-foreground/60 bg-clip-text text-5xl font-extrabold tracking-tight text-transparent sm:text-7xl">
+        <div className="space-y-6 text-center">
+          <h1 className="bg-linear-to-br from-foreground to-foreground/70 bg-clip-text text-5xl font-black tracking-tighter text-transparent sm:text-8xl">
             Grad Loop
           </h1>
-          <p className="mx-auto max-w-xl text-lg text-muted-foreground sm:text-xl">
+          <p className="mx-auto max-w-2xl text-lg text-muted-foreground sm:text-2xl leading-relaxed">
             Connect, grow, and thrive with your college alumni network. Join the community to unlock exclusive opportunities.
           </p>
         </div>
 
         {!isLoaded ? (
-          <div className="flex h-12 items-center justify-center">
-            <div className="size-6 animate-spin rounded-full border-b-2 border-primary" />
+          <div className="flex h-16 items-center justify-center">
+            <div className="size-8 animate-spin rounded-full border-b-2 border-primary" />
           </div>
         ) : !userId ? (
-          <div className="flex flex-col gap-4 sm:flex-row">
-            <Button asChild size="lg" className="h-12 rounded-full px-8 text-base shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95">
-              <Link href="/sign-up">
-                Get Started <ArrowRight className="ml-2 size-4" />
+          <div className="flex flex-col gap-6 sm:flex-row w-full sm:w-auto">
+            <Button asChild size="lg" className="h-14 rounded-full px-10 text-lg font-bold shadow-xl shadow-primary/20 transition-all hover:scale-105 active:scale-95 bg-primary hover:shadow-2xl">
+              <Link href="/sign-up" className="flex items-center">
+                Get Started <ArrowRight className="ml-2 size-5" />
               </Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="h-12 rounded-full px-8 text-base transition-all hover:bg-muted active:scale-95">
+            <Button asChild variant="outline" size="lg" className="h-14 rounded-full px-10 text-lg font-bold transition-all hover:bg-muted active:scale-95 border-2">
               <Link href="/sign-in">Sign In</Link>
             </Button>
           </div>
         ) : (
-          <div className="flex flex-col items-center space-y-6">
-            <div className="flex items-center gap-4 rounded-full border bg-background/80 p-2 pr-6 shadow-sm backdrop-blur-md transition-all hover:shadow-md">
-              <UserButton appearance={{ elements: { userButtonAvatarBox: "size-10 shadow-inner" } }} />
-              <div className="flex flex-col items-start text-sm">
-                <span className="font-semibold text-foreground">Welcome back</span>
-                <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <ShieldCheck className="size-3 text-emerald-500" />
-                  {status === "redirecting" ? "Heading to dashboard..." : "Verifying profile..."}
+          <div className="flex flex-col items-center space-y-8">
+            <div className="flex items-center gap-6 rounded-full border border-border bg-card p-3 pr-10 shadow-lg hover:shadow-xl transition-all duration-300">
+              <UserButton appearance={{ elements: { userButtonAvatarBox: "size-14 shadow-inner ring-2 ring-border" } }} />
+              <div className="flex flex-col items-start">
+                <span className="text-lg font-bold text-foreground">Welcome back</span>
+                <span className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground">
+                  <ShieldCheck className="size-4 text-emerald-500" />
+                  {status === "redirecting" ? "Heading to home..." : "Verifying profile..."}
                 </span>
               </div>
             </div>
             {status !== "redirecting" && (
-               <div className="flex items-center justify-center gap-2 text-primary">
-                 <div className="size-4 animate-spin rounded-full border-b-2 border-primary" />
-                 <span className="text-sm font-medium">Checking profile details</span>
+               <div className="flex items-center justify-center gap-3 py-2 text-primary">
+                 <div className="size-5 animate-spin rounded-full border-b-2 border-primary" />
+                 <span className="text-base font-semibold">Updating your workspace...</span>
                </div>
             )}
           </div>

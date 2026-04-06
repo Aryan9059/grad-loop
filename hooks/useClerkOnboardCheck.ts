@@ -31,7 +31,7 @@ export function useClerkOnboardCheck(){
 
                 setStatus("redirecting");
                 if(data.exists){
-                    router.replace("/dashboard");
+                    router.replace("/home");
                 }else{
                     router.replace("/onboarding");
                 }
