@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { X, Check } from "lucide-react";
 
 const ROLE_OPTIONS = ["STUDENT", "ALUMNI"] as const;
 const DOMAIN_OPTIONS = ["Web", "App", "AI/ML", "CP", "Cybersecurity", "Cloud", "Data"] as const;
@@ -18,6 +20,7 @@ export default function OnboardingForm() {
   const [skillInput, setSkillInput] = useState("");
   const [skillSuggestions, setSkillSuggestions] = useState<string[]>([]);
   const [showSkillDropdown, setShowSkillDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [company, setCompany] = useState("");
   const [roleTitle, setRoleTitle] = useState("");
   const [openToConnect, setOpenToConnect] = useState(true);
@@ -25,11 +28,20 @@ export default function OnboardingForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowSkillDropdown(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const addSkill = (value: string) => {
     const normalized = value.trim();
-    if (!normalized) {
-      return;
-    }
+    if (!normalized) return;
 
     const exists = skills.some((item) => item.toLowerCase() === normalized.toLowerCase());
     if (exists) {
@@ -58,8 +70,8 @@ export default function OnboardingForm() {
       try {
         const res = await fetch(`/api/skills?q=${encodeURIComponent(query)}`, { cache: "no-store" });
         if (!res.ok) {
-          setSkillSuggestions([]);
-          return;
+           setSkillSuggestions([]);
+           return;
         }
 
         const data = (await res.json()) as { skills?: string[] };
@@ -93,9 +105,7 @@ export default function OnboardingForm() {
 
     const res = await fetch("/api/onboarding", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         firstName,
         lastName,
@@ -119,92 +129,75 @@ export default function OnboardingForm() {
     router.push("/dashboard");
   };
 
+  const inputClasses = "flex h-11 w-full rounded-md border border-input bg-background/50 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors";
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid gap-4 sm:grid-cols-2">
-        <input
-          className="rounded-md border p-2"
-          placeholder="First name"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          required
-        />
-        <input
-          className="rounded-md border p-2"
-          placeholder="Last name"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          required
-        />
+      <div className="grid gap-6 sm:grid-cols-2">
+        <div className="space-y-2">
+          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">First Name</label>
+          <input className={inputClasses} placeholder="John" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Last Name</label>
+          <input className={inputClasses} placeholder="Doe" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+        </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <select
-          className="rounded-md border p-2"
-          value={role}
-          onChange={(e) => setRole(e.target.value as Role)}
-        >
-          {ROLE_OPTIONS.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
+      <div className="grid gap-6 sm:grid-cols-2">
+        <div className="space-y-2">
+          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Role</label>
+          <select className={inputClasses} value={role} onChange={(e) => setRole(e.target.value as Role)}>
+            {ROLE_OPTIONS.map((option) => (
+              <option key={option} value={option}>{option.charAt(0) + option.slice(1).toLowerCase()}</option>
+            ))}
+          </select>
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Graduation Year</label>
+          <input className={inputClasses} placeholder="2026" type="number" min={1990} max={2100} value={graduationYear} onChange={(e) => setGraduationYear(e.target.value)} required />
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Primary Domain</label>
+        <select className={inputClasses} value={domain} onChange={(e) => setDomain(e.target.value)} required>
+          <option value="" disabled>Select your primary area of expertise</option>
+          {DOMAIN_OPTIONS.map((option) => (
+            <option key={option} value={option}>{option}</option>
           ))}
         </select>
-        <input
-          className="rounded-md border p-2"
-          placeholder="Graduation year"
-          type="number"
-          min={1990}
-          max={2100}
-          value={graduationYear}
-          onChange={(e) => setGraduationYear(e.target.value)}
-          required
-        />
       </div>
 
-      <select
-        className="w-full rounded-md border p-2"
-        value={domain}
-        onChange={(e) => setDomain(e.target.value)}
-        required
-      >
-        <option value="">Select primary domain</option>
-        {DOMAIN_OPTIONS.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
+      <div className="space-y-3">
+        <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Skills</label>
+        <div className="relative" ref={dropdownRef}>
+          <input
+            className={inputClasses}
+            placeholder="Type a skill (e.g. Next.js, Python) and press Enter"
+            value={skillInput}
+            onFocus={() => setShowSkillDropdown(true)}
+            onChange={(e) => {
+              setSkillInput(e.target.value);
+              setShowSkillDropdown(true);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === ",") {
+                e.preventDefault();
+                addSkill(skillInput);
+              }
+            }}
+          />
 
-      <fieldset className="space-y-2">
-        <legend className="font-medium">Skills</legend>
-        <div className="space-y-2">
-          <div className="relative">
-            <input
-              className="w-full rounded-md border p-2"
-              placeholder="Type a skill (e.g. C, React, Kubernetes)"
-              value={skillInput}
-              onFocus={() => setShowSkillDropdown(true)}
-              onChange={(e) => {
-                setSkillInput(e.target.value);
-                setShowSkillDropdown(true);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === ",") {
-                  e.preventDefault();
-                  addSkill(skillInput);
-                }
-              }}
-            />
-
-            {showSkillDropdown && skillInput.trim() && (
-              <div className="absolute z-10 mt-1 max-h-52 w-full overflow-auto rounded-md border bg-white shadow">
+          {showSkillDropdown && skillInput.trim() && (
+            <div className="absolute top-[calc(100%+4px)] z-50 w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md animate-in fade-in-80 zoom-in-95">
+              <div className="max-h-[200px] overflow-auto p-1">
                 {skillSuggestions.length > 0 ? (
                   skillSuggestions.map((option) => (
                     <button
                       key={option}
                       type="button"
-                      className="block w-full px-3 py-2 text-left hover:bg-gray-100"
+                      className="relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       onMouseDown={(e) => e.preventDefault()}
                       onClick={() => addSkill(option)}
                     >
@@ -214,7 +207,7 @@ export default function OnboardingForm() {
                 ) : (
                   <button
                     type="button"
-                    className="block w-full px-3 py-2 text-left hover:bg-gray-100"
+                    className="relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground"
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={() => addSkill(skillInput)}
                   >
@@ -222,53 +215,58 @@ export default function OnboardingForm() {
                   </button>
                 )}
               </div>
-            )}
-          </div>
-
-          {skills.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {skills.map((skill) => (
-                <span key={skill} className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm">
-                  {skill}
-                  <button type="button" className="text-gray-600 hover:text-black" onClick={() => removeSkill(skill)}>
-                    x
-                  </button>
-                </span>
-              ))}
             </div>
           )}
         </div>
-      </fieldset>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <input
-          className="rounded-md border p-2"
-          placeholder="Company (optional)"
-          value={company}
-          onChange={(e) => setCompany(e.target.value)}
-        />
-        <input
-          className="rounded-md border p-2"
-          placeholder="Role/Title (optional)"
-          value={roleTitle}
-          onChange={(e) => setRoleTitle(e.target.value)}
-        />
+        {skills.length > 0 && (
+          <div className="flex flex-wrap gap-2 pt-2">
+            {skills.map((skill) => (
+              <span key={skill} className="inline-flex items-center gap-1.5 rounded-md border border-primary/20 bg-primary/5 px-2.5 py-1 text-sm font-medium text-primary transition-colors hover:bg-primary/10">
+                {skill}
+                <button type="button" className="rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2" onClick={() => removeSkill(skill)}>
+                  <X className="size-3.5 text-muted-foreground hover:text-foreground transition-colors" />
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
-      <label className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          checked={openToConnect}
-          onChange={(e) => setOpenToConnect(e.target.checked)}
-        />
-        <span>Open to connect</span>
-      </label>
+      <div className="grid gap-6 sm:grid-cols-2">
+        <div className="space-y-2">
+          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Company <span className="text-muted-foreground font-normal">(Optional)</span></label>
+          <input className={inputClasses} placeholder="Google" value={company} onChange={(e) => setCompany(e.target.value)} />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Role/Title <span className="text-muted-foreground font-normal">(Optional)</span></label>
+          <input className={inputClasses} placeholder="Software Engineer" value={roleTitle} onChange={(e) => setRoleTitle(e.target.value)} />
+        </div>
+      </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      <div className="flex items-center space-x-2 rounded-lg border p-4 shadow-sm">
+        <button 
+          type="button"
+          onClick={() => setOpenToConnect(!openToConnect)}
+          className={`peer size-5 shrink-0 rounded-sm border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${openToConnect ? 'bg-primary border-primary text-primary-foreground' : 'border-primary'}`}
+        >
+          {openToConnect && <Check className="size-4" />}
+        </button>
+        <div className="grid gap-1.5 leading-none">
+          <label className="text-sm font-medium cursor-pointer" onClick={() => setOpenToConnect(!openToConnect)}>
+            Open to connect
+          </label>
+          <p className="text-sm text-muted-foreground">
+            Allow other members to find you and send messages
+          </p>
+        </div>
+      </div>
 
-      <button className="rounded-md bg-black px-4 py-2 text-white disabled:opacity-50" type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Saving..." : "Continue"}
-      </button>
+      {error && <p className="text-sm font-medium text-destructive">{error}</p>}
+
+      <Button type="submit" className="w-full h-11 text-base shadow-md" disabled={isSubmitting}>
+        {isSubmitting ? "Saving Profile..." : "Complete Profile"}
+      </Button>
     </form>
   );
 }
