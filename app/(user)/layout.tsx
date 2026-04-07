@@ -18,6 +18,8 @@ import {
   Moon,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import logo from "@/app/favicon.ico";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
@@ -94,18 +96,22 @@ function LayoutContent({
         {/* Top section */}
         <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
           {/* Logo */}
-          <Link href="/home" className="flex items-center gap-2.5 mb-1 px-1">
-            <div className="h-7 w-7 rounded-lg bg-linear-to-br from-violet-500 to-indigo-600 shrink-0 shadow-sm" />
+            <Link href="/home" className="flex items-center gap-2.5 mb-1 px-1">
+            <Image
+              src={logo}
+              alt="Grad Loop logo"
+              className="h-7 w-7 shrink-0 object-contain"
+            />
             {open && (
               <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="font-extrabold text-lg text-foreground tracking-tight whitespace-nowrap"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="font-extrabold text-lg text-foreground tracking-tight whitespace-nowrap"
               >
-                Grad Loop
+              Grad Loop
               </motion.span>
             )}
-          </Link>
+            </Link>
 
           {/* Navigation section */}
           <nav className="mt-8 flex flex-col gap-0.5">
@@ -155,7 +161,7 @@ function LayoutContent({
                 onClick={() => setTheme(isDark ? "light" : "dark")}
                 className={cn(
                   "relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 cursor-pointer focus:outline-none",
-                  isDark ? "bg-violet-500" : "bg-border",
+                  isDark ? "bg-accent-foreground" : "bg-border",
                 )}
                 aria-label="Toggle dark mode"
               >

@@ -10,7 +10,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Grad Loop — Alumni Network",
+  title: "Grad Loop",
   description: "Connect, grow, and thrive with your college alumni network.",
 };
 

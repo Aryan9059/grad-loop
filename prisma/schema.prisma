@@ -18,6 +18,7 @@ model User {
   connections         Int[]    @default([])
   profile             Profile?
   posts               Post[]
+  projects            Project[]
 } 
 
 model Profile {
@@ -37,9 +38,10 @@ enum Role {
 }
 
 model Skill {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  createdAt DateTime @default(now())
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  projects  Project[]
 }
 
 model Post { 
@@ -50,3 +52,14 @@ model Post {
   authorId  Int
   author    User    @relation(fields: [authorId], references: [id]) 
 } 
+
+model Project {
+  id        Int        @id @default(autoincrement())
+  title     String
+  desc      String?
+  skills    Skill[]
+  startDate DateTime   @default(now())
+  endDate   DateTime?
+  userId    Int
+  user      User       @relation(fields: [userId], references: [id])
+}
