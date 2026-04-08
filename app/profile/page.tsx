@@ -15,16 +15,11 @@ export default async function ProfilePage() {
 
   const user = await prisma.user.findUnique({
     where: { clerkId: userId },
-    include: {
-      profile: true,
-    },
   });
 
-  if (!user || !user.profile) {
+  if (!user || !user.domain) {
     redirect("/onboarding");
   }
-
-  const { profile } = user;
 
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 bg-background overflow-hidden">
@@ -52,7 +47,7 @@ export default async function ProfilePage() {
             <div className="flex size-32 items-center justify-center rounded-full border-4 border-card bg-muted text-5xl font-bold text-muted-foreground shadow-lg sm:size-40 sm:text-6xl">
                {user.firstName?.charAt(0)}{user.lastName?.charAt(0)}
             </div>
-            {profile.openToConnect && (
+            {user.openToConnect && (
                <div className="absolute bottom-0 right-4 rounded-full border-4 border-card bg-emerald-500 size-6 sm:bottom-2 sm:right-6 sm:size-8 shadow-sm" title="Open to Connect"></div>
             )}
           </div>
@@ -73,7 +68,7 @@ export default async function ProfilePage() {
             </div>
             <div className="flex shrink-0 gap-2">
               <Badge variant="secondary" className="px-3 py-1 font-medium bg-primary/10 text-primary hover:bg-primary/20">
-                {profile.domain}
+                {user.domain}
               </Badge>
             </div>
           </div>
@@ -83,29 +78,29 @@ export default async function ProfilePage() {
                 <h2 className="text-lg font-semibold tracking-tight">Experience & Focus</h2>
                 
                 <div className="space-y-3">
-                   {profile.company && (
+                   {user.company && (
                       <div className="flex items-start gap-3">
                          <div className="rounded-md bg-muted p-2 text-muted-foreground">
                             <Building2 className="size-4" />
                          </div>
                          <div>
-                            <p className="text-sm font-medium leading-none">{profile.company}</p>
+                            <p className="text-sm font-medium leading-none">{user.company}</p>
                             <p className="text-sm text-muted-foreground">Current Company</p>
                          </div>
                       </div>
                    )}
-                   {profile.roleTitle && (
+                   {user.roleTitle && (
                       <div className="flex items-start gap-3">
                          <div className="rounded-md bg-muted p-2 text-muted-foreground">
                             <Briefcase className="size-4" />
                          </div>
                          <div>
-                            <p className="text-sm font-medium leading-none">{profile.roleTitle}</p>
+                            <p className="text-sm font-medium leading-none">{user.roleTitle}</p>
                             <p className="text-sm text-muted-foreground">Role</p>
                          </div>
                       </div>
                    )}
-                   {!profile.company && !profile.roleTitle && (
+                   {!user.company && !user.roleTitle && (
                        <div className="flex items-start gap-3 opacity-60">
                          <div className="rounded-md bg-muted p-2 text-muted-foreground">
                             <Search className="size-4" />
@@ -122,7 +117,7 @@ export default async function ProfilePage() {
              <div className="space-y-4">
                 <h2 className="text-lg font-semibold tracking-tight">Technical Skills</h2>
                 <div className="flex flex-wrap gap-2">
-                   {profile.skills.map((skill) => (
+                   {(user.skills ?? []).map((skill) => (
                        <Badge key={skill} variant="outline" className="rounded-md border-primary/20 bg-primary/5 px-2.5 py-1 text-sm font-medium text-primary hover:bg-primary/10 transition-colors">
                            {skill}
                        </Badge>
@@ -131,7 +126,7 @@ export default async function ProfilePage() {
              </div>
           </div>
 
-          {profile.openToConnect && (
+          {user.openToConnect && (
             <div className="mt-8 rounded-xl border border-border/50 bg-muted/50 p-4">
                <div className="flex items-center gap-3">
                   <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">

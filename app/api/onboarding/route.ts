@@ -74,24 +74,11 @@ export async function POST(req: Request) {
         lastName: body.lastName.trim(),
         role,
         graduationYear: body.graduationYear,
-        profile: {
-          upsert: {
-            update: {
-              domain: body.domain.trim(),
-              skills: normalizedSkills,
-              company: hasText(body.company) ? body.company.trim() : null,
-              roleTitle: hasText(body.roleTitle) ? body.roleTitle.trim() : null,
-              openToConnect: body.openToConnect ?? true,
-            },
-            create: {
-              domain: body.domain.trim(),
-              skills: normalizedSkills,
-              company: hasText(body.company) ? body.company.trim() : null,
-              roleTitle: hasText(body.roleTitle) ? body.roleTitle.trim() : null,
-              openToConnect: body.openToConnect ?? true,
-            },
-          },
-        },
+        domain: body.domain.trim(),
+        skills: normalizedSkills,
+        company: hasText(body.company) ? body.company.trim() : null,
+        roleTitle: hasText(body.roleTitle) ? body.roleTitle.trim() : null,
+        openToConnect: body.openToConnect ?? true,
       },
       create: {
         clerkId: userId,
@@ -100,15 +87,11 @@ export async function POST(req: Request) {
         lastName: body.lastName.trim(),
         role,
         graduationYear: body.graduationYear,
-        profile: {
-          create: {
-            domain: body.domain.trim(),
-            skills: normalizedSkills,
-            company: hasText(body.company) ? body.company.trim() : null,
-            roleTitle: hasText(body.roleTitle) ? body.roleTitle.trim() : null,
-            openToConnect: body.openToConnect ?? true,
-          },
-        },
+        domain: body.domain.trim(),
+        skills: normalizedSkills,
+        company: hasText(body.company) ? body.company.trim() : null,
+        roleTitle: hasText(body.roleTitle) ? body.roleTitle.trim() : null,
+        openToConnect: body.openToConnect ?? true,
       },
     }),
     prisma.skill.createMany({

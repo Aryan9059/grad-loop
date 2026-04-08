@@ -16,21 +16,15 @@ model User {
   role                Role
   graduationYear      Int?
   connections         Int[]    @default([])
-  profile             Profile?
-  posts               Post[]
-  projects            Project[]
-} 
-
-model Profile {
-  id                  Int      @id @default(autoincrement())
-  userId              Int      @unique
-  user                User     @relation(fields: [userId], references: [id])
   domain              String?
   skills              String[]
   company             String?
   roleTitle           String?
   openToConnect       Boolean  @default(true)
-}
+  profile_photo       String?
+  posts               Post[]
+} 
+
 
 enum Role {
   STUDENT
@@ -38,10 +32,9 @@ enum Role {
 }
 
 model Skill {
-  id        Int       @id @default(autoincrement())
-  name      String    @unique
-  createdAt DateTime  @default(now())
-  projects  Project[]
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
 }
 
 model Post { 
@@ -51,15 +44,4 @@ model Post {
   published Boolean @default(false) 
   authorId  Int
   author    User    @relation(fields: [authorId], references: [id]) 
-} 
-
-model Project {
-  id        Int        @id @default(autoincrement())
-  title     String
-  desc      String?
-  skills    Skill[]
-  startDate DateTime   @default(now())
-  endDate   DateTime?
-  userId    Int
-  user      User       @relation(fields: [userId], references: [id])
 }

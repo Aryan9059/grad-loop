@@ -12,7 +12,6 @@ export async function GET() {
 
     const user = await prisma.user.findUnique({
       where: { clerkId: userId },
-      include: { profile: true },
     });
 
     const completed =
@@ -20,9 +19,8 @@ export async function GET() {
       !!user.firstName &&
       !!user.lastName &&
       !!user.role &&
-      !!user.profile &&
-      !!user.profile.domain &&
-      user.profile.skills.length > 0;
+      !!user.domain &&
+      (user.skills?.length ?? 0) > 0;
 
     return NextResponse.json({
       exists: completed,
