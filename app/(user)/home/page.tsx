@@ -4,7 +4,7 @@ import Link from "next/link";
 const quickLinks = [
   { label: "Connections", href: "/connections", icon: Users, description: "Network with alumni and peers" },
   { label: "Chats", href: "/chats", icon: MessageSquareText, description: "Start conversations" },
-  { label: "Resume Analysis", href: "/resume", icon: FileText, description: "AI-powered resume feedback" },
+  { label: "Resume Studio", href: "/resume", icon: FileText, description: "Create and improve your resume" },
   { label: "Opportunities", href: "/opportunities", icon: Briefcase, description: "Explore job postings" },
 ];
 

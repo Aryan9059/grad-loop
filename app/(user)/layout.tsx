@@ -16,6 +16,8 @@ import {
   Settings,
   Sun,
   Moon,
+  LayoutTemplate,
+  WandSparkles,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -72,9 +74,9 @@ function LayoutContent({
       icon: <MessageSquareText className="h-5 w-5 shrink-0" />,
     },
     {
-      label: "Resume analysis",
+      label: "Resume Studio",
       href: "/resume",
-      icon: <FileText className="h-5 w-5 shrink-0" />,
+      icon: <WandSparkles className="h-5 w-5 shrink-0" />,
     },
     {
       label: "Opportunities",
