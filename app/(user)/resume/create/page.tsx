@@ -252,7 +252,7 @@ export default function CreateResumePage() {
         </div>
 
         {/* Mobile pane switcher */}
-        <div className="flex items-center rounded-lg border border-border bg-muted p-0.5 sm:hidden">
+        <div className="flex items-center rounded-lg border border-border bg-muted p-0.5 lg:hidden">
           {(["editor", "preview"] as const).map((pane) => (
             <button
               key={pane}
@@ -299,8 +299,8 @@ export default function CreateResumePage() {
         {/* ── Left: LaTeX editor ── */}
         <div className={cn(
           "flex flex-col border-r border-border bg-[#1e1e2e] overflow-hidden",
-          "w-full sm:w-1/2",
-          activePane === "preview" ? "hidden sm:flex" : "flex"
+          "w-full lg:w-1/2",
+          activePane === "preview" ? "hidden lg:flex" : "flex"
         )}>
           <div className="flex items-center gap-2 px-4 py-2 border-b border-white/10 shrink-0">
             <Code2 className="h-3.5 w-3.5 text-violet-400" />
@@ -318,8 +318,8 @@ export default function CreateResumePage() {
         {/* ── Right: PDF preview ── */}
         <div className={cn(
           "flex flex-col bg-muted/30 overflow-hidden",
-          "w-full sm:w-1/2",
-          activePane === "editor" ? "hidden sm:flex" : "flex"
+          "w-full lg:w-1/2",
+          activePane === "editor" ? "hidden lg:flex" : "flex"
         )}>
           <div className="flex items-center gap-2 px-4 py-2 border-b border-border shrink-0">
             <Eye className="h-3.5 w-3.5 text-muted-foreground" />
