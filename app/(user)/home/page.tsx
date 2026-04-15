@@ -18,7 +18,7 @@ export default function HomePage() {
             <Home className="h-5 w-5 text-violet-600 dark:text-violet-400" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-            Dashboard
+            Home
           </h1>
         </div>
         <p className="text-muted-foreground text-sm sm:text-base mt-1 ml-1">

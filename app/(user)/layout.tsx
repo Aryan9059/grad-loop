@@ -18,6 +18,7 @@ import {
   Moon,
   LayoutTemplate,
   WandSparkles,
+  User,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -59,14 +60,14 @@ function LayoutContent({
 
   const links = [
     {
-      label: "Dashboard",
+      label: "Home",
       href: "/home",
       icon: <Home className="h-5 w-5 shrink-0" />,
     },
     {
-      label: "Connections",
-      href: "/connections",
-      icon: <Users className="h-5 w-5 shrink-0" />,
+      label: "Profile",
+      href: "/profile",
+      icon: <User className="h-5 w-5 shrink-0" />,
     },
     {
       label: "Chats",
