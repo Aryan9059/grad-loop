@@ -9,6 +9,7 @@ type OnboardingBody = {
   role?: Role;
   graduationYear?: number;
   domain?: string;
+  universityId?: number;
   skills?: string[];
   company?: string | null;
   roleTitle?: string | null;
@@ -50,6 +51,7 @@ export async function POST(req: Request) {
     !isRole(body.role) ||
     !validGraduationYear ||
     !hasText(body.domain) ||
+    typeof body.universityId !== "number" ||
     !isStringArray(body.skills) ||
     body.skills.length === 0
   ) {
@@ -75,6 +77,7 @@ export async function POST(req: Request) {
         role,
         graduationYear: body.graduationYear,
         domain: body.domain.trim(),
+        universityId: body.universityId,
         skills: normalizedSkills,
         company: hasText(body.company) ? body.company.trim() : null,
         roleTitle: hasText(body.roleTitle) ? body.roleTitle.trim() : null,
@@ -88,6 +91,7 @@ export async function POST(req: Request) {
         role,
         graduationYear: body.graduationYear,
         domain: body.domain.trim(),
+        universityId: body.universityId,
         skills: normalizedSkills,
         company: hasText(body.company) ? body.company.trim() : null,
         roleTitle: hasText(body.roleTitle) ? body.roleTitle.trim() : null,

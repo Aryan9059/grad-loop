@@ -9,6 +9,7 @@ const ROLE_OPTIONS = ["STUDENT", "ALUMNI"] as const;
 const DOMAIN_OPTIONS = ["Web", "App", "AI/ML", "CP", "Cybersecurity", "Cloud", "Data"] as const;
 
 type Role = (typeof ROLE_OPTIONS)[number];
+type University = { id: number; name: string; domain: string };
 
 export default function OnboardingForm() {
   const [firstName, setFirstName] = useState("");
@@ -16,6 +17,8 @@ export default function OnboardingForm() {
   const [role, setRole] = useState<Role>("STUDENT");
   const [graduationYear, setGraduationYear] = useState("");
   const [domain, setDomain] = useState("");
+  const [universityId, setUniversityId] = useState<number | "">("");
+  const [universities, setUniversities] = useState<University[]>([]);
   const [skills, setSkills] = useState<string[]>([]);
   const [skillInput, setSkillInput] = useState("");
   const [skillSuggestions, setSkillSuggestions] = useState<string[]>([]);
@@ -37,6 +40,13 @@ export default function OnboardingForm() {
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/universities")
+      .then((r) => r.json())
+      .then((data) => setUniversities(Array.isArray(data) ? data : []))
+      .catch((e) => console.error("Failed to load universities", e));
   }, []);
 
   const addSkill = (value: string) => {
@@ -91,7 +101,7 @@ export default function OnboardingForm() {
     e.preventDefault();
     setError("");
 
-    if (!firstName.trim() || !lastName.trim() || !graduationYear || !domain) {
+    if (!firstName.trim() || !lastName.trim() || !graduationYear || !domain || universityId === "") {
       setError("Please fill all required fields.");
       return;
     }
@@ -112,6 +122,7 @@ export default function OnboardingForm() {
         role,
         graduationYear: Number(graduationYear),
         domain,
+        universityId: Number(universityId),
         skills,
         company: company.trim() || null,
         roleTitle: roleTitle.trim() || null,
@@ -159,14 +170,25 @@ export default function OnboardingForm() {
         </div>
       </div>
 
-      <div className="space-y-2">
-        <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Primary Domain</label>
-        <select className={inputClasses} value={domain} onChange={(e) => setDomain(e.target.value)} required>
-          <option value="" disabled>Select your primary area of expertise</option>
-          {DOMAIN_OPTIONS.map((option) => (
-            <option key={option} value={option}>{option}</option>
-          ))}
-        </select>
+      <div className="grid gap-6 sm:grid-cols-2">
+        <div className="space-y-2">
+          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Primary Domain</label>
+          <select className={inputClasses} value={domain} onChange={(e) => setDomain(e.target.value)} required>
+            <option value="" disabled>Select your primary area of expertise</option>
+            {DOMAIN_OPTIONS.map((option) => (
+              <option key={option} value={option}>{option}</option>
+            ))}
+          </select>
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">University</label>
+          <select className={inputClasses} value={universityId} onChange={(e) => setUniversityId(Number(e.target.value))} required>
+            <option value="" disabled>Select your university</option>
+            {universities.map((uni) => (
+              <option key={uni.id} value={uni.id}>{uni.name}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div className="space-y-3">

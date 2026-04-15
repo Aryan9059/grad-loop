@@ -167,8 +167,7 @@ export const SidebarLink = ({
 }: {
   link: Links;
   className?: string;
-  props?: LinkProps;
-}) => {
+} & React.ComponentProps<typeof Link>) => {
   const { open } = useSidebar();
   return (
     <Link

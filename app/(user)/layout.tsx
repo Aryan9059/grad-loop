@@ -133,8 +133,9 @@ function LayoutContent({
                 link={link}
                 className={cn(
                   pathname === link.href &&
-                    "bg-sidebar-accent text-sidebar-accent-foreground font-semibold!",
+                    "bg-sidebar-accent text-sidebar-accent-foreground font-bold!",
                 )}
+                prefetch={false}
               />
             ))}
           </nav>
@@ -184,11 +185,13 @@ function LayoutContent({
           {/* User info */}
           <div className="flex items-center gap-3 px-2 overflow-hidden">
             <div className="shrink-0">
-              <UserButton
-                appearance={{
-                  elements: { userButtonAvatarBox: "size-9 shadow-sm" },
-                }}
-              />
+              {mounted && (
+                <UserButton
+                  appearance={{
+                    elements: { userButtonAvatarBox: "size-9 shadow-sm" },
+                  }}
+                />
+              )}
             </div>
             {open && (
               <motion.div
