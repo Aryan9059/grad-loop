@@ -2,6 +2,21 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+export async function GET(req: Request, { params }: { params: Promise<{ postId: string }> }) {
+  const resolvedParams = await params;
+  const postId = Number(resolvedParams.postId);
+
+  const comments = await prisma.comment.findMany({
+    where: { postId },
+    include: {
+      user: { select: { firstName: true, lastName: true, profile_photo: true, roleTitle: true } }
+    },
+    orderBy: { createdAt: "asc" }
+  });
+
+  return NextResponse.json(comments);
+}
+
 export async function POST(req: Request, { params }: { params: Promise<{ postId: string }> }) {
   const { userId } = await auth();
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import PostBox from "./PostBox";
+import CommentSection from "./CommentSection";
 import { ThumbsUp, MessageSquare, Share2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 type Post = {
   id: number;
@@ -12,11 +14,14 @@ type Post = {
   author: { firstName: string; lastName: string; roleTitle: string; profile_photo: string | null };
   _count: { likes: number; comments: number };
   isLiked?: boolean;
+  comments?: any[];
+  mediaUrls?: string[];
 };
 
 export default function PostFeed() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeCommentPost, setActiveCommentPost] = useState<number | null>(null);
 
   const fetchPosts = async () => {
     setIsLoading(true);
@@ -80,6 +85,25 @@ export default function PostFeed() {
                </div>
              </div>
              <p className="text-sm text-foreground whitespace-pre-wrap mb-4 leading-relaxed">{post.content}</p>
+              
+              {post.mediaUrls && post.mediaUrls.length > 0 && (
+                <div className={cn(
+                  "grid gap-2 mb-4 rounded-xl overflow-hidden border border-border",
+                  post.mediaUrls.length === 1 ? "grid-cols-1" : "grid-cols-2"
+                )}>
+                  {post.mediaUrls.map((url, idx) => (
+                    <div key={idx} className="relative aspect-video">
+                      <Image 
+                        src={url} 
+                        alt={`Post media ${idx}`} 
+                        fill 
+                        className="object-cover"
+                        sizes="(max-w-768px) 100vw, 50vw"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
              <div className="flex items-center gap-6 border-t border-border pt-3 mt-4 text-muted-foreground">
                <button 
                  onClick={() => handleLike(post.id)}
@@ -90,13 +114,32 @@ export default function PostFeed() {
                >
                  <ThumbsUp className={cn("h-4 w-4", post.isLiked && "fill-primary")} /> {post._count.likes > 0 ? post._count.likes : "Like"}
                </button>
-               <button className="flex items-center gap-2 hover:text-primary text-xs font-medium transition-colors cursor-pointer">
-                 <MessageSquare className="h-4 w-4" /> {post._count.comments > 0 ? post._count.comments : "Comment"}
-               </button>
-               <button className="flex items-center gap-2 hover:text-primary text-xs font-medium transition-colors ml-auto cursor-pointer">
-                 <Share2 className="h-4 w-4" /> Share
-               </button>
-             </div>
+                <button 
+                  onClick={() => setActiveCommentPost(activeCommentPost === post.id ? null : post.id)}
+                  className={cn(
+                    "flex items-center gap-2 hover:text-primary text-xs font-medium transition-colors cursor-pointer",
+                    activeCommentPost === post.id && "text-primary font-bold"
+                  )}
+                >
+                  <MessageSquare className={cn("h-4 w-4", activeCommentPost === post.id && "fill-primary/20")} /> {post._count.comments > 0 ? post._count.comments : "Comment"}
+                </button>
+                <button className="flex items-center gap-2 hover:text-primary text-xs font-medium transition-colors ml-auto cursor-pointer">
+                  <Share2 className="h-4 w-4" /> Share
+                </button>
+              </div>
+
+              {activeCommentPost === post.id && (
+                <CommentSection 
+                    postId={post.id} 
+                    initialComments={post.comments} 
+                    onCommentAdded={() => {
+                        setPosts(posts.map(p => p.id === post.id ? {
+                            ...p,
+                            _count: { ...p._count, comments: p._count.comments + 1 }
+                        } : p));
+                    }}
+                />
+              )}
           </div>
         ))}
         {!isLoading && posts.length === 0 && (

@@ -28,6 +28,13 @@ export async function GET() {
         where: { userId: userProfile.id },
         select: { id: true },
       },
+      comments: {
+        take: 5,
+        orderBy: { createdAt: "desc" },
+        include: {
+          user: { select: { firstName: true, lastName: true, profile_photo: true, roleTitle: true } }
+        }
+      }
     },
     orderBy: { createdAt: "desc" },
     take: 50,

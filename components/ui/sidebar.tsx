@@ -167,7 +167,7 @@ export const SidebarLink = ({
 }: {
   link: Links;
   className?: string;
-} & React.ComponentProps<typeof Link>) => {
+} & Omit<React.ComponentProps<typeof Link>, "href">) => {
   const { open } = useSidebar();
   return (
     <Link
