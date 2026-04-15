@@ -182,7 +182,7 @@ function LayoutContent({
 
           {/* User info */}
           <div className="flex items-center gap-3 px-2 overflow-hidden">
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <UserButton
                 appearance={{
                   elements: { userButtonAvatarBox: "size-9 shadow-sm" },

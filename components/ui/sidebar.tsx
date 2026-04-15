@@ -84,7 +84,7 @@ export const DesktopSidebar = ({
   return (
     <motion.aside
       className={cn(
-        "hidden md:flex md:flex-col flex-shrink-0 h-screen sticky top-0 bg-sidebar border-r border-sidebar-border overflow-hidden",
+        "hidden md:flex md:flex-col shrink-0 h-screen sticky top-0 bg-sidebar border-r border-sidebar-border overflow-hidden",
         className,
       )}
       animate={{
@@ -92,7 +92,7 @@ export const DesktopSidebar = ({
       }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
-      {...props}
+      {...(props as any)}
     >
       {children}
     </motion.aside>
