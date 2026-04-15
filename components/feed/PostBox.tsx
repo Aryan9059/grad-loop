@@ -115,14 +115,6 @@ export default function PostBox({ onPostCreated }: { onPostCreated: () => void }
             )}
             Photo
           </button>
-          <button className="flex items-center gap-2 text-muted-foreground hover:text-primary text-xs font-semibold transition-colors px-3 py-2 rounded-lg hover:bg-primary/5 cursor-pointer">
-            <Paperclip className="h-4 w-4" />
-            Attach
-          </button>
-          <button className="flex items-center gap-2 text-muted-foreground hover:text-primary text-xs font-semibold transition-colors px-3 py-2 rounded-lg hover:bg-primary/5 cursor-pointer">
-            <Smile className="h-4 w-4" />
-            Emoji
-          </button>
         </div>
 
         <Button

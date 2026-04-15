@@ -155,9 +155,6 @@ export default function PostFeed() {
                 <MessageSquare className={cn("h-4 w-4", activeCommentPost === post.id && "fill-primary/20")} /> 
                 {post._count.comments > 0 ? post._count.comments : "Comment"}
               </button>
-              <button className="flex items-center gap-2 hover:bg-primary/5 text-xs font-semibold transition-all px-4 py-2 rounded-lg ml-auto text-muted-foreground hover:text-primary cursor-pointer">
-                <Share2 className="h-4 w-4" /> Share
-              </button>
             </div>
           </div>
 
