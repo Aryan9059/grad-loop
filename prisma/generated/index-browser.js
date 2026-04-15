@@ -187,6 +187,13 @@ exports.Prisma.CommentScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.CommentLikeScalarFieldEnum = {
+  id: 'id',
+  commentId: 'commentId',
+  userId: 'userId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.OpportunityScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -269,6 +276,7 @@ exports.Prisma.ModelName = {
   Post: 'Post',
   Like: 'Like',
   Comment: 'Comment',
+  CommentLike: 'CommentLike',
   Opportunity: 'Opportunity',
   ReferralRequest: 'ReferralRequest',
   ConnectionRequest: 'ConnectionRequest',

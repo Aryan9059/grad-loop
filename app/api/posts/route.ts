@@ -8,28 +8,38 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const user = await prisma.user.findUnique({
+  const userProfile = await prisma.user.findUnique({
     where: { clerkId: userId },
-    select: { universityId: true },
+    select: { id: true, universityId: true },
   });
 
-  if (!user?.universityId) {
+  if (!userProfile?.universityId) {
     return NextResponse.json({ error: "No university assigned" }, { status: 403 });
   }
 
   const posts = await prisma.post.findMany({
-    where: { universityId: user.universityId, published: true },
+    where: { universityId: userProfile.universityId, published: true },
     include: {
       author: {
         select: { id: true, firstName: true, lastName: true, roleTitle: true, company: true, domain: true, profile_photo: true },
       },
       _count: { select: { likes: true, comments: true } },
+      likes: {
+        where: { userId: userProfile.id },
+        select: { id: true },
+      },
     },
     orderBy: { createdAt: "desc" },
     take: 50,
   });
 
-  return NextResponse.json(posts);
+  const formattedPosts = posts.map((post) => ({
+    ...post,
+    isLiked: post.likes.length > 0,
+    likes: undefined, // remove full likes array
+  }));
+
+  return NextResponse.json(formattedPosts);
 }
 
 export async function POST(req: Request) {

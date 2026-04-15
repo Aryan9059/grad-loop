@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import PostBox from "./PostBox";
 import { ThumbsUp, MessageSquare, Share2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type Post = {
   id: number;
@@ -10,6 +11,7 @@ type Post = {
   createdAt: string;
   author: { firstName: string; lastName: string; roleTitle: string; profile_photo: string | null };
   _count: { likes: number; comments: number };
+  isLiked?: boolean;
 };
 
 export default function PostFeed() {
@@ -33,19 +35,28 @@ export default function PostFeed() {
   }, []);
 
   const handleLike = async (postId: number) => {
+    const post = posts.find(p => p.id === postId);
+    if (!post) return;
+
+    const alreadyLiked = !!post.isLiked;
+
     // Optimistically update UI
     setPosts(posts.map(p => {
         if (p.id === postId) {
             return {
                 ...p,
-                _count: { ...p._count, likes: p._count.likes + 1 }
+                isLiked: !alreadyLiked,
+                _count: { 
+                    ...p._count, 
+                    likes: alreadyLiked ? Math.max(0, p._count.likes - 1) : p._count.likes + 1 
+                }
             };
         }
         return p;
     }));
     
     await fetch(`/api/posts/${postId}/like`, { method: "POST" });
-    fetchPosts(); // sync with server
+    // fetchPosts(); // Optional: remove if you want full trust in optimistic UI
   };
 
   return (
@@ -72,9 +83,12 @@ export default function PostFeed() {
              <div className="flex items-center gap-6 border-t border-border pt-3 mt-4 text-muted-foreground">
                <button 
                  onClick={() => handleLike(post.id)}
-                 className="flex items-center gap-2 hover:text-primary text-xs font-medium transition-colors cursor-pointer"
+                 className={cn(
+                   "flex items-center gap-2 hover:text-primary text-xs font-medium transition-colors cursor-pointer",
+                   post.isLiked && "text-primary"
+                 )}
                >
-                 <ThumbsUp className="h-4 w-4" /> {post._count.likes > 0 ? post._count.likes : "Like"}
+                 <ThumbsUp className={cn("h-4 w-4", post.isLiked && "fill-primary")} /> {post._count.likes > 0 ? post._count.likes : "Like"}
                </button>
                <button className="flex items-center gap-2 hover:text-primary text-xs font-medium transition-colors cursor-pointer">
                  <MessageSquare className="h-4 w-4" /> {post._count.comments > 0 ? post._count.comments : "Comment"}
