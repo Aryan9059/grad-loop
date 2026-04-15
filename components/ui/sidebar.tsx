@@ -5,6 +5,7 @@ import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion, LayoutGroup } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Logo } from "./logo";
 
 interface Links {
   label: string;
@@ -110,9 +111,12 @@ export const MobileSidebar = ({
           "h-14 px-4 flex flex-row md:hidden items-center justify-between bg-sidebar border-b border-sidebar-border w-full shadow-sm",
         )}
       >
-        <span className="font-extrabold text-base text-foreground tracking-tight">
-          Grad Loop
-        </span>
+        <div className="flex items-center gap-2">
+          <Logo className="h-7 w-7" />
+          <span className="font-extrabold text-base text-foreground tracking-tight">
+            Grad Loop
+          </span>
+        </div>
         <Menu
           className="text-foreground cursor-pointer h-5 w-5"
           onClick={() => setOpen(!open)}
@@ -129,7 +133,7 @@ export const MobileSidebar = ({
               ease: "easeInOut",
             }}
             className={cn(
-              "fixed h-full w-[260px] inset-y-0 left-0 bg-sidebar border-r border-sidebar-border p-0 z-100 flex flex-col md:hidden shadow-xl",
+              "fixed h-full w-[320px] inset-y-0 left-0 bg-sidebar border-r border-sidebar-border p-0 z-100 flex flex-col md:hidden shadow-xl",
               className,
             )}
           >

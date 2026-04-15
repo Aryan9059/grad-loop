@@ -23,6 +23,7 @@ import {
   LayoutDashboard,
 } from "lucide-react";
 import Link from "next/link";
+import { Logo } from "@/components/ui/logo";
 import Image from "next/image";
 import logo from "@/app/favicon.ico";
 import { UserButton, useUser, useClerk } from "@clerk/nextjs";
@@ -69,11 +70,6 @@ function LayoutContent({
       icon: <LayoutDashboard className="h-5 w-5 shrink-0" />,
     },
     {
-      label: "Profile",
-      href: "/profile",
-      icon: <User className="h-5 w-5 shrink-0" />,
-    },
-    {
       label: "Chats",
       href: "/chats",
       icon: <MessageSquareText className="h-5 w-5 shrink-0" />,
@@ -87,6 +83,11 @@ function LayoutContent({
       label: "Opportunities",
       href: "/opportunities",
       icon: <Briefcase className="h-5 w-5 shrink-0" />,
+    },
+    {
+      label: "Profile",
+      href: "/profile",
+      icon: <User className="h-5 w-5 shrink-0" />,
     },
   ];
 
@@ -105,13 +106,8 @@ function LayoutContent({
       <SidebarBody className="px-4 py-6 flex flex-col justify-between">
         {/* Top section */}
         <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-          {/* Logo */}
-          <Link href="/home" className="flex items-center gap-2.5 mb-1 px-2">
-            <Image
-              src={logo}
-              alt="Grad Loop logo"
-              className="h-8 w-8 shrink-0 object-contain"
-            />
+          <Link href="/home" className="flex items-center gap-2 mb-1 px-1">
+            <Logo className="h-9 w-9 shrink-0" />
             {open && (
               <motion.span
                 initial={{ opacity: 0 }}
@@ -147,29 +143,6 @@ function LayoutContent({
             ))}
           </nav>
 
-          {/* Settings section */}
-          <nav className="mt-6 flex flex-col gap-0.5">
-            {open && (
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-muted-foreground/50 px-3 mb-2 whitespace-nowrap"
-              >
-                Settings
-              </motion.span>
-            )}
-            {settingsLinks.map((link, idx) => (
-              <SidebarLink
-                key={idx}
-                link={link}
-                className={cn(
-                  pathname === link.href &&
-                    "bg-primary/10 text-primary font-bold!",
-                )}
-                prefetch={false}
-              />
-            ))}
-          </nav>
         </div>
 
         {/* Bottom section: theme toggle + logout + user */}
@@ -210,28 +183,19 @@ function LayoutContent({
             </motion.div>
           )}
 
-          {/* Logout button */}
-          <button
-            onClick={() => signOut({ redirectUrl: "/" })}
-            className={cn(
-              "flex items-center gap-3 py-2.5 px-3 rounded-lg overflow-hidden cursor-pointer",
-              "text-red-500/80 hover:bg-red-500/10 hover:text-red-500",
-              "transition-colors duration-150 text-[0.9rem]",
-            )}
-          >
-            <LogOut className="h-5 w-5 shrink-0" />
-            {open && (
-              <motion.span
-                animate={{
-                  opacity: open ? 1 : 0,
-                  display: open ? "inline-block" : "none",
-                }}
-                className="font-medium whitespace-pre"
-              >
-                Logout
-              </motion.span>
-            )}
-          </button>
+          {/* Settings Link at bottom */}
+          {settingsLinks.map((link, idx) => (
+            <SidebarLink
+              key={idx}
+              link={link}
+              className={cn(
+                "py-2.5 px-3 rounded-lg!",
+                pathname === link.href &&
+                  "bg-primary/10 text-primary font-bold!",
+              )}
+              prefetch={false}
+            />
+          ))}
 
           {/* Divider */}
           <div className="border-t border-sidebar-border" />
