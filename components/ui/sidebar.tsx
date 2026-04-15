@@ -38,7 +38,7 @@ export const SidebarProvider = ({
   open?: boolean;
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [openState, setOpenState] = useState(false);
+  const [openState, setOpenState] = useState(true);
 
   const open = openProp !== undefined ? openProp : openState;
   const setOpen = setOpenProp !== undefined ? setOpenProp : setOpenState;
@@ -88,10 +88,9 @@ export const DesktopSidebar = ({
         className,
       )}
       animate={{
-        width: open ? "280px" : "80px",
+        width: open ? "260px" : "76px",
       }}
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      transition={{ duration: 0.2, ease: "easeInOut" }}
       {...(props as any)}
     >
       {children}
@@ -108,14 +107,14 @@ export const MobileSidebar = ({
     <>
       <div
         className={cn(
-          "h-14 px-4 flex flex-row md:hidden items-center justify-between bg-sidebar border-b border-sidebar-border w-full",
+          "h-14 px-4 flex flex-row md:hidden items-center justify-between bg-sidebar border-b border-sidebar-border w-full shadow-sm",
         )}
       >
-        <span className="font-bold text-base text-foreground tracking-tight">
+        <span className="font-extrabold text-base text-foreground tracking-tight">
           Grad Loop
         </span>
         <Menu
-          className="text-sidebar-foreground cursor-pointer h-5 w-5"
+          className="text-foreground cursor-pointer h-5 w-5"
           onClick={() => setOpen(!open)}
         />
       </div>
@@ -130,12 +129,12 @@ export const MobileSidebar = ({
               ease: "easeInOut",
             }}
             className={cn(
-              "fixed h-full w-[280px] inset-y-0 left-0 bg-sidebar border-r border-sidebar-border p-0 z-100 flex flex-col md:hidden",
+              "fixed h-full w-[260px] inset-y-0 left-0 bg-sidebar border-r border-sidebar-border p-0 z-100 flex flex-col md:hidden shadow-xl",
               className,
             )}
           >
             <div
-              className="absolute right-4 top-4 z-50 text-sidebar-foreground cursor-pointer p-1 rounded-md hover:bg-sidebar-accent"
+              className="absolute right-4 top-4 z-50 text-muted-foreground cursor-pointer p-1.5 rounded-lg hover:bg-muted"
               onClick={() => setOpen(false)}
             >
               <X className="h-5 w-5" />
@@ -151,7 +150,7 @@ export const MobileSidebar = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/40 z-99 md:hidden"
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-99 md:hidden"
             onClick={() => setOpen(false)}
           />
         )}
@@ -173,9 +172,9 @@ export const SidebarLink = ({
     <Link
       href={link.href}
       className={cn(
-        "flex items-center gap-3 group/sidebar py-2.5 px-3 rounded-lg overflow-hidden",
-        "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-        "transition-colors duration-150 text-[0.9rem]",
+        "flex items-center gap-3 group/sidebar py-2.5 px-3 rounded-xl overflow-hidden",
+        "text-muted-foreground hover:bg-muted hover:text-foreground",
+        "transition-all duration-150 text-[0.85rem]",
         className,
       )}
       {...props}

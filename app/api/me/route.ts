@@ -12,19 +12,14 @@ export async function GET() {
 
     const user = await prisma.user.findUnique({
       where: { clerkId: userId },
+      include: { university: true },
     });
 
-    const completed =
-      !!user &&
-      !!user.firstName &&
-      !!user.lastName &&
-      !!user.role &&
-      !!user.domain &&
-      (user.skills?.length ?? 0) > 0;
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
 
-    return NextResponse.json({
-      exists: completed,
-    });
+    return NextResponse.json(user);
   } catch (error) {
     console.error("/api/me failed", error);
     return NextResponse.json({ exists: false, error: "server_error" }, { status: 500 });

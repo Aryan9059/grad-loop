@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Send, Image as ImageIcon, X, Loader2 } from "lucide-react";
+import { Send, Image as ImageIcon, X, Loader2, Smile, Paperclip } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import Image from "next/image";
 
@@ -69,23 +69,23 @@ export default function PostBox({ onPostCreated }: { onPostCreated: () => void }
   }
 
   return (
-    <div className="bg-card border border-border p-4 rounded-xl shadow-sm mb-6">
+    <div className="soft-card soft-card-hover p-5 mb-5">
       <textarea
         placeholder="Share an achievement, ask a question, or post an update..."
-        className="w-full bg-transparent resize-none outline-none text-sm placeholder:text-muted-foreground p-2 min-h-[100px]"
+        className="w-full bg-muted/40 rounded-xl resize-none outline-none text-sm placeholder:text-muted-foreground p-4 min-h-[90px] border border-transparent focus:border-primary/20 focus:bg-card transition-all"
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
 
       {/* Media Previews */}
       {mediaUrls.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-4 px-2">
+        <div className="flex flex-wrap gap-2 mb-4 px-1 mt-3">
           {mediaUrls.map((url) => (
-            <div key={url} className="relative group rounded-lg overflow-hidden border border-border">
-              <Image src={url} alt="Uploaded media" width={100} height={100} className="object-cover h-24 w-24" />
+            <div key={url} className="relative group rounded-xl overflow-hidden border border-border shadow-sm">
+              <Image src={url} alt="Uploaded media" width={100} height={100} className="object-cover h-20 w-20" />
               <button
                 onClick={() => removeMedia(url)}
-                className="absolute top-1 right-1 bg-background/80 hover:bg-destructive hover:text-destructive-foreground p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-1 right-1 bg-black/60 hover:bg-destructive text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
               >
                 <X className="h-3 w-3" />
               </button>
@@ -94,8 +94,8 @@ export default function PostBox({ onPostCreated }: { onPostCreated: () => void }
         </div>
       )}
 
-      <div className="flex items-center justify-between mt-3 border-t border-border pt-3">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between mt-3 pt-3 border-t border-border/50">
+        <div className="flex items-center gap-1">
           <input
             type="file"
             accept="image/*"
@@ -106,18 +106,31 @@ export default function PostBox({ onPostCreated }: { onPostCreated: () => void }
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={isUploading}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground text-sm font-medium transition-colors px-3 py-1.5 rounded-lg hover:bg-muted disabled:opacity-50"
+            className="flex items-center gap-2 text-muted-foreground hover:text-primary text-xs font-semibold transition-colors px-3 py-2 rounded-lg hover:bg-primary/5 disabled:opacity-50 cursor-pointer"
           >
             {isUploading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
               <ImageIcon className="h-4 w-4" />
             )}
-            Add Media
+            Photo
+          </button>
+          <button className="flex items-center gap-2 text-muted-foreground hover:text-primary text-xs font-semibold transition-colors px-3 py-2 rounded-lg hover:bg-primary/5 cursor-pointer">
+            <Paperclip className="h-4 w-4" />
+            Attach
+          </button>
+          <button className="flex items-center gap-2 text-muted-foreground hover:text-primary text-xs font-semibold transition-colors px-3 py-2 rounded-lg hover:bg-primary/5 cursor-pointer">
+            <Smile className="h-4 w-4" />
+            Emoji
           </button>
         </div>
 
-        <Button onClick={handleSubmit} disabled={isSubmitting || isUploading || (!content.trim() && mediaUrls.length === 0)} size="sm" className="rounded-full px-6 bg-primary hover:bg-primary/90">
+        <Button
+          onClick={handleSubmit}
+          disabled={isSubmitting || isUploading || (!content.trim() && mediaUrls.length === 0)}
+          size="sm"
+          className="rounded-full px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all"
+        >
           {isSubmitting ? (
             <Loader2 className="h-4 w-4 animate-spin mr-2" />
           ) : (

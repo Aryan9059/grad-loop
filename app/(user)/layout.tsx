@@ -19,15 +19,18 @@ import {
   LayoutTemplate,
   WandSparkles,
   User,
+  LogOut,
+  LayoutDashboard,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/app/favicon.ico";
-import { UserButton, useUser } from "@clerk/nextjs";
+import { UserButton, useUser, useClerk } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
+import RightSidebar from "@/components/dashboard/RightSidebar";
 
 export default function UserLayout({
   children,
@@ -50,6 +53,7 @@ function LayoutContent({
   pathname: string;
 }) {
   const { user } = useUser();
+  const { signOut } = useClerk();
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
   const { open } = useSidebar();
@@ -58,11 +62,11 @@ function LayoutContent({
     setMounted(true);
   }, []);
 
-  const links = [
+  const overviewLinks = [
     {
-      label: "Home",
+      label: "Dashboard",
       href: "/home",
-      icon: <Home className="h-5 w-5 shrink-0" />,
+      icon: <LayoutDashboard className="h-5 w-5 shrink-0" />,
     },
     {
       label: "Profile",
@@ -84,6 +88,9 @@ function LayoutContent({
       href: "/opportunities",
       icon: <Briefcase className="h-5 w-5 shrink-0" />,
     },
+  ];
+
+  const settingsLinks = [
     {
       label: "Settings",
       href: "/settings",
@@ -95,45 +102,69 @@ function LayoutContent({
 
   return (
     <div className="flex flex-col md:flex-row w-full min-h-screen bg-background">
-      <SidebarBody className="px-5 py-6 flex flex-col justify-between">
+      <SidebarBody className="px-4 py-6 flex flex-col justify-between">
         {/* Top section */}
         <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
           {/* Logo */}
-            <Link href="/home" className="flex items-center gap-2.5 mb-1 px-1">
+          <Link href="/home" className="flex items-center gap-2.5 mb-1 px-2">
             <Image
               src={logo}
               alt="Grad Loop logo"
-              className="h-7 w-7 shrink-0 object-contain"
+              className="h-8 w-8 shrink-0 object-contain"
             />
             {open && (
               <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="font-extrabold text-lg text-foreground tracking-tight whitespace-nowrap"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="font-extrabold text-lg text-foreground tracking-tight whitespace-nowrap"
               >
-              Grad Loop
+                Grad Loop
               </motion.span>
             )}
-            </Link>
+          </Link>
 
-          {/* Navigation section */}
+          {/* Overview section */}
           <nav className="mt-8 flex flex-col gap-0.5">
             {open && (
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground/60 px-3 mb-2 whitespace-nowrap"
+                className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-muted-foreground/50 px-3 mb-2 whitespace-nowrap"
               >
-                Menu
+                Overview
               </motion.span>
             )}
-            {links.map((link, idx) => (
+            {overviewLinks.map((link, idx) => (
               <SidebarLink
                 key={idx}
                 link={link}
                 className={cn(
                   pathname === link.href &&
-                    "bg-sidebar-accent text-sidebar-accent-foreground font-bold!",
+                    "bg-primary/10 text-primary font-bold!",
+                )}
+                prefetch={false}
+              />
+            ))}
+          </nav>
+
+          {/* Settings section */}
+          <nav className="mt-6 flex flex-col gap-0.5">
+            {open && (
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-muted-foreground/50 px-3 mb-2 whitespace-nowrap"
+              >
+                Settings
+              </motion.span>
+            )}
+            {settingsLinks.map((link, idx) => (
+              <SidebarLink
+                key={idx}
+                link={link}
+                className={cn(
+                  pathname === link.href &&
+                    "bg-primary/10 text-primary font-bold!",
                 )}
                 prefetch={false}
               />
@@ -141,8 +172,8 @@ function LayoutContent({
           </nav>
         </div>
 
-        {/* Bottom section: theme toggle + user */}
-        <div className="flex flex-col gap-4 pt-4">
+        {/* Bottom section: theme toggle + logout + user */}
+        <div className="flex flex-col gap-3 pt-4">
           {/* Theme toggle row */}
           {mounted && open && (
             <motion.div
@@ -165,7 +196,7 @@ function LayoutContent({
                 onClick={() => setTheme(isDark ? "light" : "dark")}
                 className={cn(
                   "relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 cursor-pointer focus:outline-none",
-                  isDark ? "bg-accent-foreground" : "bg-border",
+                  isDark ? "bg-primary" : "bg-border",
                 )}
                 aria-label="Toggle dark mode"
               >
@@ -179,6 +210,29 @@ function LayoutContent({
             </motion.div>
           )}
 
+          {/* Logout button */}
+          <button
+            onClick={() => signOut({ redirectUrl: "/" })}
+            className={cn(
+              "flex items-center gap-3 py-2.5 px-3 rounded-lg overflow-hidden cursor-pointer",
+              "text-red-500/80 hover:bg-red-500/10 hover:text-red-500",
+              "transition-colors duration-150 text-[0.9rem]",
+            )}
+          >
+            <LogOut className="h-5 w-5 shrink-0" />
+            {open && (
+              <motion.span
+                animate={{
+                  opacity: open ? 1 : 0,
+                  display: open ? "inline-block" : "none",
+                }}
+                className="font-medium whitespace-pre"
+              >
+                Logout
+              </motion.span>
+            )}
+          </button>
+
           {/* Divider */}
           <div className="border-t border-sidebar-border" />
 
@@ -188,7 +242,7 @@ function LayoutContent({
               {mounted && (
                 <UserButton
                   appearance={{
-                    elements: { userButtonAvatarBox: "size-9 shadow-sm" },
+                    elements: { userButtonAvatarBox: "size-9 shadow-sm ring-2 ring-primary/10" },
                   }}
                 />
               )}
@@ -213,9 +267,12 @@ function LayoutContent({
         </div>
       </SidebarBody>
 
-      {/* Main content */}
-      <main className="flex flex-1 flex-col w-full min-h-screen overflow-y-auto bg-background">
-        {children}
+      {/* Main content area + Right Sidebar */}
+      <main className="flex flex-1 w-full min-h-screen overflow-y-auto bg-background">
+        <div className="flex-1 overflow-y-auto">
+          {children}
+        </div>
+        {pathname === "/home" && <RightSidebar />}
       </main>
     </div>
   );

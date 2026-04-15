@@ -46,16 +46,16 @@ export default function CommentSection({
   }
 
   return (
-    <div className="mt-4 pt-4 border-t border-border space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+    <div className="pt-4 border-t border-border/50 space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
       {/* List */}
-      <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-muted">
+      <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
         {comments.map((comment) => (
           <div key={comment.id} className="flex gap-3">
-            <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center font-bold text-[10px] text-muted-foreground shrink-0 border border-border mt-0.5">
+            <div className="h-8 w-8 rounded-full bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center font-bold text-[10px] text-primary shrink-0 mt-0.5 ring-1 ring-primary/10">
               {comment.user.firstName?.charAt(0)}{comment.user.lastName?.charAt(0)}
             </div>
             <div className="flex-1 space-y-1">
-              <div className="bg-muted/50 p-3 rounded-2xl rounded-tl-none">
+              <div className="bg-muted/50 p-3 rounded-2xl rounded-tl-sm">
                 <div className="flex items-center justify-between mb-0.5">
                    <p className="text-xs font-bold text-foreground">
                     {comment.user.firstName} {comment.user.lastName}
@@ -69,10 +69,10 @@ export default function CommentSection({
                 </p>
               </div>
               <div className="flex items-center gap-4 px-1">
-                 <button className="text-[10px] font-bold text-muted-foreground hover:text-primary transition-colors">
+                 <button className="text-[10px] font-bold text-muted-foreground hover:text-primary transition-colors cursor-pointer">
                     Like
                  </button>
-                 <button className="text-[10px] font-bold text-muted-foreground hover:text-primary transition-colors">
+                 <button className="text-[10px] font-bold text-muted-foreground hover:text-primary transition-colors cursor-pointer">
                     Reply
                  </button>
               </div>
@@ -80,20 +80,20 @@ export default function CommentSection({
           </div>
         ))}
         {comments.length === 0 && (
-          <p className="text-center text-xs text-muted-foreground py-2 italic font-medium">
+          <p className="text-center text-xs text-muted-foreground py-2 font-medium">
             No comments yet. Be the first to start the conversation!
           </p>
         )}
       </div>
 
       {/* Input */}
-      <div className="flex items-center gap-3 bg-muted/30 p-2 rounded-2xl border border-border/50 focus-within:border-primary/30 focus-within:bg-background transition-all duration-300">
+      <div className="flex items-center gap-3 bg-muted/30 p-2 rounded-xl border border-border/50 focus-within:border-primary/30 focus-within:bg-card transition-all duration-300">
         <input
           placeholder="Write a thoughtful comment..."
           value={newComment}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewComment(e.target.value)}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && !e.shiftKey && handleSubmit()}
-          className="flex-1 bg-transparent outline-hidden text-sm h-9 px-2"
+          className="flex-1 bg-transparent outline-hidden text-sm h-9 px-3"
           disabled={isSubmitting}
         />
         <Button
@@ -102,7 +102,7 @@ export default function CommentSection({
           onClick={handleSubmit}
           disabled={!newComment.trim() || isSubmitting}
           className={cn(
-            "h-8 w-8 rounded-xl transition-all",
+            "h-8 w-8 rounded-lg transition-all cursor-pointer",
             newComment.trim() ? "text-primary hover:bg-primary/10" : "text-muted-foreground"
           )}
         >
