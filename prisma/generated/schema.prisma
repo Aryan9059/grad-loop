@@ -44,6 +44,7 @@ model User {
   roleTitle      String?
   openToConnect  Boolean  @default(true)
   profile_photo  String?
+  bio            String?
 
   // New Fields
   universityId Int?

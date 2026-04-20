@@ -4791,6 +4791,7 @@ export namespace Prisma {
     roleTitle: string | null
     openToConnect: boolean | null
     profile_photo: string | null
+    bio: string | null
     universityId: number | null
     isModerator: boolean | null
     openToMentor: boolean | null
@@ -4809,6 +4810,7 @@ export namespace Prisma {
     roleTitle: string | null
     openToConnect: boolean | null
     profile_photo: string | null
+    bio: string | null
     universityId: number | null
     isModerator: boolean | null
     openToMentor: boolean | null
@@ -4829,6 +4831,7 @@ export namespace Prisma {
     roleTitle: number
     openToConnect: number
     profile_photo: number
+    bio: number
     universityId: number
     isModerator: number
     openToMentor: number
@@ -4863,6 +4866,7 @@ export namespace Prisma {
     roleTitle?: true
     openToConnect?: true
     profile_photo?: true
+    bio?: true
     universityId?: true
     isModerator?: true
     openToMentor?: true
@@ -4881,6 +4885,7 @@ export namespace Prisma {
     roleTitle?: true
     openToConnect?: true
     profile_photo?: true
+    bio?: true
     universityId?: true
     isModerator?: true
     openToMentor?: true
@@ -4901,6 +4906,7 @@ export namespace Prisma {
     roleTitle?: true
     openToConnect?: true
     profile_photo?: true
+    bio?: true
     universityId?: true
     isModerator?: true
     openToMentor?: true
@@ -5008,6 +5014,7 @@ export namespace Prisma {
     roleTitle: string | null
     openToConnect: boolean
     profile_photo: string | null
+    bio: string | null
     universityId: number | null
     isModerator: boolean
     openToMentor: boolean
@@ -5047,6 +5054,7 @@ export namespace Prisma {
     roleTitle?: boolean
     openToConnect?: boolean
     profile_photo?: boolean
+    bio?: boolean
     universityId?: boolean
     isModerator?: boolean
     openToMentor?: boolean
@@ -5080,6 +5088,7 @@ export namespace Prisma {
     roleTitle?: boolean
     openToConnect?: boolean
     profile_photo?: boolean
+    bio?: boolean
     universityId?: boolean
     isModerator?: boolean
     openToMentor?: boolean
@@ -5101,6 +5110,7 @@ export namespace Prisma {
     roleTitle?: boolean
     openToConnect?: boolean
     profile_photo?: boolean
+    bio?: boolean
     universityId?: boolean
     isModerator?: boolean
     openToMentor?: boolean
@@ -5122,12 +5132,13 @@ export namespace Prisma {
     roleTitle?: boolean
     openToConnect?: boolean
     profile_photo?: boolean
+    bio?: boolean
     universityId?: boolean
     isModerator?: boolean
     openToMentor?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clerkId" | "email" | "firstName" | "lastName" | "role" | "graduationYear" | "connections" | "domain" | "skills" | "company" | "roleTitle" | "openToConnect" | "profile_photo" | "universityId" | "isModerator" | "openToMentor", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clerkId" | "email" | "firstName" | "lastName" | "role" | "graduationYear" | "connections" | "domain" | "skills" | "company" | "roleTitle" | "openToConnect" | "profile_photo" | "bio" | "universityId" | "isModerator" | "openToMentor", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     university?: boolean | User$universityArgs<ExtArgs>
     posts?: boolean | User$postsArgs<ExtArgs>
@@ -5181,6 +5192,7 @@ export namespace Prisma {
       roleTitle: string | null
       openToConnect: boolean
       profile_photo: string | null
+      bio: string | null
       universityId: number | null
       isModerator: boolean
       openToMentor: boolean
@@ -5633,6 +5645,7 @@ export namespace Prisma {
     readonly roleTitle: FieldRef<"User", 'String'>
     readonly openToConnect: FieldRef<"User", 'Boolean'>
     readonly profile_photo: FieldRef<"User", 'String'>
+    readonly bio: FieldRef<"User", 'String'>
     readonly universityId: FieldRef<"User", 'Int'>
     readonly isModerator: FieldRef<"User", 'Boolean'>
     readonly openToMentor: FieldRef<"User", 'Boolean'>
@@ -18811,6 +18824,7 @@ export namespace Prisma {
     roleTitle: 'roleTitle',
     openToConnect: 'openToConnect',
     profile_photo: 'profile_photo',
+    bio: 'bio',
     universityId: 'universityId',
     isModerator: 'isModerator',
     openToMentor: 'openToMentor'
@@ -19193,6 +19207,7 @@ export namespace Prisma {
     roleTitle?: StringNullableFilter<"User"> | string | null
     openToConnect?: BoolFilter<"User"> | boolean
     profile_photo?: StringNullableFilter<"User"> | string | null
+    bio?: StringNullableFilter<"User"> | string | null
     universityId?: IntNullableFilter<"User"> | number | null
     isModerator?: BoolFilter<"User"> | boolean
     openToMentor?: BoolFilter<"User"> | boolean
@@ -19225,6 +19240,7 @@ export namespace Prisma {
     roleTitle?: SortOrderInput | SortOrder
     openToConnect?: SortOrder
     profile_photo?: SortOrderInput | SortOrder
+    bio?: SortOrderInput | SortOrder
     universityId?: SortOrderInput | SortOrder
     isModerator?: SortOrder
     openToMentor?: SortOrder
@@ -19260,6 +19276,7 @@ export namespace Prisma {
     roleTitle?: StringNullableFilter<"User"> | string | null
     openToConnect?: BoolFilter<"User"> | boolean
     profile_photo?: StringNullableFilter<"User"> | string | null
+    bio?: StringNullableFilter<"User"> | string | null
     universityId?: IntNullableFilter<"User"> | number | null
     isModerator?: BoolFilter<"User"> | boolean
     openToMentor?: BoolFilter<"User"> | boolean
@@ -19292,6 +19309,7 @@ export namespace Prisma {
     roleTitle?: SortOrderInput | SortOrder
     openToConnect?: SortOrder
     profile_photo?: SortOrderInput | SortOrder
+    bio?: SortOrderInput | SortOrder
     universityId?: SortOrderInput | SortOrder
     isModerator?: SortOrder
     openToMentor?: SortOrder
@@ -19320,6 +19338,7 @@ export namespace Prisma {
     roleTitle?: StringNullableWithAggregatesFilter<"User"> | string | null
     openToConnect?: BoolWithAggregatesFilter<"User"> | boolean
     profile_photo?: StringNullableWithAggregatesFilter<"User"> | string | null
+    bio?: StringNullableWithAggregatesFilter<"User"> | string | null
     universityId?: IntNullableWithAggregatesFilter<"User"> | number | null
     isModerator?: BoolWithAggregatesFilter<"User"> | boolean
     openToMentor?: BoolWithAggregatesFilter<"User"> | boolean
@@ -20160,6 +20179,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     isModerator?: boolean
     openToMentor?: boolean
     university?: UniversityCreateNestedOneWithoutUsersInput
@@ -20191,6 +20211,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     universityId?: number | null
     isModerator?: boolean
     openToMentor?: boolean
@@ -20221,6 +20242,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
     university?: UniversityUpdateOneWithoutUsersNestedInput
@@ -20252,6 +20274,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     universityId?: NullableIntFieldUpdateOperationsInput | number | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
@@ -20283,6 +20306,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     universityId?: number | null
     isModerator?: boolean
     openToMentor?: boolean
@@ -20302,6 +20326,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
   }
@@ -20321,6 +20346,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     universityId?: NullableIntFieldUpdateOperationsInput | number | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
@@ -21313,6 +21339,7 @@ export namespace Prisma {
     roleTitle?: SortOrder
     openToConnect?: SortOrder
     profile_photo?: SortOrder
+    bio?: SortOrder
     universityId?: SortOrder
     isModerator?: SortOrder
     openToMentor?: SortOrder
@@ -21338,6 +21365,7 @@ export namespace Prisma {
     roleTitle?: SortOrder
     openToConnect?: SortOrder
     profile_photo?: SortOrder
+    bio?: SortOrder
     universityId?: SortOrder
     isModerator?: SortOrder
     openToMentor?: SortOrder
@@ -21356,6 +21384,7 @@ export namespace Prisma {
     roleTitle?: SortOrder
     openToConnect?: SortOrder
     profile_photo?: SortOrder
+    bio?: SortOrder
     universityId?: SortOrder
     isModerator?: SortOrder
     openToMentor?: SortOrder
@@ -23457,6 +23486,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     isModerator?: boolean
     openToMentor?: boolean
     posts?: PostCreateNestedManyWithoutAuthorInput
@@ -23487,6 +23517,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     isModerator?: boolean
     openToMentor?: boolean
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
@@ -23668,6 +23699,7 @@ export namespace Prisma {
     roleTitle?: StringNullableFilter<"User"> | string | null
     openToConnect?: BoolFilter<"User"> | boolean
     profile_photo?: StringNullableFilter<"User"> | string | null
+    bio?: StringNullableFilter<"User"> | string | null
     universityId?: IntNullableFilter<"User"> | number | null
     isModerator?: BoolFilter<"User"> | boolean
     openToMentor?: BoolFilter<"User"> | boolean
@@ -24494,6 +24526,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     isModerator?: boolean
     openToMentor?: boolean
     university?: UniversityCreateNestedOneWithoutUsersInput
@@ -24524,6 +24557,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     universityId?: number | null
     isModerator?: boolean
     openToMentor?: boolean
@@ -24659,6 +24693,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
     university?: UniversityUpdateOneWithoutUsersNestedInput
@@ -24689,6 +24724,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     universityId?: NullableIntFieldUpdateOperationsInput | number | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
@@ -24836,6 +24872,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     isModerator?: boolean
     openToMentor?: boolean
     university?: UniversityCreateNestedOneWithoutUsersInput
@@ -24866,6 +24903,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     universityId?: number | null
     isModerator?: boolean
     openToMentor?: boolean
@@ -24947,6 +24985,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
     university?: UniversityUpdateOneWithoutUsersNestedInput
@@ -24977,6 +25016,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     universityId?: NullableIntFieldUpdateOperationsInput | number | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
@@ -25036,6 +25076,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     isModerator?: boolean
     openToMentor?: boolean
     university?: UniversityCreateNestedOneWithoutUsersInput
@@ -25066,6 +25107,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     universityId?: number | null
     isModerator?: boolean
     openToMentor?: boolean
@@ -25168,6 +25210,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
     university?: UniversityUpdateOneWithoutUsersNestedInput
@@ -25198,6 +25241,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     universityId?: NullableIntFieldUpdateOperationsInput | number | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
@@ -25263,6 +25307,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     isModerator?: boolean
     openToMentor?: boolean
     university?: UniversityCreateNestedOneWithoutUsersInput
@@ -25293,6 +25338,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     universityId?: number | null
     isModerator?: boolean
     openToMentor?: boolean
@@ -25364,6 +25410,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
     university?: UniversityUpdateOneWithoutUsersNestedInput
@@ -25394,6 +25441,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     universityId?: NullableIntFieldUpdateOperationsInput | number | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
@@ -25423,6 +25471,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     isModerator?: boolean
     openToMentor?: boolean
     university?: UniversityCreateNestedOneWithoutUsersInput
@@ -25453,6 +25502,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     universityId?: number | null
     isModerator?: boolean
     openToMentor?: boolean
@@ -25547,6 +25597,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
     university?: UniversityUpdateOneWithoutUsersNestedInput
@@ -25577,6 +25628,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     universityId?: NullableIntFieldUpdateOperationsInput | number | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
@@ -25652,6 +25704,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     isModerator?: boolean
     openToMentor?: boolean
     university?: UniversityCreateNestedOneWithoutUsersInput
@@ -25682,6 +25735,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     universityId?: number | null
     isModerator?: boolean
     openToMentor?: boolean
@@ -25746,6 +25800,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     isModerator?: boolean
     openToMentor?: boolean
     university?: UniversityCreateNestedOneWithoutUsersInput
@@ -25776,6 +25831,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     universityId?: number | null
     isModerator?: boolean
     openToMentor?: boolean
@@ -25821,6 +25877,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
     university?: UniversityUpdateOneWithoutUsersNestedInput
@@ -25851,6 +25908,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     universityId?: NullableIntFieldUpdateOperationsInput | number | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
@@ -25927,6 +25985,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
     university?: UniversityUpdateOneWithoutUsersNestedInput
@@ -25957,6 +26016,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     universityId?: NullableIntFieldUpdateOperationsInput | number | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
@@ -25986,6 +26046,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     isModerator?: boolean
     openToMentor?: boolean
     university?: UniversityCreateNestedOneWithoutUsersInput
@@ -26016,6 +26077,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     universityId?: number | null
     isModerator?: boolean
     openToMentor?: boolean
@@ -26050,6 +26112,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     isModerator?: boolean
     openToMentor?: boolean
     university?: UniversityCreateNestedOneWithoutUsersInput
@@ -26080,6 +26143,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     universityId?: number | null
     isModerator?: boolean
     openToMentor?: boolean
@@ -26125,6 +26189,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
     university?: UniversityUpdateOneWithoutUsersNestedInput
@@ -26155,6 +26220,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     universityId?: NullableIntFieldUpdateOperationsInput | number | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
@@ -26195,6 +26261,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
     university?: UniversityUpdateOneWithoutUsersNestedInput
@@ -26225,6 +26292,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     universityId?: NullableIntFieldUpdateOperationsInput | number | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
@@ -26254,6 +26322,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     isModerator?: boolean
     openToMentor?: boolean
     university?: UniversityCreateNestedOneWithoutUsersInput
@@ -26284,6 +26353,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     universityId?: number | null
     isModerator?: boolean
     openToMentor?: boolean
@@ -26373,6 +26443,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     isModerator?: boolean
     openToMentor?: boolean
     university?: UniversityCreateNestedOneWithoutUsersInput
@@ -26403,6 +26474,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     universityId?: number | null
     isModerator?: boolean
     openToMentor?: boolean
@@ -26466,6 +26538,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
     university?: UniversityUpdateOneWithoutUsersNestedInput
@@ -26496,6 +26569,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     universityId?: NullableIntFieldUpdateOperationsInput | number | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
@@ -26604,6 +26678,7 @@ export namespace Prisma {
     roleTitle?: string | null
     openToConnect?: boolean
     profile_photo?: string | null
+    bio?: string | null
     isModerator?: boolean
     openToMentor?: boolean
   }
@@ -26661,6 +26736,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
     posts?: PostUpdateManyWithoutAuthorNestedInput
@@ -26691,6 +26767,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -26721,6 +26798,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
   }
@@ -27361,6 +27439,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
     university?: UniversityUpdateOneWithoutUsersNestedInput
@@ -27391,6 +27470,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     universityId?: NullableIntFieldUpdateOperationsInput | number | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean
@@ -27421,6 +27501,7 @@ export namespace Prisma {
     roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
     openToConnect?: BoolFieldUpdateOperationsInput | boolean
     profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     universityId?: NullableIntFieldUpdateOperationsInput | number | null
     isModerator?: BoolFieldUpdateOperationsInput | boolean
     openToMentor?: BoolFieldUpdateOperationsInput | boolean

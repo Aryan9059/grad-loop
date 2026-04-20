@@ -149,6 +149,7 @@ exports.Prisma.UserScalarFieldEnum = {
   roleTitle: 'roleTitle',
   openToConnect: 'openToConnect',
   profile_photo: 'profile_photo',
+  bio: 'bio',
   universityId: 'universityId',
   isModerator: 'isModerator',
   openToMentor: 'openToMentor'
