@@ -223,12 +223,19 @@ export default function CreateResumePage() {
           <button
             onClick={handleGenerate}
             disabled={generating}
-            className="w-full h-12 rounded-xl bg-primary text-primary-foreground font-semibold text-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-primary/20"
+            className="w-full h-12 px-5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm flex items-center hover:bg-primary/90 active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-primary/20"
           >
             {generating ? (
-              <><Loader2 className="h-4 w-4 animate-spin" />Generating resume…</>
+              <div className="flex items-center justify-center gap-2.5 w-full">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span>Generating resume…</span>
+              </div>
             ) : (
-              <><Wand2 className="h-4 w-4" />Generate Resume<ChevronRight className="h-4 w-4 ml-auto" /></>
+              <>
+                <Wand2 className="h-4 w-4 mr-2.5" />
+                <span>Generate Resume</span>
+                <ChevronRight className="h-4 w-4 ml-auto" />
+              </>
             )}
           </button>
         </div>
