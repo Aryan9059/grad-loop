@@ -55,33 +55,28 @@ export default function OpportunitiesPage() {
           </div>
           <Button 
             onClick={() => setIsModalOpen(true)}
-            className="rounded-2xl px-6 py-6 h-auto font-bold bg-primary hover:bg-primary/90 text-white shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all hover:scale-[1.02] active:scale-95"
+            className="group relative rounded-2xl px-6 py-3.5 h-auto font-black text-[10px] uppercase tracking-widest bg-primary text-white shadow-[0_10px_30px_rgba(var(--primary-rgb),0.3)] hover:shadow-[0_15px_40px_rgba(var(--primary-rgb),0.5)] transition-all duration-500 hover:scale-[1.02] active:scale-95 overflow-hidden"
           >
-            <Plus className="h-5 w-5 mr-2" />
-            Post Opportunity
+            <div className="absolute inset-0 bg-linear-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+            <div className="relative flex items-center gap-3">
+              <div className="p-1.5 rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors">
+                <Plus className="h-4 w-4" />
+              </div>
+              Post Opportunity
+            </div>
           </Button>
         </div>
 
-        {/* Filters and Search */}
+        {/* Search Section */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-           <div className="md:col-span-8 relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground/50" />
+           <div className="md:col-span-12 relative">
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground/40" />
               <input 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by title, skills, or description..." 
-                className="w-full bg-card rounded-2xl pl-12 pr-4 py-4 text-sm font-medium border border-border shadow-sm focus:border-primary/30 focus:bg-card transition-all outline-none"
+                className="w-full bg-card rounded-[1.5rem] pl-14 pr-6 py-5 text-sm font-bold border-2 border-border/80 shadow-sm focus:border-primary/40 focus:ring-4 focus:ring-primary/5 transition-all outline-none"
               />
-           </div>
-           <div className="md:col-span-4 flex gap-3">
-              <Button variant="outline" className="flex-1 rounded-2xl h-full border-border bg-card font-bold text-sm">
-                <Filter className="h-4 w-4 mr-2 text-muted-foreground" />
-                Filters
-              </Button>
-              <div className="hidden lg:flex items-center gap-2 px-4 rounded-2xl bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
-                 <TrendingUp className="h-4 w-4" />
-                 <span className="text-[11px] font-black uppercase">Trending</span>
-              </div>
            </div>
         </div>
 
