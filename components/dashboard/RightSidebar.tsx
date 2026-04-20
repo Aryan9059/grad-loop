@@ -2,19 +2,38 @@
 
 import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import { UserPlus, MapPin, GraduationCap, Briefcase, Mail } from "lucide-react";
+import { UserPlus, MapPin, GraduationCap, Briefcase, Mail, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 
-const MENTORS = [
-  { name: "Padhang Satrio", role: "Sr. Product Designer", color: "bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400" },
-  { name: "Zakir Horizontal", role: "Full Stack Engineer", color: "bg-violet-100 text-violet-600 dark:bg-violet-900/40 dark:text-violet-400" },
-  { name: "Leonardo Samsul", role: "AI Researcher", color: "bg-fuchsia-100 text-fuchsia-600 dark:bg-fuchsia-900/40 dark:text-fuchsia-400" },
+type RecommendedUser = {
+  id: number;
+  firstName: string | null;
+  lastName: string | null;
+  roleTitle: string | null;
+  company: string | null;
+  domain: string | null;
+  skills: string[];
+  profile_photo: string | null;
+  role: string;
+  openToMentor: boolean;
+  clerkId: string | null;
+  similarity: number;
+};
+
+const AVATAR_COLORS = [
+  "bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400",
+  "bg-violet-100 text-violet-600 dark:bg-violet-900/40 dark:text-violet-400",
+  "bg-fuchsia-100 text-fuchsia-600 dark:bg-fuchsia-900/40 dark:text-fuchsia-400",
+  "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400",
+  "bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-400",
 ];
 
 export default function RightSidebar() {
   const { user, isLoaded } = useUser();
   const [dbUser, setDbUser] = useState<any>(null);
+  const [recommendations, setRecommendations] = useState<RecommendedUser[]>([]);
+  const [loadingRecs, setLoadingRecs] = useState(true);
 
   useEffect(() => {
     if (user) {
@@ -22,6 +41,19 @@ export default function RightSidebar() {
         .then(res => res.json())
         .then(data => setDbUser(data))
         .catch(err => console.error("Error fetching user data:", err));
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      setLoadingRecs(true);
+      fetch("/api/embeddings/recommend")
+        .then(res => res.json())
+        .then(data => {
+          setRecommendations(data.recommendations || []);
+        })
+        .catch(err => console.error("Error fetching recommendations:", err))
+        .finally(() => setLoadingRecs(false));
     }
   }, [user]);
 
@@ -109,21 +141,51 @@ export default function RightSidebar() {
         </div>
 
         <div className="space-y-4">
-          {MENTORS.map((mentor, i) => (
-            <div key={i} className="flex items-center gap-3 group">
-              <div className={`h-10 w-10 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 ${mentor.color} shadow-sm ring-1 ring-inset ring-black/5`}>
-                {mentor.name.split(" ").map(n => n[0]).join("")}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-extrabold text-foreground truncate group-hover:text-primary transition-colors">{mentor.name}</p>
-                <p className="text-[10px] text-muted-foreground font-medium truncate">{mentor.role}</p>
-              </div>
-              <button className="flex items-center gap-1.5 text-[10px] font-bold text-primary bg-primary/10 hover:bg-primary text-primary hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer whitespace-nowrap">
-                <UserPlus className="h-3 w-3" />
-                Follow
-              </button>
+          {loadingRecs ? (
+            <div className="flex items-center justify-center py-6">
+              <Loader2 className="h-5 w-5 animate-spin text-primary/50" />
+              <span className="ml-2 text-xs text-muted-foreground">Finding mentors...</span>
             </div>
-          ))}
+          ) : recommendations.length === 0 ? (
+            <div className="text-center py-6">
+              <p className="text-xs text-muted-foreground">No recommendations yet.</p>
+              <p className="text-[10px] text-muted-foreground/60 mt-1">Complete your profile to get personalized mentor suggestions.</p>
+            </div>
+          ) : (
+            recommendations.map((mentor, i) => {
+              const name = [mentor.firstName, mentor.lastName].filter(Boolean).join(" ") || "User";
+              const mentorInitials = name.split(" ").map(n => n[0]).join("");
+              const colorClass = AVATAR_COLORS[i % AVATAR_COLORS.length];
+
+              return (
+                <div key={mentor.id} className="flex items-center gap-3 group">
+                  {mentor.profile_photo ? (
+                    <img
+                      src={mentor.profile_photo}
+                      alt={name}
+                      className="h-10 w-10 rounded-xl object-cover shrink-0 shadow-sm ring-1 ring-inset ring-black/5"
+                    />
+                  ) : (
+                    <div className={`h-10 w-10 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 ${colorClass} shadow-sm ring-1 ring-inset ring-black/5`}>
+                      {mentorInitials}
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-extrabold text-foreground truncate group-hover:text-primary transition-colors">{name}</p>
+                    <p className="text-[10px] text-muted-foreground font-medium truncate">
+                      {mentor.roleTitle || mentor.domain || mentor.role}
+                    </p>
+                  </div>
+                  <Link href={`/u/${mentor.clerkId}`}>
+                    <button className="flex items-center gap-1.5 text-[10px] font-bold text-primary bg-primary/10 hover:bg-primary hover:text-white px-3 py-1.5 rounded-lg transition-all cursor-pointer whitespace-nowrap">
+                      <UserPlus className="h-3 w-3" />
+                      View
+                    </button>
+                  </Link>
+                </div>
+              );
+            })
+          )}
         </div>
 
         <button className="w-full mt-5 text-center text-[11px] font-bold text-primary hover:text-primary/80 transition-colors cursor-pointer py-2 rounded-xl hover:bg-primary/5 border border-primary/10">

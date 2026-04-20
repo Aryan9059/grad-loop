@@ -1,6 +1,7 @@
-import { auth } from "@clerk/nextjs/server";
+  import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { generateAndUpsertEmbedding } from "@/lib/embeddings";
 
 export async function POST(req: Request) {
   try {
@@ -38,6 +39,11 @@ export async function POST(req: Request) {
         openToConnect: openToConnect !== undefined ? openToConnect : undefined,
       },
     });
+
+    // Fire-and-forget: regenerate profile embedding
+    generateAndUpsertEmbedding(updatedUser).catch((err) =>
+      console.error("Embedding generation failed (profile update):", err)
+    );
 
     return NextResponse.json(updatedUser);
   } catch (error) {

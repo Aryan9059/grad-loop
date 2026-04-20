@@ -1,5 +1,6 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
+import { generateAndUpsertEmbedding } from "@/lib/embeddings";
 
 type Role = "STUDENT" | "ALUMNI";
 
@@ -103,6 +104,15 @@ export async function POST(req: Request) {
       skipDuplicates: true,
     }),
   ]);
+
+  // Fire-and-forget: generate profile embedding for similarity search
+  prisma.user.findUnique({ where: { clerkId: userId } }).then((dbUser) => {
+    if (dbUser) {
+      generateAndUpsertEmbedding(dbUser).catch((err) =>
+        console.error("Embedding generation failed (onboarding):", err)
+      );
+    }
+  });
 
   return Response.json({ success: true });
 }
