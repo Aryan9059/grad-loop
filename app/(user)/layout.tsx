@@ -25,7 +25,6 @@ import {
 import Link from "next/link";
 import { Logo } from "@/components/ui/logo";
 import Image from "next/image";
-import logo from "@/app/favicon.ico";
 import { UserButton, useUser, useClerk } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
@@ -73,6 +72,11 @@ function LayoutContent({
       label: "Chats",
       href: "/chats",
       icon: <MessageSquareText className="h-5 w-5 shrink-0" />,
+    },
+    {
+      label: "Connections",
+      href: "/connections",
+      icon: <Users className="h-5 w-5 shrink-0" />,
     },
     {
       label: "Resume Studio",
@@ -135,7 +139,7 @@ function LayoutContent({
                 key={idx}
                 link={link}
                 className={cn(
-                  pathname === link.href &&
+                  (pathname === link.href || pathname.startsWith(link.href + "/")) &&
                     "bg-primary/10 text-primary font-bold!",
                 )}
                 prefetch={false}

@@ -232,12 +232,14 @@ exports.Prisma.ConnectionRequestScalarFieldEnum = {
 exports.Prisma.ConversationScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  lastMessageAt: 'lastMessageAt'
 };
 
 exports.Prisma.MessageScalarFieldEnum = {
   id: 'id',
   content: 'content',
+  read: 'read',
   createdAt: 'createdAt',
   senderId: 'senderId',
   conversationId: 'conversationId'
