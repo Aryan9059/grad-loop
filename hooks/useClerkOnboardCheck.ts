@@ -30,7 +30,7 @@ export function useClerkOnboardCheck(){
                 const data = await res.json();
 
                 setStatus("redirecting");
-                if(data.exists){
+                if(data.exists && data.isOnboarded){
                     router.replace("/home");
                 }else{
                     router.replace("/onboarding");

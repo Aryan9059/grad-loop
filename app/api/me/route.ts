@@ -19,7 +19,11 @@ export async function GET() {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json(user);
+    return NextResponse.json({
+      ...user,
+      exists: true,
+      isOnboarded: !!user.universityId
+    });
   } catch (error) {
     console.error("/api/me failed", error);
     return NextResponse.json({ exists: false, error: "server_error" }, { status: 500 });
