@@ -11985,6 +11985,9 @@ export namespace Prisma {
     deadline: Date | null
     authorId: number | null
     universityId: number | null
+    location: string | null
+    outcomes: string | null
+    applicationLink: string | null
     createdAt: Date | null
   }
 
@@ -11997,6 +12000,9 @@ export namespace Prisma {
     deadline: Date | null
     authorId: number | null
     universityId: number | null
+    location: string | null
+    outcomes: string | null
+    applicationLink: string | null
     createdAt: Date | null
   }
 
@@ -12010,6 +12016,9 @@ export namespace Prisma {
     deadline: number
     authorId: number
     universityId: number
+    location: number
+    outcomes: number
+    applicationLink: number
     createdAt: number
     _all: number
   }
@@ -12036,6 +12045,9 @@ export namespace Prisma {
     deadline?: true
     authorId?: true
     universityId?: true
+    location?: true
+    outcomes?: true
+    applicationLink?: true
     createdAt?: true
   }
 
@@ -12048,6 +12060,9 @@ export namespace Prisma {
     deadline?: true
     authorId?: true
     universityId?: true
+    location?: true
+    outcomes?: true
+    applicationLink?: true
     createdAt?: true
   }
 
@@ -12061,6 +12076,9 @@ export namespace Prisma {
     deadline?: true
     authorId?: true
     universityId?: true
+    location?: true
+    outcomes?: true
+    applicationLink?: true
     createdAt?: true
     _all?: true
   }
@@ -12161,6 +12179,9 @@ export namespace Prisma {
     deadline: Date | null
     authorId: number
     universityId: number
+    location: string | null
+    outcomes: string | null
+    applicationLink: string | null
     createdAt: Date
     _count: OpportunityCountAggregateOutputType | null
     _avg: OpportunityAvgAggregateOutputType | null
@@ -12193,6 +12214,9 @@ export namespace Prisma {
     deadline?: boolean
     authorId?: boolean
     universityId?: boolean
+    location?: boolean
+    outcomes?: boolean
+    applicationLink?: boolean
     createdAt?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     university?: boolean | UniversityDefaultArgs<ExtArgs>
@@ -12210,6 +12234,9 @@ export namespace Prisma {
     deadline?: boolean
     authorId?: boolean
     universityId?: boolean
+    location?: boolean
+    outcomes?: boolean
+    applicationLink?: boolean
     createdAt?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     university?: boolean | UniversityDefaultArgs<ExtArgs>
@@ -12225,6 +12252,9 @@ export namespace Prisma {
     deadline?: boolean
     authorId?: boolean
     universityId?: boolean
+    location?: boolean
+    outcomes?: boolean
+    applicationLink?: boolean
     createdAt?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     university?: boolean | UniversityDefaultArgs<ExtArgs>
@@ -12240,10 +12270,13 @@ export namespace Prisma {
     deadline?: boolean
     authorId?: boolean
     universityId?: boolean
+    location?: boolean
+    outcomes?: boolean
+    applicationLink?: boolean
     createdAt?: boolean
   }
 
-  export type OpportunityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "type" | "description" | "skills" | "salary" | "deadline" | "authorId" | "universityId" | "createdAt", ExtArgs["result"]["opportunity"]>
+  export type OpportunityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "type" | "description" | "skills" | "salary" | "deadline" | "authorId" | "universityId" | "location" | "outcomes" | "applicationLink" | "createdAt", ExtArgs["result"]["opportunity"]>
   export type OpportunityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     university?: boolean | UniversityDefaultArgs<ExtArgs>
@@ -12276,6 +12309,9 @@ export namespace Prisma {
       deadline: Date | null
       authorId: number
       universityId: number
+      location: string | null
+      outcomes: string | null
+      applicationLink: string | null
       createdAt: Date
     }, ExtArgs["result"]["opportunity"]>
     composites: {}
@@ -12712,6 +12748,9 @@ export namespace Prisma {
     readonly deadline: FieldRef<"Opportunity", 'DateTime'>
     readonly authorId: FieldRef<"Opportunity", 'Int'>
     readonly universityId: FieldRef<"Opportunity", 'Int'>
+    readonly location: FieldRef<"Opportunity", 'String'>
+    readonly outcomes: FieldRef<"Opportunity", 'String'>
+    readonly applicationLink: FieldRef<"Opportunity", 'String'>
     readonly createdAt: FieldRef<"Opportunity", 'DateTime'>
   }
     
@@ -18898,6 +18937,9 @@ export namespace Prisma {
     deadline: 'deadline',
     authorId: 'authorId',
     universityId: 'universityId',
+    location: 'location',
+    outcomes: 'outcomes',
+    applicationLink: 'applicationLink',
     createdAt: 'createdAt'
   };
 
@@ -19665,6 +19707,9 @@ export namespace Prisma {
     deadline?: DateTimeNullableFilter<"Opportunity"> | Date | string | null
     authorId?: IntFilter<"Opportunity"> | number
     universityId?: IntFilter<"Opportunity"> | number
+    location?: StringNullableFilter<"Opportunity"> | string | null
+    outcomes?: StringNullableFilter<"Opportunity"> | string | null
+    applicationLink?: StringNullableFilter<"Opportunity"> | string | null
     createdAt?: DateTimeFilter<"Opportunity"> | Date | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     university?: XOR<UniversityScalarRelationFilter, UniversityWhereInput>
@@ -19681,6 +19726,9 @@ export namespace Prisma {
     deadline?: SortOrderInput | SortOrder
     authorId?: SortOrder
     universityId?: SortOrder
+    location?: SortOrderInput | SortOrder
+    outcomes?: SortOrderInput | SortOrder
+    applicationLink?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     author?: UserOrderByWithRelationInput
     university?: UniversityOrderByWithRelationInput
@@ -19700,6 +19748,9 @@ export namespace Prisma {
     deadline?: DateTimeNullableFilter<"Opportunity"> | Date | string | null
     authorId?: IntFilter<"Opportunity"> | number
     universityId?: IntFilter<"Opportunity"> | number
+    location?: StringNullableFilter<"Opportunity"> | string | null
+    outcomes?: StringNullableFilter<"Opportunity"> | string | null
+    applicationLink?: StringNullableFilter<"Opportunity"> | string | null
     createdAt?: DateTimeFilter<"Opportunity"> | Date | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     university?: XOR<UniversityScalarRelationFilter, UniversityWhereInput>
@@ -19716,6 +19767,9 @@ export namespace Prisma {
     deadline?: SortOrderInput | SortOrder
     authorId?: SortOrder
     universityId?: SortOrder
+    location?: SortOrderInput | SortOrder
+    outcomes?: SortOrderInput | SortOrder
+    applicationLink?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: OpportunityCountOrderByAggregateInput
     _avg?: OpportunityAvgOrderByAggregateInput
@@ -19737,6 +19791,9 @@ export namespace Prisma {
     deadline?: DateTimeNullableWithAggregatesFilter<"Opportunity"> | Date | string | null
     authorId?: IntWithAggregatesFilter<"Opportunity"> | number
     universityId?: IntWithAggregatesFilter<"Opportunity"> | number
+    location?: StringNullableWithAggregatesFilter<"Opportunity"> | string | null
+    outcomes?: StringNullableWithAggregatesFilter<"Opportunity"> | string | null
+    applicationLink?: StringNullableWithAggregatesFilter<"Opportunity"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Opportunity"> | Date | string
   }
 
@@ -20627,6 +20684,9 @@ export namespace Prisma {
     skills?: OpportunityCreateskillsInput | string[]
     salary?: string | null
     deadline?: Date | string | null
+    location?: string | null
+    outcomes?: string | null
+    applicationLink?: string | null
     createdAt?: Date | string
     author: UserCreateNestedOneWithoutOpportunitiesInput
     university: UniversityCreateNestedOneWithoutOpportunitiesInput
@@ -20643,6 +20703,9 @@ export namespace Prisma {
     deadline?: Date | string | null
     authorId: number
     universityId: number
+    location?: string | null
+    outcomes?: string | null
+    applicationLink?: string | null
     createdAt?: Date | string
     requests?: ReferralRequestUncheckedCreateNestedManyWithoutOpportunityInput
   }
@@ -20654,6 +20717,9 @@ export namespace Prisma {
     skills?: OpportunityUpdateskillsInput | string[]
     salary?: NullableStringFieldUpdateOperationsInput | string | null
     deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    outcomes?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutOpportunitiesNestedInput
     university?: UniversityUpdateOneRequiredWithoutOpportunitiesNestedInput
@@ -20670,6 +20736,9 @@ export namespace Prisma {
     deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authorId?: IntFieldUpdateOperationsInput | number
     universityId?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    outcomes?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     requests?: ReferralRequestUncheckedUpdateManyWithoutOpportunityNestedInput
   }
@@ -20684,6 +20753,9 @@ export namespace Prisma {
     deadline?: Date | string | null
     authorId: number
     universityId: number
+    location?: string | null
+    outcomes?: string | null
+    applicationLink?: string | null
     createdAt?: Date | string
   }
 
@@ -20694,6 +20766,9 @@ export namespace Prisma {
     skills?: OpportunityUpdateskillsInput | string[]
     salary?: NullableStringFieldUpdateOperationsInput | string | null
     deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    outcomes?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20707,6 +20782,9 @@ export namespace Prisma {
     deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authorId?: IntFieldUpdateOperationsInput | number
     universityId?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    outcomes?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -21675,6 +21753,9 @@ export namespace Prisma {
     deadline?: SortOrder
     authorId?: SortOrder
     universityId?: SortOrder
+    location?: SortOrder
+    outcomes?: SortOrder
+    applicationLink?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -21693,6 +21774,9 @@ export namespace Prisma {
     deadline?: SortOrder
     authorId?: SortOrder
     universityId?: SortOrder
+    location?: SortOrder
+    outcomes?: SortOrder
+    applicationLink?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -21705,6 +21789,9 @@ export namespace Prisma {
     deadline?: SortOrder
     authorId?: SortOrder
     universityId?: SortOrder
+    location?: SortOrder
+    outcomes?: SortOrder
+    applicationLink?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -23637,6 +23724,9 @@ export namespace Prisma {
     skills?: OpportunityCreateskillsInput | string[]
     salary?: string | null
     deadline?: Date | string | null
+    location?: string | null
+    outcomes?: string | null
+    applicationLink?: string | null
     createdAt?: Date | string
     author: UserCreateNestedOneWithoutOpportunitiesInput
     requests?: ReferralRequestCreateNestedManyWithoutOpportunityInput
@@ -23651,6 +23741,9 @@ export namespace Prisma {
     salary?: string | null
     deadline?: Date | string | null
     authorId: number
+    location?: string | null
+    outcomes?: string | null
+    applicationLink?: string | null
     createdAt?: Date | string
     requests?: ReferralRequestUncheckedCreateNestedManyWithoutOpportunityInput
   }
@@ -23821,6 +23914,9 @@ export namespace Prisma {
     deadline?: DateTimeNullableFilter<"Opportunity"> | Date | string | null
     authorId?: IntFilter<"Opportunity"> | number
     universityId?: IntFilter<"Opportunity"> | number
+    location?: StringNullableFilter<"Opportunity"> | string | null
+    outcomes?: StringNullableFilter<"Opportunity"> | string | null
+    applicationLink?: StringNullableFilter<"Opportunity"> | string | null
     createdAt?: DateTimeFilter<"Opportunity"> | Date | string
   }
 
@@ -23995,6 +24091,9 @@ export namespace Prisma {
     skills?: OpportunityCreateskillsInput | string[]
     salary?: string | null
     deadline?: Date | string | null
+    location?: string | null
+    outcomes?: string | null
+    applicationLink?: string | null
     createdAt?: Date | string
     university: UniversityCreateNestedOneWithoutOpportunitiesInput
     requests?: ReferralRequestCreateNestedManyWithoutOpportunityInput
@@ -24009,6 +24108,9 @@ export namespace Prisma {
     salary?: string | null
     deadline?: Date | string | null
     universityId: number
+    location?: string | null
+    outcomes?: string | null
+    applicationLink?: string | null
     createdAt?: Date | string
     requests?: ReferralRequestUncheckedCreateNestedManyWithoutOpportunityInput
   }
@@ -25763,6 +25865,9 @@ export namespace Prisma {
     skills?: OpportunityCreateskillsInput | string[]
     salary?: string | null
     deadline?: Date | string | null
+    location?: string | null
+    outcomes?: string | null
+    applicationLink?: string | null
     createdAt?: Date | string
     author: UserCreateNestedOneWithoutOpportunitiesInput
     university: UniversityCreateNestedOneWithoutOpportunitiesInput
@@ -25778,6 +25883,9 @@ export namespace Prisma {
     deadline?: Date | string | null
     authorId: number
     universityId: number
+    location?: string | null
+    outcomes?: string | null
+    applicationLink?: string | null
     createdAt?: Date | string
   }
 
@@ -25942,6 +26050,9 @@ export namespace Prisma {
     skills?: OpportunityUpdateskillsInput | string[]
     salary?: NullableStringFieldUpdateOperationsInput | string | null
     deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    outcomes?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutOpportunitiesNestedInput
     university?: UniversityUpdateOneRequiredWithoutOpportunitiesNestedInput
@@ -25957,6 +26068,9 @@ export namespace Prisma {
     deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authorId?: IntFieldUpdateOperationsInput | number
     universityId?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    outcomes?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -26719,6 +26833,9 @@ export namespace Prisma {
     salary?: string | null
     deadline?: Date | string | null
     authorId: number
+    location?: string | null
+    outcomes?: string | null
+    applicationLink?: string | null
     createdAt?: Date | string
   }
 
@@ -26894,6 +27011,9 @@ export namespace Prisma {
     skills?: OpportunityUpdateskillsInput | string[]
     salary?: NullableStringFieldUpdateOperationsInput | string | null
     deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    outcomes?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutOpportunitiesNestedInput
     requests?: ReferralRequestUpdateManyWithoutOpportunityNestedInput
@@ -26908,6 +27028,9 @@ export namespace Prisma {
     salary?: NullableStringFieldUpdateOperationsInput | string | null
     deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authorId?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    outcomes?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     requests?: ReferralRequestUncheckedUpdateManyWithoutOpportunityNestedInput
   }
@@ -26921,6 +27044,9 @@ export namespace Prisma {
     salary?: NullableStringFieldUpdateOperationsInput | string | null
     deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     authorId?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    outcomes?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -26991,6 +27117,9 @@ export namespace Prisma {
     salary?: string | null
     deadline?: Date | string | null
     universityId: number
+    location?: string | null
+    outcomes?: string | null
+    applicationLink?: string | null
     createdAt?: Date | string
   }
 
@@ -27095,6 +27224,9 @@ export namespace Prisma {
     skills?: OpportunityUpdateskillsInput | string[]
     salary?: NullableStringFieldUpdateOperationsInput | string | null
     deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    outcomes?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     university?: UniversityUpdateOneRequiredWithoutOpportunitiesNestedInput
     requests?: ReferralRequestUpdateManyWithoutOpportunityNestedInput
@@ -27109,6 +27241,9 @@ export namespace Prisma {
     salary?: NullableStringFieldUpdateOperationsInput | string | null
     deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     universityId?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    outcomes?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     requests?: ReferralRequestUncheckedUpdateManyWithoutOpportunityNestedInput
   }
@@ -27122,6 +27257,9 @@ export namespace Prisma {
     salary?: NullableStringFieldUpdateOperationsInput | string | null
     deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     universityId?: IntFieldUpdateOperationsInput | number
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    outcomes?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

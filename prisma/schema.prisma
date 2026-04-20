@@ -140,6 +140,9 @@ model Opportunity {
   universityId Int
   university   University @relation(fields: [universityId], references: [id], onDelete: Cascade)
   requests     ReferralRequest[]
+  location     String?
+  outcomes     String?
+  applicationLink String?
   createdAt    DateTime   @default(now())
 }
 

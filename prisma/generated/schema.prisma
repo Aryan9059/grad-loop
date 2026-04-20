@@ -128,19 +128,22 @@ model CommentLike {
 }
 
 model Opportunity {
-  id           Int               @id @default(autoincrement())
-  title        String
-  type         String // "Internship", "Full-time", etc.
-  description  String
-  skills       String[]
-  salary       String?
-  deadline     DateTime?
-  authorId     Int
-  author       User              @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  universityId Int
-  university   University        @relation(fields: [universityId], references: [id], onDelete: Cascade)
-  requests     ReferralRequest[]
-  createdAt    DateTime          @default(now())
+  id              Int               @id @default(autoincrement())
+  title           String
+  type            String // "Internship", "Full-time", etc.
+  description     String
+  skills          String[]
+  salary          String?
+  deadline        DateTime?
+  authorId        Int
+  author          User              @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  universityId    Int
+  university      University        @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  requests        ReferralRequest[]
+  location        String?
+  outcomes        String?
+  applicationLink String?
+  createdAt       DateTime          @default(now())
 }
 
 model ReferralRequest {

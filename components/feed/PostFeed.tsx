@@ -5,6 +5,7 @@ import PostBox from "./PostBox";
 import CommentSection from "./CommentSection";
 import { ThumbsUp, MessageSquare, Share2, MoreHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 import Image from "next/image";
 
 type Post = {
@@ -94,11 +95,19 @@ export default function PostFeed() {
           <div className="p-5">
             {/* Author row */}
             <div className="flex items-center gap-3 mb-4">
-              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center font-bold text-sm text-primary shrink-0 ring-2 ring-primary/10">
-                {post.author.firstName?.charAt(0)}{post.author.lastName?.charAt(0)}
-              </div>
+              <Link href={`/u/${post.author.clerkId}`} className="group/avatar shrink-0">
+                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center font-bold text-sm text-primary ring-2 ring-primary/10 transition-transform group-hover/avatar:scale-110 overflow-hidden">
+                  {post.author.profile_photo ? (
+                    <Image src={post.author.profile_photo} alt={post.author.firstName} width={40} height={40} className="object-cover w-full h-full" />
+                  ) : (
+                    <span>{post.author.firstName?.charAt(0)}{post.author.lastName?.charAt(0)}</span>
+                  )}
+                </div>
+              </Link>
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-foreground text-sm">{post.author.firstName} {post.author.lastName}</p>
+                <Link href={`/u/${post.author.clerkId}`} className="hover:underline underline-offset-4">
+                  <p className="font-semibold text-foreground text-sm">{post.author.firstName} {post.author.lastName}</p>
+                </Link>
                 <p className="text-xs text-muted-foreground">
                   {post.author.roleTitle || "Student"} · {timeAgo(post.createdAt)}
                 </p>

@@ -205,6 +205,9 @@ exports.Prisma.OpportunityScalarFieldEnum = {
   deadline: 'deadline',
   authorId: 'authorId',
   universityId: 'universityId',
+  location: 'location',
+  outcomes: 'outcomes',
+  applicationLink: 'applicationLink',
   createdAt: 'createdAt'
 };
 

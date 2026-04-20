@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { UserPlus, MapPin, GraduationCap, Briefcase, Mail } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 const MENTORS = [
   { name: "Padhang Satrio", role: "Sr. Product Designer", color: "bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400" },
@@ -89,9 +90,11 @@ export default function RightSidebar() {
               )}
             </div>
             
-            <button className="w-full mt-5 bg-primary text-white text-[11px] font-bold py-2.5 rounded-xl hover:bg-primary/90 transition-all shadow-md shadow-primary/20 cursor-pointer">
-              View Full Profile
-            </button>
+            <Link href="/profile" className="block w-full mt-5">
+              <button className="w-full bg-primary text-white text-[11px] font-bold py-2.5 rounded-xl hover:bg-primary/90 transition-all shadow-md shadow-primary/20 cursor-pointer">
+                View Full Profile
+              </button>
+            </Link>
           </div>
         </div>
       </div>

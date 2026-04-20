@@ -9,7 +9,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ postId: 
   const comments = await prisma.comment.findMany({
     where: { postId },
     include: {
-      user: { select: { firstName: true, lastName: true, profile_photo: true, roleTitle: true } }
+      user: { select: { clerkId: true, firstName: true, lastName: true, profile_photo: true, roleTitle: true } }
     },
     orderBy: { createdAt: "asc" }
   });
@@ -37,7 +37,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ postId:
   const comment = await prisma.comment.create({ 
       data: { postId, userId: user.id, content },
       include: {
-          user: { select: { firstName: true, lastName: true, profile_photo: true } }
+          user: { select: { clerkId: true, firstName: true, lastName: true, profile_photo: true } }
       }
   });
   

@@ -1,5 +1,5 @@
-"use client";
-
+import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Send } from "lucide-react";
@@ -9,7 +9,7 @@ type Comment = {
   id: number;
   content: string;
   createdAt: string;
-  user: { firstName: string; lastName: string; profile_photo: string | null; roleTitle: string };
+  user: { clerkId: string; firstName: string; lastName: string; profile_photo: string | null; roleTitle: string };
 };
 
 export default function CommentSection({
@@ -51,15 +51,23 @@ export default function CommentSection({
       <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
         {comments.map((comment) => (
           <div key={comment.id} className="flex gap-3">
-            <div className="h-8 w-8 rounded-full bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center font-bold text-[10px] text-primary shrink-0 mt-0.5 ring-1 ring-primary/10">
-              {comment.user.firstName?.charAt(0)}{comment.user.lastName?.charAt(0)}
-            </div>
+            <Link href={`/u/${comment.user.clerkId}`} className="group/avatar shrink-0 mt-0.5">
+              <div className="h-8 w-8 rounded-full bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center font-bold text-[10px] text-primary ring-1 ring-primary/10 transition-transform group-hover/avatar:scale-110 overflow-hidden">
+                {comment.user.profile_photo ? (
+                  <Image src={comment.user.profile_photo} alt={comment.user.firstName} width={32} height={32} className="object-cover w-full h-full" />
+                ) : (
+                  <span>{comment.user.firstName?.charAt(0)}{comment.user.lastName?.charAt(0)}</span>
+                )}
+              </div>
+            </Link>
             <div className="flex-1 space-y-1">
               <div className="bg-muted/50 p-3 rounded-2xl rounded-tl-sm">
                 <div className="flex items-center justify-between mb-0.5">
-                   <p className="text-xs font-bold text-foreground">
-                    {comment.user.firstName} {comment.user.lastName}
-                  </p>
+                  <Link href={`/u/${comment.user.clerkId}`} className="hover:underline underline-offset-4">
+                    <p className="text-xs font-bold text-foreground">
+                      {comment.user.firstName} {comment.user.lastName}
+                    </p>
+                  </Link>
                   <span className="text-[10px] text-muted-foreground">
                     {new Date(comment.createdAt).toLocaleDateString()}
                   </span>

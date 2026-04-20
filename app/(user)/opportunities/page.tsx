@@ -1,36 +1,126 @@
-import { Briefcase, Compass } from "lucide-react";
+"use client";
+
+import { useEffect, useState } from "react";
+import { Briefcase, Plus, Loader2, Search, Filter, TrendingUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import OpportunityCard from "@/components/opportunities/OpportunityCard";
+import PostOpportunityModal from "@/components/opportunities/PostOpportunityModal";
 
 export default function OpportunitiesPage() {
-  return (
-    <div className="flex flex-col h-full w-full p-6 sm:p-10 overflow-y-auto">
-      <div className="mb-10">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="p-2 rounded-xl bg-linear-to-br from-rose-500/10 to-pink-500/10">
-            <Briefcase className="h-5 w-5 text-rose-600 dark:text-rose-400" />
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-            Opportunities
-          </h1>
-        </div>
-        <p className="text-muted-foreground text-sm sm:text-base mt-1 ml-1">
-          Find or post job openings and opportunities.
-        </p>
-      </div>
+  const [opportunities, setOpportunities] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-      {/* Empty state */}
-      <div className="flex-1 flex items-center justify-center">
-        <div className="text-center space-y-4 max-w-sm">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-muted">
-            <Compass className="h-7 w-7 text-muted-foreground" />
-          </div>
-          <div className="space-y-2">
-            <h3 className="text-lg font-semibold text-foreground">No opportunities posted</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Check back soon for new job openings and career opportunities from your alumni network.
+  const fetchOpportunities = async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/opportunities");
+      if (res.ok) {
+        const data = await res.json();
+        setOpportunities(data);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchOpportunities();
+  }, []);
+
+  const filteredOpportunities = opportunities.filter((op) =>
+    op.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    op.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <div className="flex flex-col h-full w-full p-6 sm:p-10 overflow-y-auto bg-background/50">
+      <div className="max-w-5xl mx-auto w-full space-y-10">
+        
+        {/* Header Section */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 pb-2">
+          <div className="space-y-1.5 text-left">
+            <div className="flex items-center gap-2.5 text-primary">
+              <div className="p-2 rounded-xl bg-primary/10">
+                <Briefcase className="h-5 w-5" />
+              </div>
+              <h1 className="text-3xl font-black tracking-tighter text-foreground sm:text-4xl">Opportunities</h1>
+            </div>
+            <p className="text-muted-foreground font-medium text-sm sm:text-base ml-1">
+              Discover and share career growth within your alumni network.
             </p>
           </div>
+          <Button 
+            onClick={() => setIsModalOpen(true)}
+            className="rounded-2xl px-6 py-6 h-auto font-bold bg-primary hover:bg-primary/90 text-white shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all hover:scale-[1.02] active:scale-95"
+          >
+            <Plus className="h-5 w-5 mr-2" />
+            Post Opportunity
+          </Button>
+        </div>
+
+        {/* Filters and Search */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+           <div className="md:col-span-8 relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground/50" />
+              <input 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search by title, skills, or description..." 
+                className="w-full bg-card rounded-2xl pl-12 pr-4 py-4 text-sm font-medium border border-border shadow-sm focus:border-primary/30 focus:bg-card transition-all outline-none"
+              />
+           </div>
+           <div className="md:col-span-4 flex gap-3">
+              <Button variant="outline" className="flex-1 rounded-2xl h-full border-border bg-card font-bold text-sm">
+                <Filter className="h-4 w-4 mr-2 text-muted-foreground" />
+                Filters
+              </Button>
+              <div className="hidden lg:flex items-center gap-2 px-4 rounded-2xl bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
+                 <TrendingUp className="h-4 w-4" />
+                 <span className="text-[11px] font-black uppercase">Trending</span>
+              </div>
+           </div>
+        </div>
+
+        {/* List of Opportunities */}
+        <div className="space-y-6">
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center py-20 gap-4">
+              <div className="relative">
+                <div className="size-16 rounded-full border-4 border-primary/10 border-t-primary animate-spin" />
+                <Briefcase className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-6 w-6 text-primary/40" />
+              </div>
+              <p className="text-muted-foreground font-bold animate-pulse tracking-wide uppercase text-xs">Fetching opportunities...</p>
+            </div>
+          ) : filteredOpportunities.length > 0 ? (
+            <div className="grid grid-cols-1 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              {filteredOpportunities.map((op) => (
+                <OpportunityCard key={op.id} opportunity={op} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-24 bg-card/40 rounded-[2.5rem] border-2 border-dashed border-border/50">
+              <div className="p-5 rounded-full bg-muted/50 w-fit mx-auto mb-4">
+                 <Search className="h-10 w-10 text-muted-foreground" />
+              </div>
+              <h3 className="text-lg font-bold">No opportunities found</h3>
+              <p className="text-muted-foreground text-sm max-w-[280px] mx-auto mt-2">
+                We couldn't find any opportunities matching your current search.
+              </p>
+              <Button variant="secondary" onClick={() => setSearchQuery("")} className="mt-6 rounded-xl font-bold">Clear Search</Button>
+            </div>
+          )}
         </div>
       </div>
+
+      <PostOpportunityModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        onPostAdded={fetchOpportunities}
+      />
     </div>
   );
 }

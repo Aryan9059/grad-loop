@@ -21,7 +21,7 @@ export async function GET() {
     where: { universityId: userProfile.universityId, published: true },
     include: {
       author: {
-        select: { id: true, firstName: true, lastName: true, roleTitle: true, company: true, domain: true, profile_photo: true },
+        select: { id: true, clerkId: true, firstName: true, lastName: true, roleTitle: true, company: true, domain: true, profile_photo: true },
       },
       _count: { select: { likes: true, comments: true } },
       likes: {
@@ -32,7 +32,7 @@ export async function GET() {
         take: 5,
         orderBy: { createdAt: "desc" },
         include: {
-          user: { select: { firstName: true, lastName: true, profile_photo: true, roleTitle: true } }
+          user: { select: { clerkId: true, firstName: true, lastName: true, profile_photo: true, roleTitle: true } }
         }
       }
     },
@@ -81,7 +81,7 @@ export async function POST(req: Request) {
     },
     include: {
       author: {
-        select: { id: true, firstName: true, lastName: true, roleTitle: true, company: true, domain: true, profile_photo: true },
+        select: { id: true, clerkId: true, firstName: true, lastName: true, roleTitle: true, company: true, domain: true, profile_photo: true },
       },
       _count: { select: { likes: true, comments: true } },
     },
