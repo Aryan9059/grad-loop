@@ -180,7 +180,7 @@ export default function OpportunityCard({ opportunity }: OpportunityCardProps) {
                     <div className="size-1.5 rounded-full bg-primary" />
                     <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground">Learning Outcomes</h4>
                   </div>
-                  <div className="p-6 rounded-[2rem] bg-primary/5 border border-primary/10 relative overflow-hidden">
+                  <div className="p-6 rounded-4xl bg-primary/5 border border-primary/10 relative overflow-hidden">
                     <Target className="absolute -bottom-4 -right-4 size-20 text-primary/5" />
                     <p className="text-xs text-foreground/80 leading-relaxed italic font-medium relative z-10">
                       "{opportunity.outcomes}"

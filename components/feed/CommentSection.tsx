@@ -52,7 +52,7 @@ export default function CommentSection({
         {comments.map((comment) => (
           <div key={comment.id} className="flex gap-3">
             <Link href={`/u/${comment.user.clerkId}`} className="group/avatar shrink-0 mt-0.5">
-              <div className="h-8 w-8 rounded-full bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center font-bold text-[10px] text-primary ring-1 ring-primary/10 transition-transform group-hover/avatar:scale-110 overflow-hidden">
+              <div className="h-8 w-8 rounded-full bg-linear-to-br from-primary/15 to-primary/5 flex items-center justify-center font-bold text-[10px] text-primary ring-1 ring-primary/10 transition-transform group-hover/avatar:scale-110 overflow-hidden">
                 {comment.user.profile_photo ? (
                   <Image src={comment.user.profile_photo} alt={comment.user.firstName} width={32} height={32} className="object-cover w-full h-full" />
                 ) : (

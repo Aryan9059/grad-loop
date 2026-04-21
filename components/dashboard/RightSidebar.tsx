@@ -68,7 +68,7 @@ export default function RightSidebar() {
       {/* User Profile Summary Card */}
       <div className="soft-card overflow-hidden">
         {/* Minified Banner */}
-        <div className="h-16 w-full bg-gradient-to-r from-primary/80 to-primary relative">
+        <div className="h-16 w-full bg-linear-to-r from-primary/80 to-primary relative">
           <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
         </div>
         

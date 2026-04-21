@@ -26,7 +26,7 @@ export default async function HomePage() {
         <div className="max-w-3xl mx-auto w-full space-y-6">
           {/* University Header */}
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 shadow-sm">
+            <div className="p-2.5 rounded-xl bg-linear-to-br from-primary/15 to-primary/5 shadow-sm">
               <GraduationCap className="h-5 w-5 text-primary" />
             </div>
             <div>

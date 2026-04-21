@@ -75,7 +75,7 @@ export default function OpportunitiesPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by title, skills, or description..." 
-                className="w-full bg-card rounded-[1.5rem] pl-14 pr-6 py-5 text-sm font-bold border-2 border-border/80 shadow-sm focus:border-primary/40 focus:ring-4 focus:ring-primary/5 transition-all outline-none"
+                className="w-full bg-card rounded-3xl pl-14 pr-6 py-5 text-sm font-bold border-2 border-border/80 shadow-sm focus:border-primary/40 focus:ring-4 focus:ring-primary/5 transition-all outline-none"
               />
            </div>
         </div>
