@@ -12,7 +12,7 @@ type Post = {
   id: number;
   content: string;
   createdAt: string;
-  author: { firstName: string; lastName: string; roleTitle: string; profile_photo: string | null };
+  author: { clerkId: string; firstName: string; lastName: string; roleTitle: string; profile_photo: string | null };
   _count: { likes: number; comments: number };
   isLiked?: boolean;
   comments?: any[];
