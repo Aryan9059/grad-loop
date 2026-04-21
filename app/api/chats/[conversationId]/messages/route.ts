@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-// GET PAGINATED MESSAGES FOR A CONVERSATION
+// GET MESSAGES FOR A CONVERSATION
 export async function GET(
   req: NextRequest,
   { params }: { params: { conversationId: string } }

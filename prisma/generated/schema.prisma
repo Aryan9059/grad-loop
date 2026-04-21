@@ -46,13 +46,11 @@ model User {
   profile_photo  String?
   bio            String?
 
-  // New Fields
   universityId Int?
   university   University? @relation(fields: [universityId], references: [id])
   isModerator  Boolean     @default(false)
   openToMentor Boolean     @default(false)
 
-  // Relations
   posts         Post[]
   opportunities Opportunity[]
   referralsMade ReferralRequest[]   @relation("Referrer")

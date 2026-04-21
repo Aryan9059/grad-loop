@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
         const client = new Mistral({ apiKey });
 
         const response = await client.chat.complete({
-            model: "mistral-small-latest",
+            model: "mistral-large-latest",
             responseFormat: { type: "json_object" },
             temperature: 0.3,
             messages: [

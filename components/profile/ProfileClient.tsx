@@ -52,7 +52,7 @@ export default function ProfileClient({ initialUser }: { initialUser: any }) {
             <div className="absolute -top-16 left-6 sm:-top-20 sm:left-12">
               <div className="flex size-32 items-center justify-center rounded-full border-4 border-card bg-muted text-5xl font-bold text-muted-foreground shadow-lg sm:size-40 sm:text-6xl overflow-hidden">
                  {user.profile_photo ? (
-                    <Image src={user.profile_photo} alt={user.firstName} width={160} height={160} className="w-full h-full object-cover" />
+                    <Image src={user.profile_photo} alt={user.firstName} width={160} height={160} className="w-full h-full object-cover" unoptimized />
                  ) : (
                     <span>{user.firstName?.charAt(0)}{user.lastName?.charAt(0)}</span>
                  )}

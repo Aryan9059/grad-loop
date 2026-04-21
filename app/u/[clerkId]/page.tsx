@@ -52,7 +52,7 @@ export default async function PublicProfilePage({
               <div className="absolute -top-16 left-6 sm:-top-20 sm:left-12">
                 <div className="flex size-32 items-center justify-center rounded-full border-4 border-card bg-muted text-5xl font-bold text-muted-foreground shadow-lg sm:size-40 sm:text-6xl overflow-hidden">
                    {user.profile_photo ? (
-                      <Image src={user.profile_photo} alt={user.firstName || ""} width={160} height={160} className="w-full h-full object-cover" />
+                      <Image src={user.profile_photo} alt={user.firstName || ""} width={160} height={160} className="w-full h-full object-cover" unoptimized/>
                    ) : (
                       <span>{user.firstName?.charAt(0)}{user.lastName?.charAt(0)}</span>
                    )}
@@ -133,7 +133,7 @@ export default async function PublicProfilePage({
                  </div>
               </div>
 
-              {user.openToConnect && (
+              {/* {user.openToConnect && (
                 <Link href={`/sign-up?redirect=/u/${clerkId}`} className="mt-10 block rounded-2xl border border-primary/20 bg-primary/5 p-5 hover:bg-primary/10 transition-all group">
                    <div className="flex items-center gap-4">
                       <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-lg shadow-primary/20 group-hover:scale-110 transition-all">
@@ -146,7 +146,7 @@ export default async function PublicProfilePage({
                       <span className="text-primary font-bold text-sm bg-primary/10 px-4 py-2 rounded-xl group-hover:bg-primary group-hover:text-white transition-all">Connect</span>
                    </div>
                 </Link>
-              )}
+              )} */}
             </div>
           </div>
         </div>

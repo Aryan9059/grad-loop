@@ -88,11 +88,12 @@ STRICT RULES:
 4. Write strong, achievement-focused bullets:
    - Start with action verbs
    - Include metrics, scale, or impact wherever possible
-5. Ensure the resume visually fills ONE FULL PAGE (avoid underflow).
+5. Ensure the resume visually fills ONLY ONE PAGE, not more than that (avoid underflow).
 6. Do NOT invent data. You may rephrase, structure, and expand wording only.
 7. If a section has zero data, omit that section entirely.
 8. Use 3-6 bullets per entry when enough data exists.
 9. Keep bullets concise but information-dense.
+10. Do not change the education of the user, keep it same as in the prompt or data given.
 
 OUTPUT:
 - Return ONLY raw LaTeX starting from \\documentclass.
@@ -170,7 +171,7 @@ export async function POST(req: NextRequest) {
         });
 
         const completion = await client.chat.complete({
-            model: "mistral-small-latest",
+            model: "mistral-large-latest",
             temperature: 0.3,
             messages: [
                 { role: "system", content: SYSTEM_PROMPT },

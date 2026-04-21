@@ -98,7 +98,7 @@ export default function PostFeed() {
               <Link href={`/u/${post.author.clerkId}`} className="group/avatar shrink-0">
                 <div className="h-10 w-10 rounded-full bg-linear-to-br from-primary/20 to-primary/5 flex items-center justify-center font-bold text-sm text-primary ring-2 ring-primary/10 transition-transform group-hover/avatar:scale-110 overflow-hidden">
                   {post.author.profile_photo ? (
-                    <Image src={post.author.profile_photo} alt={post.author.firstName} width={40} height={40} className="object-cover w-full h-full" />
+                    <Image src={post.author.profile_photo} alt={post.author.firstName} width={40} height={40} className="object-cover w-full h-full" unoptimized/>
                   ) : (
                     <span>{post.author.firstName?.charAt(0)}{post.author.lastName?.charAt(0)}</span>
                   )}
