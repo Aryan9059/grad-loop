@@ -5,13 +5,13 @@ import { prisma } from "@/lib/prisma";
 // GET MESSAGES FOR A CONVERSATION
 export async function GET(
   req: NextRequest,
-  { params }: { params: { conversationId: string } }
+  context: { params: Promise<{ conversationId: string }> }
 ) {
   try {
     const { userId } = await auth();
     if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const { conversationId } = await params;
+    const { conversationId } = await context.params;
     const convId = parseInt(conversationId);
 
     const currentUser = await prisma.user.findUnique({ where: { clerkId: userId } });
@@ -82,13 +82,13 @@ export async function GET(
 // SEND A MESSAGE IN A CONVERSATION
 export async function POST(
   req: Request,
-  { params }: { params: { conversationId: string } }
+  context: { params: Promise<{ conversationId: string }> }
 ) {
   try {
     const { userId } = await auth();
     if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const { conversationId } = await params;
+    const { conversationId } = await context.params;
     const convId = parseInt(conversationId);
     const { content } = await req.json();
 

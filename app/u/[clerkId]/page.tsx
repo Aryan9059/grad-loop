@@ -6,12 +6,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { Logo } from "@/components/ui/logo";
 
-export default async function PublicProfilePage({
-  params,
-}: {
-  params: { clerkId: string };
-}) {
-  const { clerkId } = await params;
+export default async function PublicProfilePage(
+  props: {
+    params: Promise<{ clerkId: string }>;
+  }
+) {
+  const params = await props.params;
+  const { clerkId } = params;
 
   const user = await prisma.user.findUnique({
     where: { clerkId },

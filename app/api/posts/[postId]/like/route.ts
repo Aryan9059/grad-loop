@@ -2,11 +2,11 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request, { params }: { params: Promise<{ postId: string }> }) {
+export async function POST(req: Request, context: { params: Promise<{ postId: string }> }) {
   const { userId } = await auth();
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const resolvedParams = await params;
+  const resolvedParams = await context.params;
   const postId = Number(resolvedParams.postId);
 
   const user = await prisma.user.findUnique({ where: { clerkId: userId } });
