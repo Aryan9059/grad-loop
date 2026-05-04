@@ -16,7 +16,7 @@ The repository contains both **TypeScript/JavaScript** (web application) and **P
 
 ---
 
-## Tech Stack (Detailed)
+## Tech Stack
 ### Frontend
 - **Next.js**: Core web framework for UI, routing, and server-side capabilities
 - **TypeScript**: Strongly typed development for reliability and maintainability
