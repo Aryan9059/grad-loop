@@ -110,7 +110,7 @@ function LayoutContent({
       <SidebarBody className="px-4 py-6 flex flex-col justify-between">
         {/* Top section */}
         <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-          <Link href="/home" className="flex items-center gap-2 mb-1 px-1">
+          <Link href="/" className="flex items-center gap-2 mb-1 px-1">
             <Logo className="h-9 w-9 shrink-0" />
             {open && (
               <motion.span

@@ -81,79 +81,95 @@ export default function Home() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,#1e293b,transparent)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,#0f172a,transparent)]" />
       </div>
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 transition-all duration-300 border-b border-slate-100 dark:border-white/10 bg-white/80 dark:bg-[#020617]/80 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo - Left */}
-            <div className="flex items-center gap-2">
-              <Logo className="w-9 h-9" />
-              <motion.span 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-lg font-bold tracking-tight text-slate-900 dark:text-white whitespace-nowrap"
-              >
-                Grad Loop
-              </motion.span>
-            </div>
-            
-            {/* Links - Center */}
-            <div className="hidden md:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
-              <button onClick={() => scrollToSection('about')} className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer">About</button>
-              <button onClick={() => scrollToSection('features')} className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer">Features</button>
-              <button onClick={() => scrollToSection('community')} className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer">Community</button>
-            </div>
+      {/* Floating Navbar — grid [1fr auto 1fr] guarantees center pill is always truly centered */}
+      <nav className="fixed top-4 left-4 right-4 z-50 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
 
-            {/* CTA - Right */}
-            <div className="hidden md:flex items-center gap-3">
-              <ThemeToggle />
-              {userId ? (
-                <div className="flex items-center gap-4">
-                   <UserButton appearance={{ elements: { userButtonAvatarBox: "size-9 border border-slate-200 dark:border-slate-800" } }} />
-                </div>
-              ) : (
-                <>
-                  <Button asChild variant="ghost" className="rounded-full px-5 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900">
-                    <Link href="/sign-in">Log in</Link>
-                  </Button>
-                  <Button asChild className="rounded-full px-6 bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20">
-                    <Link href="/sign-up">Sign up</Link>
-                  </Button>
-                </>
-              )}
-            </div>
-
-            <div className="md:hidden flex items-center gap-2">
-              <ThemeToggle />
-              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 text-slate-600 dark:text-slate-400">
-                {isMenuOpen ? <X /> : <Menu />}
-              </button>
-            </div>
+        {/* Left cell — Logo + Name */}
+        <div className="flex justify-start">
+          <div className="flex items-center gap-2.5 px-3 py-2 rounded-full bg-white/90 dark:bg-slate-900/90 border border-slate-200/80 dark:border-white/10 shadow-sm shadow-black/5 dark:shadow-black/30 backdrop-blur-md">
+            <Logo className="w-7 h-7 flex-shrink-0" />
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-sm font-bold tracking-tight text-slate-900 dark:text-white whitespace-nowrap"
+            >
+              Grad Loop
+            </motion.span>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Center cell — Nav Links (desktop only) */}
+        <div className="hidden md:flex justify-center">
+          <div className="flex items-center gap-1 px-2 py-2 rounded-full bg-white/90 dark:bg-slate-900/90 border border-slate-200/80 dark:border-white/10 shadow-sm shadow-black/5 dark:shadow-black/30 backdrop-blur-md">
+            <button
+              onClick={() => scrollToSection('about')}
+              className="px-4 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all duration-200 cursor-pointer"
+            >
+              About
+            </button>
+            <button
+              onClick={() => scrollToSection('features')}
+              className="px-4 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all duration-200 cursor-pointer"
+            >
+              Features
+            </button>
+            <button
+              onClick={() => scrollToSection('community')}
+              className="px-4 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all duration-200 cursor-pointer"
+            >
+              Community
+            </button>
+          </div>
+        </div>
+
+        {/* Right cell — Actions */}
+        <div className="flex justify-end">
+          <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/90 dark:bg-slate-900/90 border border-slate-200/80 dark:border-white/10 shadow-sm shadow-black/5 dark:shadow-black/30 backdrop-blur-md">
+            <ThemeToggle />
+            {userId ? (
+              <UserButton appearance={{ elements: { userButtonAvatarBox: "size-7 border border-slate-200 dark:border-slate-700" } }} />
+            ) : (
+              <>
+                <Button asChild variant="ghost" className="hidden md:inline-flex rounded-full h-8 px-4 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800">
+                  <Link href="/sign-in">Log in</Link>
+                </Button>
+                <Button asChild className="rounded-full h-8 px-4 text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/25">
+                  <Link href="/sign-up">Sign up</Link>
+                </Button>
+              </>
+            )}
+            {/* Mobile hamburger */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors cursor-pointer"
+            >
+              {isMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Dropdown — spans full width */}
         {isMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="md:hidden absolute top-20 left-4 right-4 bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-2xl border border-slate-200 dark:border-slate-800 z-50"
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            className="absolute top-14 left-0 right-0 col-span-3 md:hidden bg-white dark:bg-slate-900 rounded-2xl p-5 shadow-2xl shadow-black/10 dark:shadow-black/50 border border-slate-200 dark:border-white/10 backdrop-blur-md"
           >
-            <div className="flex flex-col gap-4">
-              <button onClick={() => scrollToSection('about')} className="text-lg font-medium text-left">About</button>
-              <button onClick={() => scrollToSection('features')} className="text-lg font-medium text-left">Features</button>
-              <button onClick={() => scrollToSection('community')} className="text-lg font-medium text-left">Community</button>
-              <hr className="border-slate-100 dark:border-slate-800" />
+            <div className="flex flex-col gap-1">
+              <button onClick={() => scrollToSection('about')} className="text-base font-medium text-left px-4 py-3 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer">About</button>
+              <button onClick={() => scrollToSection('features')} className="text-base font-medium text-left px-4 py-3 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer">Features</button>
+              <button onClick={() => scrollToSection('community')} className="text-base font-medium text-left px-4 py-3 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer">Community</button>
+              <hr className="my-1 border-slate-100 dark:border-slate-800" />
               {userId ? (
-                <div className="flex justify-center py-4">
-                  <UserButton appearance={{ elements: { userButtonAvatarBox: "size-12" } }} />
+                <div className="flex justify-center py-3">
+                  <UserButton appearance={{ elements: { userButtonAvatarBox: "size-10" } }} />
                 </div>
               ) : (
-                <div className="flex flex-col gap-4">
-                  <Button asChild className="w-full rounded-xl bg-blue-600 py-6 text-lg font-bold shadow-lg shadow-blue-500/20">
+                <div className="flex flex-col gap-2 pt-1">
+                  <Button asChild className="w-full rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg shadow-blue-500/20">
                     <Link href="/sign-up" onClick={() => setIsMenuOpen(false)}>Sign up</Link>
                   </Button>
-                  <Button asChild variant="ghost" className="w-full rounded-xl py-6 text-lg font-medium">
+                  <Button asChild variant="ghost" className="w-full rounded-xl font-medium text-slate-600 dark:text-slate-400">
                     <Link href="/sign-in" onClick={() => setIsMenuOpen(false)}>Log in</Link>
                   </Button>
                 </div>
@@ -165,7 +181,7 @@ export default function Home() {
 
       <main>
         {/* Hero Section */}
-        <section id="about" className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <section id="about" className="relative pt-36 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
           {/* Background Elements */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 overflow-hidden">
             <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-100/50 dark:bg-blue-900/10 rounded-full blur-[120px]" />
@@ -173,20 +189,10 @@ export default function Home() {
           </div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-sm font-semibold mb-8 border border-blue-100 dark:border-blue-800/50 shadow-sm"
-            >
-              <Zap className="w-4 h-4 fill-current" />
-              <span>Building the future of alumni networking</span>
-            </motion.div>
-
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={{ duration: 0.6 }}
               className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-600 dark:from-white dark:to-slate-400"
             >
               Connect with your <br className="hidden md:block" />
