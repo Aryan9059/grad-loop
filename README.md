@@ -6,22 +6,30 @@
 Resume creation + analysis, profile recommendations, authentication, and database‑backed persistence — all in one loop.
 
 <br />
+<!-- Big, colorful badges -->
+<img alt="Next.js" src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" />
+<img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+<img alt="Python" src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+<img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" />
+<img alt="CSS3" src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" />
 
-<!-- Stack / Tech badges -->
+<br/>
 
-[![Next.js](https://img.shields.io/badge/Next.js-App-000000?logo=nextdotjs&logoColor=white)](#tech-stack)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Primary-3178C6?logo=typescript&logoColor=white)](#tech-stack)
-[![Python](https://img.shields.io/badge/Python-Analysis%20Services-3776AB?logo=python&logoColor=white)](#tech-stack)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?logo=postgresql&logoColor=white)](#database)
-[![CSS](https://img.shields.io/badge/CSS-Styling-1572B6?logo=css3&logoColor=white)](#tech-stack)
+<!-- Repo activity / social badges (also big) -->
+<img alt="Stars" src="https://img.shields.io/github/stars/Aryan9059/grad-loop?style=for-the-badge&color=ffb703" />
+<img alt="Forks" src="https://img.shields.io/github/forks/Aryan9059/grad-loop?style=for-the-badge&color=8ecae6" />
+<img alt="Issues" src="https://img.shields.io/github/issues/Aryan9059/grad-loop?style=for-the-badge&color=fb7185" />
+<img alt="Last Commit" src="https://img.shields.io/github/last-commit/Aryan9059/grad-loop?style=for-the-badge&color=22c55e" />
+<img alt="License" src="https://img.shields.io/github/license/Aryan9059/grad-loop?style=for-the-badge&color=a78bfa" />
 
-<!-- Language composition badges (as reported) -->
+<br/>
 
-[![TypeScript %](https://img.shields.io/badge/TypeScript-67.3%25-3178C6?logo=typescript&logoColor=white)](#tech-stack)
-[![Python %](https://img.shields.io/badge/Python-28.7%25-3776AB?logo=python&logoColor=white)](#tech-stack)
-[![JavaScript %](https://img.shields.io/badge/JavaScript-2.6%25-F7DF1E?logo=javascript&logoColor=000)](#tech-stack)
-[![CSS %](https://img.shields.io/badge/CSS-1.1%25-1572B6?logo=css3&logoColor=white)](#tech-stack)
-[![PL%2FpgSQL %](https://img.shields.io/badge/PL%2FpgSQL-0.3%25-4169E1?logo=postgresql&logoColor=white)](#database)
+<!-- Language composition (big + vibrant) -->
+<img alt="TypeScript 67.3%" src="https://img.shields.io/badge/TypeScript-67.3%25-2563eb?style=for-the-badge&logo=typescript&logoColor=white" />
+<img alt="Python 28.7%" src="https://img.shields.io/badge/Python-28.7%25-f59e0b?style=for-the-badge&logo=python&logoColor=white" />
+<img alt="JavaScript 2.6%" src="https://img.shields.io/badge/JavaScript-2.6%25-facc15?style=for-the-badge&logo=javascript&logoColor=111827" />
+<img alt="CSS 1.1%" src="https://img.shields.io/badge/CSS-1.1%25-06b6d4?style=for-the-badge&logo=css3&logoColor=white" />
+<img alt="PL/pgSQL 0.3%" src="https://img.shields.io/badge/PL%2FpgSQL-0.3%25-ec4899?style=for-the-badge&logo=postgresql&logoColor=white" />
 
 <br />
 
