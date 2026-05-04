@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { findSimilarProfiles } from "@/lib/embeddings";
+import { findSimilarProfiles, generateAndUpsertEmbedding } from "@/lib/embeddings";
 
 export async function GET() {
   try {
@@ -18,8 +18,28 @@ export async function GET() {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
+    // Check if user has an embedding, generate one if not
+    const existingEmbedding = await prisma.$queryRaw`
+      SELECT user_id FROM profile_embeddings WHERE user_id = ${user.id}
+    `;
+
+    if (!Array.isArray(existingEmbedding) || existingEmbedding.length === 0) {
+      console.log(`Generating embedding for user ${user.id} (${user.firstName} ${user.lastName})`);
+      try {
+        await generateAndUpsertEmbedding(user);
+        console.log(`Successfully generated embedding for user ${user.id}`);
+      } catch (embedError) {
+        console.error(`Failed to generate embedding for user ${user.id}:`, embedError);
+        // Continue anyway - maybe other users have embeddings
+      }
+    }
+
     // Find similar profiles via pgvector cosine similarity
     const matches = await findSimilarProfiles(user.id, 5);
+    console.log(`Found ${matches.length} matches for user ${user.id}`);
+    if (matches.length > 0) {
+      console.log(`Top matches:`, matches.slice(0, 3).map(m => ({ user_id: m.user_id, similarity: m.similarity })));
+    }
 
     if (matches.length === 0) {
       return NextResponse.json({ recommendations: [] });

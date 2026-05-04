@@ -110,14 +110,17 @@ export async function findSimilarProfiles(
   );
 
   if (embResult.rows.length === 0) {
+    console.log(`No embedding found for user ${userId}`);
     return [];
   }
 
+  console.log(`Found embedding for user ${userId}, searching for ${limit} matches`);
   const result = await getPool().query(
     `SELECT * FROM match_profiles($1::vector, $2, $3)`,
     [embResult.rows[0].embedding, limit, userId]
   );
 
+  console.log(`match_profiles returned ${result.rows.length} results`);
   return result.rows;
 }
 
