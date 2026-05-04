@@ -3,10 +3,10 @@
 -- Run against DIRECT_URL via psql
 -- ============================================================
 
--- 1. Enable pgvector extension
+-- 1. Enable pgvector extension (idempotent)
 CREATE EXTENSION IF NOT EXISTS vector;
 
--- 2. Create profile_embeddings table
+-- 2. Create profile_embeddings table (idempotent)
 CREATE TABLE IF NOT EXISTS profile_embeddings (
   id         BIGSERIAL PRIMARY KEY,
   user_id    INTEGER NOT NULL UNIQUE REFERENCES "User"(id) ON DELETE CASCADE,
@@ -15,12 +15,12 @@ CREATE TABLE IF NOT EXISTS profile_embeddings (
   updated_at TIMESTAMPTZ DEFAULT now()
 );
 
--- 3. Create HNSW index for fast cosine similarity search
+-- 3. Create HNSW index for fast cosine similarity search (idempotent)
 CREATE INDEX IF NOT EXISTS idx_profile_embeddings_hnsw
   ON profile_embeddings
   USING hnsw (embedding vector_cosine_ops);
 
--- 4. Create similarity search function
+-- 4. Create similarity search function (idempotent)
 CREATE OR REPLACE FUNCTION match_profiles(
   query_embedding vector(1024),
   match_count     INT DEFAULT 5,

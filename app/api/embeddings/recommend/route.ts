@@ -21,7 +21,10 @@ export async function GET() {
 
     // Check if user has an embedding, generate one if not
     const pool = new pg.Pool({
-      connectionString: process.env.DATABASE_URL,
+      connectionString: process.env.DATABASE_POOLING_URL || process.env.DATABASE_URL!,
+      max: 10,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 2000,
     });
 
     let hasEmbedding = false;

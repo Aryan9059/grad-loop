@@ -13,8 +13,14 @@ function getMistral() {
 let _pool: pg.Pool | null = null;
 function getPool() {
   if (!_pool) {
+    // Use pooling URL if available, fallback to direct URL
+    const connectionString = process.env.DATABASE_POOLING_URL || process.env.DATABASE_URL!;
     _pool = new pg.Pool({
-      connectionString: process.env.DIRECT_URL || process.env.DATABASE_URL!,
+      connectionString,
+      // Connection pooling settings for serverless
+      max: 10, // Maximum number of clients in the pool
+      idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
+      connectionTimeoutMillis: 2000, // Return an error after 2 seconds if connection could not be established
     });
   }
   return _pool;

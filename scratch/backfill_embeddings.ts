@@ -9,7 +9,7 @@ import { PrismaClient } from "../prisma/generated";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { buildProfileText, generateEmbedding, upsertProfileEmbedding } from "../lib/embeddings";
 
-const connectionString = process.env.DIRECT_URL!;
+const connectionString = process.env.DATABASE_POOLING_URL || process.env.DIRECT_URL || process.env.DATABASE_URL!;
 const prisma = new PrismaClient({ adapter: new PrismaPg(connectionString) });
 
 async function main() {
