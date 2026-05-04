@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 
+import { useRouter } from "next/navigation";
+
 type Post = {
   id: number;
   content: string;
@@ -19,26 +21,16 @@ type Post = {
   mediaUrls?: string[];
 };
 
-export default function PostFeed() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export default function PostFeed({ initialPosts = [] }: { initialPosts?: Post[] }) {
+  const [posts, setPosts] = useState<Post[]>(initialPosts);
+  const [isLoading, setIsLoading] = useState(false);
   const [activeCommentPost, setActiveCommentPost] = useState<number | null>(null);
+  const router = useRouter();
 
-  const fetchPosts = async () => {
-    setIsLoading(true);
-    try {
-        const res = await fetch("/api/posts");
-        if (res.ok) {
-        setPosts(await res.json());
-        }
-    } finally {
-        setIsLoading(false);
-    }
-  };
-
+  // Sync state if initialPosts changes (e.g. on router.refresh())
   useEffect(() => {
-    fetchPosts();
-  }, []);
+    setPosts(initialPosts);
+  }, [initialPosts]);
 
   const handleLike = async (postId: number) => {
     const post = posts.find(p => p.id === postId);
@@ -79,7 +71,7 @@ export default function PostFeed() {
 
   return (
     <div className="w-full space-y-5">
-      <PostBox onPostCreated={fetchPosts} />
+      <PostBox onPostCreated={() => router.refresh()} />
       
       {isLoading && posts.length === 0 && (
         <div className="soft-card p-12 text-center">

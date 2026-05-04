@@ -3,6 +3,11 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
+  cacheComponents: true,
+  experimental: {
+    dynamicIO: true,
+    instantNavigationDevToolsToggle: true,
+  },
   images: {
     remotePatterns: [
       {

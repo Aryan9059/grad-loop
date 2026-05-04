@@ -3,6 +3,10 @@ import PostFeed from "@/components/feed/PostFeed";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import { getPosts } from "@/lib/data";
+import { Suspense } from "react";
+
+export const unstable_instant = { prefetch: 'static' };
 
 export default async function HomePage() {
   const { userId } = await auth();
@@ -41,9 +45,16 @@ export default async function HomePage() {
 
 
           {/* Post Feed */}
-          <PostFeed />
+          <Suspense fallback={<div className="soft-card p-12 text-center text-sm font-medium text-muted-foreground animate-pulse">Loading feed...</div>}>
+            <PostFeedData userId={userId} />
+          </Suspense>
         </div>
       </div>
     </div>
   );
+}
+
+async function PostFeedData({ userId }: { userId: string }) {
+  const posts = await getPosts(userId);
+  return <PostFeed initialPosts={posts as any} />;
 }

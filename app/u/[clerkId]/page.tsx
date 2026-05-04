@@ -5,6 +5,19 @@ import { Briefcase, Building2, GraduationCap, MapPin, Search } from "lucide-reac
 import Image from "next/image";
 import Link from "next/link";
 import { Logo } from "@/components/ui/logo";
+import { Suspense } from "react";
+
+export const unstable_instant = { prefetch: 'static' };
+
+async function getProfileData(clerkId: string) {
+  'use cache'
+  return await prisma.user.findUnique({
+    where: { clerkId },
+    include: {
+      university: true,
+    },
+  });
+}
 
 export default async function PublicProfilePage(
   props: {
@@ -14,12 +27,15 @@ export default async function PublicProfilePage(
   const params = await props.params;
   const { clerkId } = params;
 
-  const user = await prisma.user.findUnique({
-    where: { clerkId },
-    include: {
-      university: true,
-    },
-  });
+  return (
+    <Suspense fallback={<ProfileLoading />}>
+      <ProfileData clerkId={clerkId} />
+    </Suspense>
+  );
+}
+
+async function ProfileData({ clerkId }: { clerkId: string }) {
+  const user = await getProfileData(clerkId);
 
   if (!user) {
     notFound();
@@ -152,6 +168,17 @@ export default async function PublicProfilePage(
           </div>
         </div>
       </main>
+    </div>
+  );
+}
+
+function ProfileLoading() {
+  return (
+    <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
+        <div className="size-12 rounded-full border-4 border-primary/10 border-t-primary animate-spin" />
+        <p className="text-sm font-bold text-muted-foreground animate-pulse tracking-widest uppercase">Loading Profile...</p>
+      </div>
     </div>
   );
 }
