@@ -17,6 +17,7 @@ import {
 } from 'lucide-react'
 import { useAuth, UserButton } from "@clerk/nextjs"
 import { Logo } from "@/components/ui/logo"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 export default function Home() {
   const { userId, isLoaded } = useAuth()
@@ -74,9 +75,14 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 selection:bg-blue-100 dark:selection:bg-blue-900/30">
+    <div className="min-h-screen bg-white dark:bg-[#020617] font-sans text-slate-900 dark:text-slate-100 selection:bg-blue-100 dark:selection:bg-blue-900/30">
+      {/* Dark mode mesh background */}
+      <div className="fixed inset-0 -z-50 hidden dark:block">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,#1e293b,transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,#0f172a,transparent)]" />
+      </div>
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 transition-all duration-300 border-b border-slate-100 dark:border-slate-800/50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md">
+      <nav className="fixed top-0 w-full z-50 transition-all duration-300 border-b border-slate-100 dark:border-white/10 bg-white/80 dark:bg-[#020617]/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo - Left */}
@@ -100,6 +106,7 @@ export default function Home() {
 
             {/* CTA - Right */}
             <div className="hidden md:flex items-center gap-3">
+              <ThemeToggle />
               {userId ? (
                 <div className="flex items-center gap-4">
                    <UserButton appearance={{ elements: { userButtonAvatarBox: "size-9 border border-slate-200 dark:border-slate-800" } }} />
@@ -116,7 +123,8 @@ export default function Home() {
               )}
             </div>
 
-            <div className="md:hidden">
+            <div className="md:hidden flex items-center gap-2">
+              <ThemeToggle />
               <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 text-slate-600 dark:text-slate-400">
                 {isMenuOpen ? <X /> : <Menu />}
               </button>
@@ -217,8 +225,9 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="relative max-w-5xl mx-auto"
             >
-              <div className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl bg-slate-100 dark:bg-slate-900 p-2 md:p-4">
-                <div className="relative rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-inner">
+              <div className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-2xl bg-white dark:bg-slate-900/50 backdrop-blur-sm p-2 md:p-4 group">
+                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                <div className="relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-inner">
                   <Image 
                     src="/dashboard-hero.png" 
                     alt="Grad Loop Dashboard" 
@@ -228,6 +237,8 @@ export default function Home() {
                     priority
                   />
                 </div>
+                {/* Hero Glow in Dark Mode */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000 group-hover:duration-200 hidden dark:block -z-10"></div>
               </div>
               
               {/* Decorative elements */}
@@ -428,7 +439,7 @@ export default function Home() {
         </section>
 
         {/* Call to Action */}
-        <section id="community" className="py-24 bg-slate-50 dark:bg-slate-900/30">
+        <section id="community" className="py-24 bg-slate-50/50 dark:bg-slate-900/20">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="relative overflow-hidden bg-blue-600 rounded-[2.5rem] p-8 md:p-16 text-center text-white shadow-2xl shadow-blue-500/20">
               <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl" />
@@ -452,7 +463,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-slate-100 dark:border-slate-900 bg-white dark:bg-slate-950">
+      <footer className="py-12 border-t border-slate-100 dark:border-white/10 bg-white dark:bg-[#020617]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-8">
             <div className="flex items-center gap-2">

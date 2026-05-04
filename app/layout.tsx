@@ -29,7 +29,7 @@ export default function RootLayout({
         <ClerkProvider>
           <ThemeProvider
             attribute="class"
-            defaultTheme="dark"
+            defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
