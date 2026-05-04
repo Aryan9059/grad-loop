@@ -62,6 +62,7 @@ model User {
   likes               Like[]
   comments            Comment[]
   commentLikes        CommentLike[]
+  profileEmbedding    ProfileEmbedding?
 } 
 
 enum Role {
@@ -196,4 +197,14 @@ model Event {
   universityId Int
   university   University @relation(fields: [universityId], references: [id], onDelete: Cascade)
   createdAt    DateTime   @default(now())
+}
+model ProfileEmbedding {
+  id           BigInt   @id @default(autoincrement())
+  userId       Int      @unique @map("user_id")
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  embedding    Unsupported("vector(1024)") // pgvector type
+  profileText  String?  @map("profile_text")
+  updatedAt    DateTime @default(now()) @map("updated_at")
+
+  @@map("profile_embeddings")
 }
