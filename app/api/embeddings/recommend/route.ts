@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { findSimilarProfiles, generateAndUpsertEmbedding } from "@/lib/embeddings";
+import pg from "pg";
 
 export async function GET() {
   try {
@@ -19,26 +20,49 @@ export async function GET() {
     }
 
     // Check if user has an embedding, generate one if not
-    const existingEmbedding = await prisma.$queryRaw`
-      SELECT user_id FROM profile_embeddings WHERE user_id = ${user.id}
-    `;
+    const pool = new pg.Pool({
+      connectionString: process.env.DATABASE_URL,
+    });
 
-    if (!Array.isArray(existingEmbedding) || existingEmbedding.length === 0) {
+    let hasEmbedding = false;
+    try {
+      const existingEmbedding = await pool.query(
+        `SELECT user_id FROM profile_embeddings WHERE user_id = $1`,
+        [user.id]
+      );
+      hasEmbedding = existingEmbedding.rows.length > 0;
+      console.log(`User ${user.id} ${hasEmbedding ? 'already has' : 'does not have'} an embedding`);
+    } catch (dbError) {
+      console.error(`Database error checking embeddings for user ${user.id}:`, dbError);
+      // Table might not exist, continue without embedding check
+    } finally {
+      await pool.end();
+    }
+
+    if (!hasEmbedding) {
       console.log(`Generating embedding for user ${user.id} (${user.firstName} ${user.lastName})`);
       try {
         await generateAndUpsertEmbedding(user);
         console.log(`Successfully generated embedding for user ${user.id}`);
       } catch (embedError) {
         console.error(`Failed to generate embedding for user ${user.id}:`, embedError);
-        // Continue anyway - maybe other users have embeddings
+        // Return empty recommendations if we can't generate embedding
+        return NextResponse.json({ recommendations: [] });
       }
     }
 
     // Find similar profiles via pgvector cosine similarity
-    const matches = await findSimilarProfiles(user.id, 5);
-    console.log(`Found ${matches.length} matches for user ${user.id}`);
-    if (matches.length > 0) {
-      console.log(`Top matches:`, matches.slice(0, 3).map(m => ({ user_id: m.user_id, similarity: m.similarity })));
+    let matches: { user_id: number; similarity: number }[] = [];
+    try {
+      matches = await findSimilarProfiles(user.id, 5);
+      console.log(`Found ${matches.length} matches for user ${user.id}`);
+      if (matches.length > 0) {
+        console.log(`Top matches:`, matches.slice(0, 3).map(m => ({ user_id: m.user_id, similarity: m.similarity })));
+      }
+    } catch (similarityError) {
+      console.error(`Error finding similar profiles for user ${user.id}:`, similarityError);
+      // Return empty recommendations if similarity search fails
+      return NextResponse.json({ recommendations: [] });
     }
 
     if (matches.length === 0) {
