@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { getPosts } from "@/lib/data";
 import { Suspense } from "react";
 
-export const unstable_instant = { prefetch: 'static' };
+
 
 export default async function HomePage() {
   const { userId } = await auth();

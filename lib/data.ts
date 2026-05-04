@@ -1,12 +1,10 @@
 import { prisma } from "./prisma";
-import { unstable_cache } from "next/cache";
+import { findSimilarProfiles, generateAndUpsertEmbedding } from "./embeddings";
 
 /**
- * Opportunities are cached globally as they are the same for all users
- * in a university (or globally if university logic is loose).
+ * Opportunities are fetched server-side. No client fetch overhead.
  */
 export async function getOpportunities() {
-  'use cache'
   return await prisma.opportunity.findMany({
     include: {
       author: {
@@ -26,7 +24,6 @@ export async function getOpportunities() {
 }
 
 export async function getUserConversations(clerkId: string) {
-  'use cache'
   const user = await prisma.user.findUnique({
     where: { clerkId },
     select: { id: true }
@@ -83,19 +80,14 @@ export async function getUserConversations(clerkId: string) {
   }));
 }
 
-import { findSimilarProfiles, generateAndUpsertEmbedding } from "./embeddings";
-
 export async function getRecommendedUsers(clerkId: string) {
-  'use cache'
   const user = await prisma.user.findUnique({
     where: { clerkId },
   });
 
   if (!user) return [];
 
-  // Logic from recommendation API route
   try {
-    // Generate embedding if missing (side effect in cached function is okay as it only happens on cache miss)
     await generateAndUpsertEmbedding(user);
     
     const matches = await findSimilarProfiles(user.id, 8);
@@ -136,7 +128,6 @@ export async function getRecommendedUsers(clerkId: string) {
 }
 
 export async function getUserConnections(clerkId: string) {
-  'use cache'
   const user = await prisma.user.findUnique({
     where: { clerkId },
     select: { connections: true }
@@ -145,7 +136,6 @@ export async function getUserConnections(clerkId: string) {
 }
 
 export async function getPosts(clerkId: string) {
-  'use cache'
   const user = await prisma.user.findUnique({
     where: { clerkId },
     select: { id: true, universityId: true }
@@ -187,7 +177,6 @@ export async function getPosts(clerkId: string) {
 }
 
 export async function getConnectionsList(clerkId: string) {
-  'use cache'
   const user = await prisma.user.findUnique({
     where: { clerkId },
     select: { connections: true }
@@ -216,7 +205,6 @@ export async function getConnectionsList(clerkId: string) {
 }
 
 export async function getPendingRequests(clerkId: string) {
-  'use cache'
   const user = await prisma.user.findUnique({
     where: { clerkId },
     select: { id: true }

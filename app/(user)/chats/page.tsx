@@ -5,7 +5,7 @@ import ChatsView from "@/components/chats/ChatsView";
 import { Loader2 } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 
-export const unstable_instant = { prefetch: 'static' };
+
 
 export default async function ChatsPage() {
   const { userId: clerkId } = await auth();

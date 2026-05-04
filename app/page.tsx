@@ -102,7 +102,7 @@ export default function Home() {
             <div className="hidden md:flex items-center gap-3">
               {userId ? (
                 <div className="flex items-center gap-4">
-                   <UserButton afterSignOutUrl="/" appearance={{ elements: { userButtonAvatarBox: "size-9 border border-slate-200 dark:border-slate-800" } }} />
+                   <UserButton appearance={{ elements: { userButtonAvatarBox: "size-9 border border-slate-200 dark:border-slate-800" } }} />
                 </div>
               ) : (
                 <>
@@ -138,7 +138,7 @@ export default function Home() {
               <hr className="border-slate-100 dark:border-slate-800" />
               {userId ? (
                 <div className="flex justify-center py-4">
-                  <UserButton afterSignOutUrl="/" appearance={{ elements: { userButtonAvatarBox: "size-12" } }} />
+                  <UserButton appearance={{ elements: { userButtonAvatarBox: "size-12" } }} />
                 </div>
               ) : (
                 <div className="flex flex-col gap-4">

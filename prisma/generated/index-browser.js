@@ -24,11 +24,11 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.7.0
+ * Prisma Client JS version: 7.6.0
  * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
  */
 Prisma.prismaVersion = {
-  client: "7.7.0",
+  client: "7.6.0",
   engine: "75cbdc1eb7150937890ad5465d861175c6624711"
 }
 
@@ -255,6 +255,13 @@ exports.Prisma.EventScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.ProfileEmbeddingScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  profileText: 'profileText',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -288,7 +295,8 @@ exports.Prisma.ModelName = {
   ConnectionRequest: 'ConnectionRequest',
   Conversation: 'Conversation',
   Message: 'Message',
-  Event: 'Event'
+  Event: 'Event',
+  ProfileEmbedding: 'ProfileEmbedding'
 };
 
 /**

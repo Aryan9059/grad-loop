@@ -4,7 +4,7 @@ import { getConnectionsList, getPendingRequests, getRecommendedUsers } from "@/l
 import ConnectionsView from "@/components/connections/ConnectionsView";
 import { Loader2 } from "lucide-react";
 
-export const unstable_instant = { prefetch: 'static' };
+
 
 export default async function ConnectionsPage() {
   const { userId: clerkId } = await auth();

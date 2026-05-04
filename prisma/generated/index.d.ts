@@ -83,6 +83,11 @@ export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
  * 
  */
 export type Event = $Result.DefaultSelection<Prisma.$EventPayload>
+/**
+ * Model ProfileEmbedding
+ * 
+ */
+export type ProfileEmbedding = $Result.DefaultSelection<Prisma.$ProfileEmbeddingPayload>
 
 /**
  * Enums
@@ -361,6 +366,16 @@ export class PrismaClient<
     * ```
     */
   get event(): Prisma.EventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.profileEmbedding`: Exposes CRUD operations for the **ProfileEmbedding** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProfileEmbeddings
+    * const profileEmbeddings = await prisma.profileEmbedding.findMany()
+    * ```
+    */
+  get profileEmbedding(): Prisma.ProfileEmbeddingDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -411,7 +426,7 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.7.0
+   * Prisma Client JS version: 7.6.0
    * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
    */
   export type PrismaVersion = {
@@ -808,7 +823,8 @@ export namespace Prisma {
     ConnectionRequest: 'ConnectionRequest',
     Conversation: 'Conversation',
     Message: 'Message',
-    Event: 'Event'
+    Event: 'Event',
+    ProfileEmbedding: 'ProfileEmbedding'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -824,7 +840,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "university" | "community" | "user" | "skill" | "post" | "like" | "comment" | "commentLike" | "opportunity" | "referralRequest" | "connectionRequest" | "conversation" | "message" | "event"
+      modelProps: "university" | "community" | "user" | "skill" | "post" | "like" | "comment" | "commentLike" | "opportunity" | "referralRequest" | "connectionRequest" | "conversation" | "message" | "event" | "profileEmbedding"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1864,6 +1880,64 @@ export namespace Prisma {
           }
         }
       }
+      ProfileEmbedding: {
+        payload: Prisma.$ProfileEmbeddingPayload<ExtArgs>
+        fields: Prisma.ProfileEmbeddingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProfileEmbeddingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileEmbeddingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProfileEmbeddingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileEmbeddingPayload>
+          }
+          findFirst: {
+            args: Prisma.ProfileEmbeddingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileEmbeddingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProfileEmbeddingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileEmbeddingPayload>
+          }
+          findMany: {
+            args: Prisma.ProfileEmbeddingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileEmbeddingPayload>[]
+          }
+          delete: {
+            args: Prisma.ProfileEmbeddingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileEmbeddingPayload>
+          }
+          update: {
+            args: Prisma.ProfileEmbeddingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileEmbeddingPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProfileEmbeddingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProfileEmbeddingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProfileEmbeddingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfileEmbeddingPayload>[]
+          }
+          aggregate: {
+            args: Prisma.ProfileEmbeddingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProfileEmbedding>
+          }
+          groupBy: {
+            args: Prisma.ProfileEmbeddingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProfileEmbeddingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProfileEmbeddingCountArgs<ExtArgs>
+            result: $Utils.Optional<ProfileEmbeddingCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1986,6 +2060,7 @@ export namespace Prisma {
     conversation?: ConversationOmit
     message?: MessageOmit
     event?: EventOmit
+    profileEmbedding?: ProfileEmbeddingOmit
   }
 
   /* Types for Logging */
@@ -5070,6 +5145,7 @@ export namespace Prisma {
     likes?: boolean | User$likesArgs<ExtArgs>
     comments?: boolean | User$commentsArgs<ExtArgs>
     commentLikes?: boolean | User$commentLikesArgs<ExtArgs>
+    profileEmbedding?: boolean | User$profileEmbeddingArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -5152,6 +5228,7 @@ export namespace Prisma {
     likes?: boolean | User$likesArgs<ExtArgs>
     comments?: boolean | User$commentsArgs<ExtArgs>
     commentLikes?: boolean | User$commentLikesArgs<ExtArgs>
+    profileEmbedding?: boolean | User$profileEmbeddingArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5176,6 +5253,7 @@ export namespace Prisma {
       likes: Prisma.$LikePayload<ExtArgs>[]
       comments: Prisma.$CommentPayload<ExtArgs>[]
       commentLikes: Prisma.$CommentLikePayload<ExtArgs>[]
+      profileEmbedding: Prisma.$ProfileEmbeddingPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5602,6 +5680,7 @@ export namespace Prisma {
     likes<T extends User$likesArgs<ExtArgs> = {}>(args?: Subset<T, User$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     comments<T extends User$commentsArgs<ExtArgs> = {}>(args?: Subset<T, User$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     commentLikes<T extends User$commentLikesArgs<ExtArgs> = {}>(args?: Subset<T, User$commentLikesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    profileEmbedding<T extends User$profileEmbeddingArgs<ExtArgs> = {}>(args?: Subset<T, User$profileEmbeddingArgs<ExtArgs>>): Prisma__ProfileEmbeddingClient<$Result.GetResult<Prisma.$ProfileEmbeddingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6330,6 +6409,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CommentLikeScalarFieldEnum | CommentLikeScalarFieldEnum[]
+  }
+
+  /**
+   * User.profileEmbedding
+   */
+  export type User$profileEmbeddingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileEmbedding
+     */
+    select?: ProfileEmbeddingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProfileEmbedding
+     */
+    omit?: ProfileEmbeddingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileEmbeddingInclude<ExtArgs> | null
+    where?: ProfileEmbeddingWhereInput
   }
 
   /**
@@ -18841,6 +18939,927 @@ export namespace Prisma {
 
 
   /**
+   * Model ProfileEmbedding
+   */
+
+  export type AggregateProfileEmbedding = {
+    _count: ProfileEmbeddingCountAggregateOutputType | null
+    _avg: ProfileEmbeddingAvgAggregateOutputType | null
+    _sum: ProfileEmbeddingSumAggregateOutputType | null
+    _min: ProfileEmbeddingMinAggregateOutputType | null
+    _max: ProfileEmbeddingMaxAggregateOutputType | null
+  }
+
+  export type ProfileEmbeddingAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type ProfileEmbeddingSumAggregateOutputType = {
+    id: bigint | null
+    userId: number | null
+  }
+
+  export type ProfileEmbeddingMinAggregateOutputType = {
+    id: bigint | null
+    userId: number | null
+    profileText: string | null
+    updatedAt: Date | null
+  }
+
+  export type ProfileEmbeddingMaxAggregateOutputType = {
+    id: bigint | null
+    userId: number | null
+    profileText: string | null
+    updatedAt: Date | null
+  }
+
+  export type ProfileEmbeddingCountAggregateOutputType = {
+    id: number
+    userId: number
+    profileText: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ProfileEmbeddingAvgAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type ProfileEmbeddingSumAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type ProfileEmbeddingMinAggregateInputType = {
+    id?: true
+    userId?: true
+    profileText?: true
+    updatedAt?: true
+  }
+
+  export type ProfileEmbeddingMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    profileText?: true
+    updatedAt?: true
+  }
+
+  export type ProfileEmbeddingCountAggregateInputType = {
+    id?: true
+    userId?: true
+    profileText?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ProfileEmbeddingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProfileEmbedding to aggregate.
+     */
+    where?: ProfileEmbeddingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProfileEmbeddings to fetch.
+     */
+    orderBy?: ProfileEmbeddingOrderByWithRelationInput | ProfileEmbeddingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProfileEmbeddingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProfileEmbeddings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProfileEmbeddings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProfileEmbeddings
+    **/
+    _count?: true | ProfileEmbeddingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProfileEmbeddingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProfileEmbeddingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProfileEmbeddingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProfileEmbeddingMaxAggregateInputType
+  }
+
+  export type GetProfileEmbeddingAggregateType<T extends ProfileEmbeddingAggregateArgs> = {
+        [P in keyof T & keyof AggregateProfileEmbedding]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProfileEmbedding[P]>
+      : GetScalarType<T[P], AggregateProfileEmbedding[P]>
+  }
+
+
+
+
+  export type ProfileEmbeddingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProfileEmbeddingWhereInput
+    orderBy?: ProfileEmbeddingOrderByWithAggregationInput | ProfileEmbeddingOrderByWithAggregationInput[]
+    by: ProfileEmbeddingScalarFieldEnum[] | ProfileEmbeddingScalarFieldEnum
+    having?: ProfileEmbeddingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProfileEmbeddingCountAggregateInputType | true
+    _avg?: ProfileEmbeddingAvgAggregateInputType
+    _sum?: ProfileEmbeddingSumAggregateInputType
+    _min?: ProfileEmbeddingMinAggregateInputType
+    _max?: ProfileEmbeddingMaxAggregateInputType
+  }
+
+  export type ProfileEmbeddingGroupByOutputType = {
+    id: bigint
+    userId: number
+    profileText: string | null
+    updatedAt: Date
+    _count: ProfileEmbeddingCountAggregateOutputType | null
+    _avg: ProfileEmbeddingAvgAggregateOutputType | null
+    _sum: ProfileEmbeddingSumAggregateOutputType | null
+    _min: ProfileEmbeddingMinAggregateOutputType | null
+    _max: ProfileEmbeddingMaxAggregateOutputType | null
+  }
+
+  type GetProfileEmbeddingGroupByPayload<T extends ProfileEmbeddingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProfileEmbeddingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProfileEmbeddingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProfileEmbeddingGroupByOutputType[P]>
+            : GetScalarType<T[P], ProfileEmbeddingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProfileEmbeddingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    profileText?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["profileEmbedding"]>
+
+
+  export type ProfileEmbeddingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    profileText?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["profileEmbedding"]>
+
+  export type ProfileEmbeddingSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    profileText?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ProfileEmbeddingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "profileText" | "updatedAt", ExtArgs["result"]["profileEmbedding"]>
+  export type ProfileEmbeddingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ProfileEmbeddingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ProfileEmbeddingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProfileEmbedding"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: bigint
+      userId: number
+      profileText: string | null
+      updatedAt: Date
+    }, ExtArgs["result"]["profileEmbedding"]>
+    composites: {}
+  }
+
+  type ProfileEmbeddingGetPayload<S extends boolean | null | undefined | ProfileEmbeddingDefaultArgs> = $Result.GetResult<Prisma.$ProfileEmbeddingPayload, S>
+
+  type ProfileEmbeddingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProfileEmbeddingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProfileEmbeddingCountAggregateInputType | true
+    }
+
+  export interface ProfileEmbeddingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProfileEmbedding'], meta: { name: 'ProfileEmbedding' } }
+    /**
+     * Find zero or one ProfileEmbedding that matches the filter.
+     * @param {ProfileEmbeddingFindUniqueArgs} args - Arguments to find a ProfileEmbedding
+     * @example
+     * // Get one ProfileEmbedding
+     * const profileEmbedding = await prisma.profileEmbedding.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProfileEmbeddingFindUniqueArgs>(args: SelectSubset<T, ProfileEmbeddingFindUniqueArgs<ExtArgs>>): Prisma__ProfileEmbeddingClient<$Result.GetResult<Prisma.$ProfileEmbeddingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProfileEmbedding that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProfileEmbeddingFindUniqueOrThrowArgs} args - Arguments to find a ProfileEmbedding
+     * @example
+     * // Get one ProfileEmbedding
+     * const profileEmbedding = await prisma.profileEmbedding.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProfileEmbeddingFindUniqueOrThrowArgs>(args: SelectSubset<T, ProfileEmbeddingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProfileEmbeddingClient<$Result.GetResult<Prisma.$ProfileEmbeddingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProfileEmbedding that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileEmbeddingFindFirstArgs} args - Arguments to find a ProfileEmbedding
+     * @example
+     * // Get one ProfileEmbedding
+     * const profileEmbedding = await prisma.profileEmbedding.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProfileEmbeddingFindFirstArgs>(args?: SelectSubset<T, ProfileEmbeddingFindFirstArgs<ExtArgs>>): Prisma__ProfileEmbeddingClient<$Result.GetResult<Prisma.$ProfileEmbeddingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProfileEmbedding that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileEmbeddingFindFirstOrThrowArgs} args - Arguments to find a ProfileEmbedding
+     * @example
+     * // Get one ProfileEmbedding
+     * const profileEmbedding = await prisma.profileEmbedding.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProfileEmbeddingFindFirstOrThrowArgs>(args?: SelectSubset<T, ProfileEmbeddingFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProfileEmbeddingClient<$Result.GetResult<Prisma.$ProfileEmbeddingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProfileEmbeddings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileEmbeddingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProfileEmbeddings
+     * const profileEmbeddings = await prisma.profileEmbedding.findMany()
+     * 
+     * // Get first 10 ProfileEmbeddings
+     * const profileEmbeddings = await prisma.profileEmbedding.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const profileEmbeddingWithIdOnly = await prisma.profileEmbedding.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProfileEmbeddingFindManyArgs>(args?: SelectSubset<T, ProfileEmbeddingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfileEmbeddingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Delete a ProfileEmbedding.
+     * @param {ProfileEmbeddingDeleteArgs} args - Arguments to delete one ProfileEmbedding.
+     * @example
+     * // Delete one ProfileEmbedding
+     * const ProfileEmbedding = await prisma.profileEmbedding.delete({
+     *   where: {
+     *     // ... filter to delete one ProfileEmbedding
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProfileEmbeddingDeleteArgs>(args: SelectSubset<T, ProfileEmbeddingDeleteArgs<ExtArgs>>): Prisma__ProfileEmbeddingClient<$Result.GetResult<Prisma.$ProfileEmbeddingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProfileEmbedding.
+     * @param {ProfileEmbeddingUpdateArgs} args - Arguments to update one ProfileEmbedding.
+     * @example
+     * // Update one ProfileEmbedding
+     * const profileEmbedding = await prisma.profileEmbedding.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProfileEmbeddingUpdateArgs>(args: SelectSubset<T, ProfileEmbeddingUpdateArgs<ExtArgs>>): Prisma__ProfileEmbeddingClient<$Result.GetResult<Prisma.$ProfileEmbeddingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProfileEmbeddings.
+     * @param {ProfileEmbeddingDeleteManyArgs} args - Arguments to filter ProfileEmbeddings to delete.
+     * @example
+     * // Delete a few ProfileEmbeddings
+     * const { count } = await prisma.profileEmbedding.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProfileEmbeddingDeleteManyArgs>(args?: SelectSubset<T, ProfileEmbeddingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProfileEmbeddings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileEmbeddingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProfileEmbeddings
+     * const profileEmbedding = await prisma.profileEmbedding.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProfileEmbeddingUpdateManyArgs>(args: SelectSubset<T, ProfileEmbeddingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProfileEmbeddings and returns the data updated in the database.
+     * @param {ProfileEmbeddingUpdateManyAndReturnArgs} args - Arguments to update many ProfileEmbeddings.
+     * @example
+     * // Update many ProfileEmbeddings
+     * const profileEmbedding = await prisma.profileEmbedding.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ProfileEmbeddings and only return the `id`
+     * const profileEmbeddingWithIdOnly = await prisma.profileEmbedding.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProfileEmbeddingUpdateManyAndReturnArgs>(args: SelectSubset<T, ProfileEmbeddingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfileEmbeddingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+
+    /**
+     * Count the number of ProfileEmbeddings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileEmbeddingCountArgs} args - Arguments to filter ProfileEmbeddings to count.
+     * @example
+     * // Count the number of ProfileEmbeddings
+     * const count = await prisma.profileEmbedding.count({
+     *   where: {
+     *     // ... the filter for the ProfileEmbeddings we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProfileEmbeddingCountArgs>(
+      args?: Subset<T, ProfileEmbeddingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProfileEmbeddingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProfileEmbedding.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileEmbeddingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProfileEmbeddingAggregateArgs>(args: Subset<T, ProfileEmbeddingAggregateArgs>): Prisma.PrismaPromise<GetProfileEmbeddingAggregateType<T>>
+
+    /**
+     * Group by ProfileEmbedding.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileEmbeddingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProfileEmbeddingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProfileEmbeddingGroupByArgs['orderBy'] }
+        : { orderBy?: ProfileEmbeddingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProfileEmbeddingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProfileEmbeddingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProfileEmbedding model
+   */
+  readonly fields: ProfileEmbeddingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProfileEmbedding.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProfileEmbeddingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProfileEmbedding model
+   */
+  interface ProfileEmbeddingFieldRefs {
+    readonly id: FieldRef<"ProfileEmbedding", 'BigInt'>
+    readonly userId: FieldRef<"ProfileEmbedding", 'Int'>
+    readonly profileText: FieldRef<"ProfileEmbedding", 'String'>
+    readonly updatedAt: FieldRef<"ProfileEmbedding", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProfileEmbedding findUnique
+   */
+  export type ProfileEmbeddingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileEmbedding
+     */
+    select?: ProfileEmbeddingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProfileEmbedding
+     */
+    omit?: ProfileEmbeddingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileEmbeddingInclude<ExtArgs> | null
+    /**
+     * Filter, which ProfileEmbedding to fetch.
+     */
+    where: ProfileEmbeddingWhereUniqueInput
+  }
+
+  /**
+   * ProfileEmbedding findUniqueOrThrow
+   */
+  export type ProfileEmbeddingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileEmbedding
+     */
+    select?: ProfileEmbeddingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProfileEmbedding
+     */
+    omit?: ProfileEmbeddingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileEmbeddingInclude<ExtArgs> | null
+    /**
+     * Filter, which ProfileEmbedding to fetch.
+     */
+    where: ProfileEmbeddingWhereUniqueInput
+  }
+
+  /**
+   * ProfileEmbedding findFirst
+   */
+  export type ProfileEmbeddingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileEmbedding
+     */
+    select?: ProfileEmbeddingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProfileEmbedding
+     */
+    omit?: ProfileEmbeddingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileEmbeddingInclude<ExtArgs> | null
+    /**
+     * Filter, which ProfileEmbedding to fetch.
+     */
+    where?: ProfileEmbeddingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProfileEmbeddings to fetch.
+     */
+    orderBy?: ProfileEmbeddingOrderByWithRelationInput | ProfileEmbeddingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProfileEmbeddings.
+     */
+    cursor?: ProfileEmbeddingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProfileEmbeddings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProfileEmbeddings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProfileEmbeddings.
+     */
+    distinct?: ProfileEmbeddingScalarFieldEnum | ProfileEmbeddingScalarFieldEnum[]
+  }
+
+  /**
+   * ProfileEmbedding findFirstOrThrow
+   */
+  export type ProfileEmbeddingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileEmbedding
+     */
+    select?: ProfileEmbeddingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProfileEmbedding
+     */
+    omit?: ProfileEmbeddingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileEmbeddingInclude<ExtArgs> | null
+    /**
+     * Filter, which ProfileEmbedding to fetch.
+     */
+    where?: ProfileEmbeddingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProfileEmbeddings to fetch.
+     */
+    orderBy?: ProfileEmbeddingOrderByWithRelationInput | ProfileEmbeddingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProfileEmbeddings.
+     */
+    cursor?: ProfileEmbeddingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProfileEmbeddings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProfileEmbeddings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProfileEmbeddings.
+     */
+    distinct?: ProfileEmbeddingScalarFieldEnum | ProfileEmbeddingScalarFieldEnum[]
+  }
+
+  /**
+   * ProfileEmbedding findMany
+   */
+  export type ProfileEmbeddingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileEmbedding
+     */
+    select?: ProfileEmbeddingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProfileEmbedding
+     */
+    omit?: ProfileEmbeddingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileEmbeddingInclude<ExtArgs> | null
+    /**
+     * Filter, which ProfileEmbeddings to fetch.
+     */
+    where?: ProfileEmbeddingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProfileEmbeddings to fetch.
+     */
+    orderBy?: ProfileEmbeddingOrderByWithRelationInput | ProfileEmbeddingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProfileEmbeddings.
+     */
+    cursor?: ProfileEmbeddingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProfileEmbeddings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProfileEmbeddings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProfileEmbeddings.
+     */
+    distinct?: ProfileEmbeddingScalarFieldEnum | ProfileEmbeddingScalarFieldEnum[]
+  }
+
+  /**
+   * ProfileEmbedding update
+   */
+  export type ProfileEmbeddingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileEmbedding
+     */
+    select?: ProfileEmbeddingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProfileEmbedding
+     */
+    omit?: ProfileEmbeddingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileEmbeddingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ProfileEmbedding.
+     */
+    data: XOR<ProfileEmbeddingUpdateInput, ProfileEmbeddingUncheckedUpdateInput>
+    /**
+     * Choose, which ProfileEmbedding to update.
+     */
+    where: ProfileEmbeddingWhereUniqueInput
+  }
+
+  /**
+   * ProfileEmbedding updateMany
+   */
+  export type ProfileEmbeddingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProfileEmbeddings.
+     */
+    data: XOR<ProfileEmbeddingUpdateManyMutationInput, ProfileEmbeddingUncheckedUpdateManyInput>
+    /**
+     * Filter which ProfileEmbeddings to update
+     */
+    where?: ProfileEmbeddingWhereInput
+    /**
+     * Limit how many ProfileEmbeddings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProfileEmbedding updateManyAndReturn
+   */
+  export type ProfileEmbeddingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileEmbedding
+     */
+    select?: ProfileEmbeddingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProfileEmbedding
+     */
+    omit?: ProfileEmbeddingOmit<ExtArgs> | null
+    /**
+     * The data used to update ProfileEmbeddings.
+     */
+    data: XOR<ProfileEmbeddingUpdateManyMutationInput, ProfileEmbeddingUncheckedUpdateManyInput>
+    /**
+     * Filter which ProfileEmbeddings to update
+     */
+    where?: ProfileEmbeddingWhereInput
+    /**
+     * Limit how many ProfileEmbeddings to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileEmbeddingIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProfileEmbedding delete
+   */
+  export type ProfileEmbeddingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileEmbedding
+     */
+    select?: ProfileEmbeddingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProfileEmbedding
+     */
+    omit?: ProfileEmbeddingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileEmbeddingInclude<ExtArgs> | null
+    /**
+     * Filter which ProfileEmbedding to delete.
+     */
+    where: ProfileEmbeddingWhereUniqueInput
+  }
+
+  /**
+   * ProfileEmbedding deleteMany
+   */
+  export type ProfileEmbeddingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProfileEmbeddings to delete
+     */
+    where?: ProfileEmbeddingWhereInput
+    /**
+     * Limit how many ProfileEmbeddings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProfileEmbedding without action
+   */
+  export type ProfileEmbeddingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProfileEmbedding
+     */
+    select?: ProfileEmbeddingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProfileEmbedding
+     */
+    omit?: ProfileEmbeddingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileEmbeddingInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -19031,6 +20050,16 @@ export namespace Prisma {
   export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
 
 
+  export const ProfileEmbeddingScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    profileText: 'profileText',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ProfileEmbeddingScalarFieldEnum = (typeof ProfileEmbeddingScalarFieldEnum)[keyof typeof ProfileEmbeddingScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -19120,6 +20149,20 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'BigInt'
+   */
+  export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
+    
+
+
+  /**
+   * Reference to a field of type 'BigInt[]'
+   */
+  export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
     
 
 
@@ -19293,6 +20336,7 @@ export namespace Prisma {
     likes?: LikeListRelationFilter
     comments?: CommentListRelationFilter
     commentLikes?: CommentLikeListRelationFilter
+    profileEmbedding?: XOR<ProfileEmbeddingNullableScalarRelationFilter, ProfileEmbeddingWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -19326,6 +20370,7 @@ export namespace Prisma {
     likes?: LikeOrderByRelationAggregateInput
     comments?: CommentOrderByRelationAggregateInput
     commentLikes?: CommentLikeOrderByRelationAggregateInput
+    profileEmbedding?: ProfileEmbeddingOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -19362,6 +20407,7 @@ export namespace Prisma {
     likes?: LikeListRelationFilter
     comments?: CommentListRelationFilter
     commentLikes?: CommentLikeListRelationFilter
+    profileEmbedding?: XOR<ProfileEmbeddingNullableScalarRelationFilter, ProfileEmbeddingWhereInput> | null
   }, "id" | "clerkId" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -20145,6 +21191,58 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
   }
 
+  export type ProfileEmbeddingWhereInput = {
+    AND?: ProfileEmbeddingWhereInput | ProfileEmbeddingWhereInput[]
+    OR?: ProfileEmbeddingWhereInput[]
+    NOT?: ProfileEmbeddingWhereInput | ProfileEmbeddingWhereInput[]
+    id?: BigIntFilter<"ProfileEmbedding"> | bigint | number
+    userId?: IntFilter<"ProfileEmbedding"> | number
+    profileText?: StringNullableFilter<"ProfileEmbedding"> | string | null
+    updatedAt?: DateTimeFilter<"ProfileEmbedding"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ProfileEmbeddingOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    profileText?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ProfileEmbeddingWhereUniqueInput = Prisma.AtLeast<{
+    id?: bigint | number
+    userId?: number
+    AND?: ProfileEmbeddingWhereInput | ProfileEmbeddingWhereInput[]
+    OR?: ProfileEmbeddingWhereInput[]
+    NOT?: ProfileEmbeddingWhereInput | ProfileEmbeddingWhereInput[]
+    profileText?: StringNullableFilter<"ProfileEmbedding"> | string | null
+    updatedAt?: DateTimeFilter<"ProfileEmbedding"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId">
+
+  export type ProfileEmbeddingOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    profileText?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+    _count?: ProfileEmbeddingCountOrderByAggregateInput
+    _avg?: ProfileEmbeddingAvgOrderByAggregateInput
+    _max?: ProfileEmbeddingMaxOrderByAggregateInput
+    _min?: ProfileEmbeddingMinOrderByAggregateInput
+    _sum?: ProfileEmbeddingSumOrderByAggregateInput
+  }
+
+  export type ProfileEmbeddingScalarWhereWithAggregatesInput = {
+    AND?: ProfileEmbeddingScalarWhereWithAggregatesInput | ProfileEmbeddingScalarWhereWithAggregatesInput[]
+    OR?: ProfileEmbeddingScalarWhereWithAggregatesInput[]
+    NOT?: ProfileEmbeddingScalarWhereWithAggregatesInput | ProfileEmbeddingScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"ProfileEmbedding"> | bigint | number
+    userId?: IntWithAggregatesFilter<"ProfileEmbedding"> | number
+    profileText?: StringNullableWithAggregatesFilter<"ProfileEmbedding"> | string | null
+    updatedAt?: DateTimeWithAggregatesFilter<"ProfileEmbedding"> | Date | string
+  }
+
   export type UniversityCreateInput = {
     name: string
     domain: string
@@ -20289,6 +21387,7 @@ export namespace Prisma {
     likes?: LikeCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -20321,6 +21420,7 @@ export namespace Prisma {
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -20352,6 +21452,7 @@ export namespace Prisma {
     likes?: LikeUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -20384,6 +21485,7 @@ export namespace Prisma {
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -21119,6 +22221,33 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ProfileEmbeddingUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    profileText?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutProfileEmbeddingNestedInput
+  }
+
+  export type ProfileEmbeddingUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    userId?: IntFieldUpdateOperationsInput | number
+    profileText?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfileEmbeddingUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    profileText?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfileEmbeddingUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    userId?: IntFieldUpdateOperationsInput | number
+    profileText?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -21424,6 +22553,11 @@ export namespace Prisma {
     every?: CommentLikeWhereInput
     some?: CommentLikeWhereInput
     none?: CommentLikeWhereInput
+  }
+
+  export type ProfileEmbeddingNullableScalarRelationFilter = {
+    is?: ProfileEmbeddingWhereInput | null
+    isNot?: ProfileEmbeddingWhereInput | null
   }
 
   export type ReferralRequestOrderByRelationAggregateInput = {
@@ -22067,6 +23201,64 @@ export namespace Prisma {
     universityId?: SortOrder
   }
 
+  export type BigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
+  }
+
+  export type ProfileEmbeddingCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    profileText?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProfileEmbeddingAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ProfileEmbeddingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    profileText?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProfileEmbeddingMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    profileText?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProfileEmbeddingSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
+  }
+
   export type UserCreateNestedManyWithoutUniversityInput = {
     create?: XOR<UserCreateWithoutUniversityInput, UserUncheckedCreateWithoutUniversityInput> | UserCreateWithoutUniversityInput[] | UserUncheckedCreateWithoutUniversityInput[]
     connectOrCreate?: UserCreateOrConnectWithoutUniversityInput | UserCreateOrConnectWithoutUniversityInput[]
@@ -22443,6 +23635,10 @@ export namespace Prisma {
     connect?: CommentLikeWhereUniqueInput | CommentLikeWhereUniqueInput[]
   }
 
+  export type ProfileEmbeddingCreateNestedOneWithoutUserInput = {
+    connect?: ProfileEmbeddingWhereUniqueInput
+  }
+
   export type PostUncheckedCreateNestedManyWithoutAuthorInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
@@ -22517,6 +23713,10 @@ export namespace Prisma {
     connectOrCreate?: CommentLikeCreateOrConnectWithoutUserInput | CommentLikeCreateOrConnectWithoutUserInput[]
     createMany?: CommentLikeCreateManyUserInputEnvelope
     connect?: CommentLikeWhereUniqueInput | CommentLikeWhereUniqueInput[]
+  }
+
+  export type ProfileEmbeddingUncheckedCreateNestedOneWithoutUserInput = {
+    connect?: ProfileEmbeddingWhereUniqueInput
   }
 
   export type EnumRoleFieldUpdateOperationsInput = {
@@ -22704,6 +23904,13 @@ export namespace Prisma {
     deleteMany?: CommentLikeScalarWhereInput | CommentLikeScalarWhereInput[]
   }
 
+  export type ProfileEmbeddingUpdateOneWithoutUserNestedInput = {
+    disconnect?: ProfileEmbeddingWhereInput | boolean
+    delete?: ProfileEmbeddingWhereInput | boolean
+    connect?: ProfileEmbeddingWhereUniqueInput
+    update?: XOR<XOR<ProfileEmbeddingUpdateToOneWithWhereWithoutUserInput, ProfileEmbeddingUpdateWithoutUserInput>, ProfileEmbeddingUncheckedUpdateWithoutUserInput>
+  }
+
   export type PostUncheckedUpdateManyWithoutAuthorNestedInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
@@ -22855,6 +24062,13 @@ export namespace Prisma {
     update?: CommentLikeUpdateWithWhereUniqueWithoutUserInput | CommentLikeUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: CommentLikeUpdateManyWithWhereWithoutUserInput | CommentLikeUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: CommentLikeScalarWhereInput | CommentLikeScalarWhereInput[]
+  }
+
+  export type ProfileEmbeddingUncheckedUpdateOneWithoutUserNestedInput = {
+    disconnect?: ProfileEmbeddingWhereInput | boolean
+    delete?: ProfileEmbeddingWhereInput | boolean
+    connect?: ProfileEmbeddingWhereUniqueInput
+    update?: XOR<XOR<ProfileEmbeddingUpdateToOneWithWhereWithoutUserInput, ProfileEmbeddingUpdateWithoutUserInput>, ProfileEmbeddingUncheckedUpdateWithoutUserInput>
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -23399,6 +24613,22 @@ export namespace Prisma {
     update?: XOR<XOR<UniversityUpdateToOneWithWhereWithoutEventsInput, UniversityUpdateWithoutEventsInput>, UniversityUncheckedUpdateWithoutEventsInput>
   }
 
+  export type BigIntFieldUpdateOperationsInput = {
+    set?: bigint | number
+    increment?: bigint | number
+    decrement?: bigint | number
+    multiply?: bigint | number
+    divide?: bigint | number
+  }
+
+  export type UserUpdateOneRequiredWithoutProfileEmbeddingNestedInput = {
+    create?: XOR<UserCreateWithoutProfileEmbeddingInput, UserUncheckedCreateWithoutProfileEmbeddingInput>
+    connectOrCreate?: UserCreateOrConnectWithoutProfileEmbeddingInput
+    upsert?: UserUpsertWithoutProfileEmbeddingInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProfileEmbeddingInput, UserUpdateWithoutProfileEmbeddingInput>, UserUncheckedUpdateWithoutProfileEmbeddingInput>
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -23617,6 +24847,33 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedBigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
+  }
+
+  export type NestedBigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
+  }
+
   export type UserCreateWithoutUniversityInput = {
     clerkId?: string | null
     email: string
@@ -23645,6 +24902,7 @@ export namespace Prisma {
     likes?: LikeCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUniversityInput = {
@@ -23676,6 +24934,7 @@ export namespace Prisma {
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUniversityInput = {
@@ -24678,6 +25937,23 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"CommentLike"> | Date | string
   }
 
+  export type ProfileEmbeddingUpdateToOneWithWhereWithoutUserInput = {
+    where?: ProfileEmbeddingWhereInput
+    data: XOR<ProfileEmbeddingUpdateWithoutUserInput, ProfileEmbeddingUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ProfileEmbeddingUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    profileText?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfileEmbeddingUncheckedUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    profileText?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateWithoutPostsInput = {
     clerkId?: string | null
     email: string
@@ -24706,6 +25982,7 @@ export namespace Prisma {
     likes?: LikeCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPostsInput = {
@@ -24737,6 +26014,7 @@ export namespace Prisma {
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPostsInput = {
@@ -24873,6 +26151,7 @@ export namespace Prisma {
     likes?: LikeUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPostsInput = {
@@ -24904,6 +26183,7 @@ export namespace Prisma {
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type CommunityUpsertWithoutPostsInput = {
@@ -25052,6 +26332,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     comments?: CommentCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutLikesInput = {
@@ -25083,6 +26364,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutLikesInput = {
@@ -25165,6 +26447,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLikesInput = {
@@ -25196,6 +26479,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type PostCreateWithoutCommentsInput = {
@@ -25256,6 +26540,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     likes?: LikeCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCommentsInput = {
@@ -25287,6 +26572,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCommentsInput = {
@@ -25390,6 +26676,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     likes?: LikeUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -25421,6 +26708,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type CommentLikeUpsertWithWhereUniqueWithoutCommentInput = {
@@ -25487,6 +26775,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     likes?: LikeCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCommentLikesInput = {
@@ -25518,6 +26807,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCommentLikesInput = {
@@ -25590,6 +26880,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     likes?: LikeUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCommentLikesInput = {
@@ -25621,6 +26912,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutOpportunitiesInput = {
@@ -25651,6 +26943,7 @@ export namespace Prisma {
     likes?: LikeCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutOpportunitiesInput = {
@@ -25682,6 +26975,7 @@ export namespace Prisma {
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutOpportunitiesInput = {
@@ -25777,6 +27071,7 @@ export namespace Prisma {
     likes?: LikeUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOpportunitiesInput = {
@@ -25808,6 +27103,7 @@ export namespace Prisma {
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UniversityUpsertWithoutOpportunitiesInput = {
@@ -25884,6 +27180,7 @@ export namespace Prisma {
     likes?: LikeCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReferralsReqInput = {
@@ -25915,6 +27212,7 @@ export namespace Prisma {
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReferralsReqInput = {
@@ -25986,6 +27284,7 @@ export namespace Prisma {
     likes?: LikeCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReferralsMadeInput = {
@@ -26017,6 +27316,7 @@ export namespace Prisma {
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReferralsMadeInput = {
@@ -26063,6 +27363,7 @@ export namespace Prisma {
     likes?: LikeUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReferralsReqInput = {
@@ -26094,6 +27395,7 @@ export namespace Prisma {
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type OpportunityUpsertWithoutRequestsInput = {
@@ -26177,6 +27479,7 @@ export namespace Prisma {
     likes?: LikeUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReferralsMadeInput = {
@@ -26208,6 +27511,7 @@ export namespace Prisma {
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSentReqsInput = {
@@ -26238,6 +27542,7 @@ export namespace Prisma {
     likes?: LikeCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSentReqsInput = {
@@ -26269,6 +27574,7 @@ export namespace Prisma {
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSentReqsInput = {
@@ -26304,6 +27610,7 @@ export namespace Prisma {
     likes?: LikeCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReceivedReqsInput = {
@@ -26335,6 +27642,7 @@ export namespace Prisma {
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReceivedReqsInput = {
@@ -26381,6 +27689,7 @@ export namespace Prisma {
     likes?: LikeUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentReqsInput = {
@@ -26412,6 +27721,7 @@ export namespace Prisma {
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutReceivedReqsInput = {
@@ -26453,6 +27763,7 @@ export namespace Prisma {
     likes?: LikeUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReceivedReqsInput = {
@@ -26484,6 +27795,7 @@ export namespace Prisma {
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutConversationsInput = {
@@ -26514,6 +27826,7 @@ export namespace Prisma {
     likes?: LikeCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutConversationsInput = {
@@ -26545,6 +27858,7 @@ export namespace Prisma {
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutConversationsInput = {
@@ -26637,6 +27951,7 @@ export namespace Prisma {
     likes?: LikeCreateNestedManyWithoutUserInput
     comments?: CommentCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMessagesInput = {
@@ -26668,6 +27983,7 @@ export namespace Prisma {
     likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
     commentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
+    profileEmbedding?: ProfileEmbeddingUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMessagesInput = {
@@ -26734,6 +28050,7 @@ export namespace Prisma {
     likes?: LikeUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMessagesInput = {
@@ -26765,6 +28082,7 @@ export namespace Prisma {
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type ConversationUpsertWithoutMessagesInput = {
@@ -26845,6 +28163,148 @@ export namespace Prisma {
     communities?: CommunityUncheckedUpdateManyWithoutUniversityNestedInput
     posts?: PostUncheckedUpdateManyWithoutUniversityNestedInput
     opportunities?: OpportunityUncheckedUpdateManyWithoutUniversityNestedInput
+  }
+
+  export type UserCreateWithoutProfileEmbeddingInput = {
+    clerkId?: string | null
+    email: string
+    firstName?: string | null
+    lastName?: string | null
+    role: $Enums.Role
+    graduationYear?: number | null
+    connections?: UserCreateconnectionsInput | number[]
+    domain?: string | null
+    skills?: UserCreateskillsInput | string[]
+    company?: string | null
+    roleTitle?: string | null
+    openToConnect?: boolean
+    profile_photo?: string | null
+    bio?: string | null
+    isModerator?: boolean
+    openToMentor?: boolean
+    university?: UniversityCreateNestedOneWithoutUsersInput
+    posts?: PostCreateNestedManyWithoutAuthorInput
+    opportunities?: OpportunityCreateNestedManyWithoutAuthorInput
+    referralsMade?: ReferralRequestCreateNestedManyWithoutReferrerInput
+    referralsReq?: ReferralRequestCreateNestedManyWithoutRequestorInput
+    sentReqs?: ConnectionRequestCreateNestedManyWithoutSenderInput
+    receivedReqs?: ConnectionRequestCreateNestedManyWithoutReceiverInput
+    conversations?: ConversationCreateNestedManyWithoutParticipantsInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
+    likes?: LikeCreateNestedManyWithoutUserInput
+    comments?: CommentCreateNestedManyWithoutUserInput
+    commentLikes?: CommentLikeCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutProfileEmbeddingInput = {
+    id?: number
+    clerkId?: string | null
+    email: string
+    firstName?: string | null
+    lastName?: string | null
+    role: $Enums.Role
+    graduationYear?: number | null
+    connections?: UserCreateconnectionsInput | number[]
+    domain?: string | null
+    skills?: UserCreateskillsInput | string[]
+    company?: string | null
+    roleTitle?: string | null
+    openToConnect?: boolean
+    profile_photo?: string | null
+    bio?: string | null
+    universityId?: number | null
+    isModerator?: boolean
+    openToMentor?: boolean
+    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    opportunities?: OpportunityUncheckedCreateNestedManyWithoutAuthorInput
+    referralsMade?: ReferralRequestUncheckedCreateNestedManyWithoutReferrerInput
+    referralsReq?: ReferralRequestUncheckedCreateNestedManyWithoutRequestorInput
+    sentReqs?: ConnectionRequestUncheckedCreateNestedManyWithoutSenderInput
+    receivedReqs?: ConnectionRequestUncheckedCreateNestedManyWithoutReceiverInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutParticipantsInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
+    commentLikes?: CommentLikeUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutProfileEmbeddingInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutProfileEmbeddingInput, UserUncheckedCreateWithoutProfileEmbeddingInput>
+  }
+
+  export type UserUpsertWithoutProfileEmbeddingInput = {
+    update: XOR<UserUpdateWithoutProfileEmbeddingInput, UserUncheckedUpdateWithoutProfileEmbeddingInput>
+    create: XOR<UserCreateWithoutProfileEmbeddingInput, UserUncheckedCreateWithoutProfileEmbeddingInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutProfileEmbeddingInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutProfileEmbeddingInput, UserUncheckedUpdateWithoutProfileEmbeddingInput>
+  }
+
+  export type UserUpdateWithoutProfileEmbeddingInput = {
+    clerkId?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    graduationYear?: NullableIntFieldUpdateOperationsInput | number | null
+    connections?: UserUpdateconnectionsInput | number[]
+    domain?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    openToConnect?: BoolFieldUpdateOperationsInput | boolean
+    profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    isModerator?: BoolFieldUpdateOperationsInput | boolean
+    openToMentor?: BoolFieldUpdateOperationsInput | boolean
+    university?: UniversityUpdateOneWithoutUsersNestedInput
+    posts?: PostUpdateManyWithoutAuthorNestedInput
+    opportunities?: OpportunityUpdateManyWithoutAuthorNestedInput
+    referralsMade?: ReferralRequestUpdateManyWithoutReferrerNestedInput
+    referralsReq?: ReferralRequestUpdateManyWithoutRequestorNestedInput
+    sentReqs?: ConnectionRequestUpdateManyWithoutSenderNestedInput
+    receivedReqs?: ConnectionRequestUpdateManyWithoutReceiverNestedInput
+    conversations?: ConversationUpdateManyWithoutParticipantsNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
+    likes?: LikeUpdateManyWithoutUserNestedInput
+    comments?: CommentUpdateManyWithoutUserNestedInput
+    commentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutProfileEmbeddingInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clerkId?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    graduationYear?: NullableIntFieldUpdateOperationsInput | number | null
+    connections?: UserUpdateconnectionsInput | number[]
+    domain?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    roleTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    openToConnect?: BoolFieldUpdateOperationsInput | boolean
+    profile_photo?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    universityId?: NullableIntFieldUpdateOperationsInput | number | null
+    isModerator?: BoolFieldUpdateOperationsInput | boolean
+    openToMentor?: BoolFieldUpdateOperationsInput | boolean
+    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    opportunities?: OpportunityUncheckedUpdateManyWithoutAuthorNestedInput
+    referralsMade?: ReferralRequestUncheckedUpdateManyWithoutReferrerNestedInput
+    referralsReq?: ReferralRequestUncheckedUpdateManyWithoutRequestorNestedInput
+    sentReqs?: ConnectionRequestUncheckedUpdateManyWithoutSenderNestedInput
+    receivedReqs?: ConnectionRequestUncheckedUpdateManyWithoutReceiverNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutParticipantsNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
+    commentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyUniversityInput = {
@@ -26937,6 +28397,7 @@ export namespace Prisma {
     likes?: LikeUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUniversityInput = {
@@ -26968,6 +28429,7 @@ export namespace Prisma {
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutUniversityInput = {
@@ -27669,6 +29131,7 @@ export namespace Prisma {
     likes?: LikeUpdateManyWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutConversationsInput = {
@@ -27700,6 +29163,7 @@ export namespace Prisma {
     likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
     commentLikes?: CommentLikeUncheckedUpdateManyWithoutUserNestedInput
+    profileEmbedding?: ProfileEmbeddingUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutConversationsInput = {

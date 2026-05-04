@@ -7,10 +7,9 @@ import Link from "next/link";
 import { Logo } from "@/components/ui/logo";
 import { Suspense } from "react";
 
-export const unstable_instant = { prefetch: 'static' };
+
 
 async function getProfileData(clerkId: string) {
-  'use cache'
   return await prisma.user.findUnique({
     where: { clerkId },
     include: {
