@@ -174,11 +174,41 @@ async function ProfileData({ clerkId }: { clerkId: string }) {
 
 function ProfileLoading() {
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center">
-      <div className="flex flex-col items-center gap-4">
-        <div className="size-12 rounded-full border-4 border-primary/10 border-t-primary animate-spin" />
-        <p className="text-sm font-bold text-muted-foreground animate-pulse tracking-widest uppercase">Loading Profile...</p>
-      </div>
+    <div className="min-h-screen bg-background flex flex-col animate-pulse">
+      <div className="border-b bg-card/50 h-16 w-full" />
+      <main className="flex-1 p-6 sm:p-10">
+        <div className="mx-auto w-full max-w-3xl overflow-hidden rounded-3xl border border-border bg-card shadow-2xl">
+          <div className="h-40 w-full bg-muted sm:h-56" />
+          <div className="relative px-6 pb-8 pt-16 sm:px-12 sm:pb-12 space-y-8">
+            <div className="absolute -top-16 left-6 sm:-top-20 sm:left-12 size-32 sm:size-40 rounded-full bg-muted border-4 border-card" />
+            <div className="flex flex-col gap-6 pt-20 sm:flex-row sm:items-start sm:justify-between sm:pt-24">
+               <div className="space-y-3">
+                  <div className="h-10 w-48 rounded-xl bg-muted" />
+                  <div className="h-4 w-32 rounded-lg bg-muted" />
+               </div>
+               <div className="h-8 w-24 rounded-xl bg-muted" />
+            </div>
+            <div className="h-24 w-full rounded-2xl bg-muted/30" />
+            <div className="grid gap-10 sm:grid-cols-2">
+               <div className="space-y-4">
+                  <div className="h-3 w-32 rounded bg-muted" />
+                  <div className="space-y-3">
+                     <div className="h-12 w-full rounded-xl bg-muted" />
+                     <div className="h-12 w-full rounded-xl bg-muted" />
+                  </div>
+               </div>
+               <div className="space-y-4">
+                  <div className="h-3 w-32 rounded bg-muted" />
+                  <div className="flex flex-wrap gap-2">
+                     {[1, 2, 3, 4].map(i => (
+                        <div key={i} className="h-8 w-16 rounded-xl bg-muted" />
+                     ))}
+                  </div>
+               </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
