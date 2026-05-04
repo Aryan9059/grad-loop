@@ -1,60 +1,77 @@
 # Grad-Loop
 
-A unified platform designed to help graduates and students build, analyze, and improve their professional profiles. **Grad-Loop** brings together resume creation + analysis, profile recommendations, authentication, and a backend-powered data layer into one cohesive web application.
+<div align="center">
+
+**A unified platform to help students and graduates build, analyze, and continuously improve their professional profiles.**  
+Resume creation + analysis, profile recommendations, authentication, and database‑backed persistence — all in one loop.
+
+<br />
+
+<!-- Stack / Tech badges -->
+
+[![Next.js](https://img.shields.io/badge/Next.js-App-000000?logo=nextdotjs&logoColor=white)](#tech-stack)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Primary-3178C6?logo=typescript&logoColor=white)](#tech-stack)
+[![Python](https://img.shields.io/badge/Python-Analysis%20Services-3776AB?logo=python&logoColor=white)](#tech-stack)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?logo=postgresql&logoColor=white)](#database)
+[![CSS](https://img.shields.io/badge/CSS-Styling-1572B6?logo=css3&logoColor=white)](#tech-stack)
+
+<!-- Language composition badges (as reported) -->
+
+[![TypeScript %](https://img.shields.io/badge/TypeScript-67.3%25-3178C6?logo=typescript&logoColor=white)](#tech-stack)
+[![Python %](https://img.shields.io/badge/Python-28.7%25-3776AB?logo=python&logoColor=white)](#tech-stack)
+[![JavaScript %](https://img.shields.io/badge/JavaScript-2.6%25-F7DF1E?logo=javascript&logoColor=000)](#tech-stack)
+[![CSS %](https://img.shields.io/badge/CSS-1.1%25-1572B6?logo=css3&logoColor=white)](#tech-stack)
+[![PL%2FpgSQL %](https://img.shields.io/badge/PL%2FpgSQL-0.3%25-4169E1?logo=postgresql&logoColor=white)](#database)
+
+<br />
+
+</div>
 
 ---
 
-## Project Overview
-Grad-Loop is a full‑stack application focused on guiding users through improving their career readiness. The platform enables users to:
-- Create resumes using an interactive builder
-- Analyze resumes and get feedback/insights
-- Receive profile recommendations to improve employability
-- Manage accounts securely with authentication
-- Store and retrieve user/resume data via a database-backed backend
+## Table of Contents
 
-The repository contains both **TypeScript/JavaScript** (web application) and **Python** (analysis/processing services or utilities), reflecting a hybrid architecture that supports resume insights alongside a modern web UI.
-
----
-
-## Tech Stack
-### Frontend
-- **Next.js**: Core web framework for UI, routing, and server-side capabilities
-- **TypeScript**: Strongly typed development for reliability and maintainability
-- **CSS**: Styling
-
-### Authentication
-- Authentication layer for user sign‑up/sign‑in and protected routes/pages
-
-### Backend
-- Backend services/APIs to handle:
-  - user and resume data handling
-  - business logic
-  - communication with the database
-
-### Database
-- Persistent storage for user profiles, resumes, and related application data
-
-### Python Components
-- Python modules/services used for resume analysis, parsing, scoring, or related workflows
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Tech Stack](#tech-stack)
+- [Repository Structure](#repository-structure)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [Database](#database)
+- [Python Components](#python-components)
+- [Scripts](#scripts)
+- [Team Contributions](#team-contributions)
+- [Contributing](#contributing)
 
 ---
 
-## Features & Functionality
+## Overview
+
+Grad-Loop is a full‑stack application focused on improving career readiness. It helps users iteratively:
+
+1. **Create** a resume
+2. **Analyze** it for feedback and quality signals
+3. **Act** on recommendations to improve their profile
+4. **Repeat** — continuously refining outcomes
+
+---
+
+## Key Features
+
 - **User Authentication**
   - Sign up / Sign in
-  - Protected user-specific workflows
+  - Protected, user-specific workflows
 
 - **Resume Creator**
-  - Guided resume builder
+  - Guided, interactive resume builder
   - Export-ready resume generation
 
 - **Resume Analyzer**
   - Automated analysis and feedback
-  - Suggestions to improve resume quality and structure
+  - Suggestions to improve structure and content
 
 - **Profile Recommendations**
-  - Personalized recommendations to enhance user profiles
-  - Actionable tips to improve career readiness
+  - Personalized, actionable improvements
 
 - **Database-backed Data Management**
   - Store and retrieve resumes, profiles, and user-related data
@@ -65,21 +82,54 @@ The repository contains both **TypeScript/JavaScript** (web application) and **P
 
 ---
 
-## Setup & Run
+## Tech Stack
+
+### Frontend
+
+- **Next.js** — UI, routing, and server-side capabilities
+- **TypeScript** — type-safe, maintainable development
+- **CSS** — styling
+
+### Backend
+
+- Backend services/APIs for user/resume data, business logic, and DB communication
+
+### Python Components
+
+- Python modules/services for resume analysis, parsing, scoring, and related workflows
+
+---
+
+## Repository Structure
+
+> The exact structure may vary; use this as a guide.
+
+- `app/` or `pages/` — routes and UI (Next.js)
+- `src/` — shared application logic/components
+- `api/` / `server/` — backend services
+- `scripts/` — automation and utilities
+- `db/` / `migrations/` — database schema and migrations
+
+---
+
+## Getting Started
 
 ### Prerequisites
+
 - **Node.js** (LTS recommended)
-- **npm** / **yarn** / **pnpm** / **bun**
+- **npm / yarn / pnpm / bun**
 - **Python 3.10+** (recommended)
-- A running database instance (as required by the backend)
+- A running **database** instance (as required by the backend)
 
 ### 1) Clone the repository
+
 ```bash
 git clone https://github.com/Aryan9059/grad-loop.git
 cd grad-loop
 ```
 
 ### 2) Install dependencies
+
 ```bash
 npm install
 # or
@@ -90,15 +140,8 @@ pnpm install
 bun install
 ```
 
-### 3) Configure environment variables
-Create a `.env` file (or `.env.local` depending on project conventions) and add required values such as:
-- Authentication secrets/keys
-- Database connection string
-- Backend API URLs
+### 3) Run the development server
 
-> If the repo includes a `.env.example`, copy it to `.env` and fill in the values.
-
-### 4) Run the development server
 ```bash
 npm run dev
 # or
@@ -111,8 +154,36 @@ bun dev
 
 Open `http://localhost:3000` in your browser.
 
-### 5) (Optional) Setup & run Python components
-If you’re running the resume analysis service/utilities:
+---
+
+## Environment Variables
+
+Create a `.env` file (or `.env.local` depending on project conventions) and set values such as:
+
+- Authentication secrets/keys
+- Database connection string
+- Backend API URLs
+
+> If the repo includes a `.env.example`, copy it to `.env` and fill in the values.
+
+---
+
+## Database
+
+This project uses a database for persisting user profiles, resumes, and related data.
+
+- Ensure your DB is running
+- Confirm your connection string is set (e.g., `DATABASE_URL=...`)
+- Apply migrations if your setup requires them
+
+> Migration tooling varies by stack (Prisma, Knex, Django/Alembic, etc.). Check the repo for a migrations folder or package scripts.
+
+---
+
+## Python Components
+
+If you are running the resume analysis service/utilities:
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # Linux/Mac
@@ -122,12 +193,22 @@ pip install -r requirements.txt
 python main.py
 ```
 
-### 6) Backend & Database
-Start the backend service and database according to the instructions in the backend folder (if present). Ensure your database connection string is correctly configured in the environment variables.
+---
+
+## Scripts
+
+Common scripts you may find in `package.json`:
+
+- `dev` — start the development server
+- `build` — create a production build
+- `start` — start the production server
+- `lint` — lint code
+- `test` — run tests
 
 ---
 
 ## Team Contributions
+
 - **Paras Pandey (IIT2024235)** — Profile Recommendations
 - **Chandan Sapkale (IIT2024258)** — Frontend + Authentication
 - **Soham Donode (IIT2024259)** — Frontend + Database
@@ -137,8 +218,9 @@ Start the backend service and database according to the instructions in the back
 ---
 
 ## Contributing
+
 1. Fork the repository
-2. Create a new branch (`feature/your-feature-name`)
+2. Create a new branch: `feature/your-feature-name`
 3. Commit your changes
 4. Open a Pull Request
 
