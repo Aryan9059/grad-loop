@@ -214,7 +214,7 @@ function LayoutContent({
       </SidebarBody>
 
       {/* Main content area + Right Sidebar */}
-      <main className="flex flex-1 w-full min-h-screen overflow-y-auto bg-background">
+      <main className="flex flex-1 w-full min-h-screen overflow-y-auto bg-background pt-14 md:pt-0">
         <div className="flex-1 overflow-y-auto">
           {children}
         </div>
