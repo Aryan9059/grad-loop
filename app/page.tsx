@@ -42,7 +42,7 @@ export default function Home() {
 
   const features = [
     {
-      icon: <Users className="w-6 h-6 text-blue-500" />,
+      icon: <Users className="w-6 h-6 text-primary" />,
       title: "Alumni Directory",
       description: "Connect with graduates from your college across the globe and expand your professional network."
     },
@@ -67,7 +67,7 @@ export default function Home() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white dark:bg-slate-950">
         <div className="flex flex-col items-center gap-4">
-          <div className="size-12 animate-spin rounded-full border-b-2 border-blue-600" />
+          <div className="size-12 animate-spin rounded-full border-b-2 border-primary" />
           <p className="text-slate-500 font-medium animate-pulse">Loading Grad Loop...</p>
         </div>
       </div>
@@ -75,7 +75,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#020617] font-sans text-slate-900 dark:text-slate-100 selection:bg-blue-100 dark:selection:bg-blue-900/30">
+    <div className="min-h-screen bg-white dark:bg-[#020617] font-sans text-slate-900 dark:text-slate-100 selection:bg-primary/20 dark:selection:bg-primary/30">
       {/* Dark mode mesh background */}
       <div className="fixed inset-0 -z-50 hidden dark:block">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,#1e293b,transparent)]" />
@@ -133,7 +133,7 @@ export default function Home() {
                 <Button asChild variant="ghost" className="hidden md:inline-flex rounded-full h-8 px-4 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800">
                   <Link href="/sign-in">Log in</Link>
                 </Button>
-                <Button asChild className="rounded-full h-8 px-4 text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/25">
+                <Button asChild className="rounded-full h-8 px-4 text-sm font-semibold bg-primary hover:bg-primary/90 text-primary-foreground shadow-md shadow-primary/25">
                   <Link href="/sign-up">Sign up</Link>
                 </Button>
               </>
@@ -166,7 +166,7 @@ export default function Home() {
                 </div>
               ) : (
                 <div className="flex flex-col gap-2 pt-1">
-                  <Button asChild className="w-full rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg shadow-blue-500/20">
+                  <Button asChild className="w-full rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/20">
                     <Link href="/sign-up" onClick={() => setIsMenuOpen(false)}>Sign up</Link>
                   </Button>
                   <Button asChild variant="ghost" className="w-full rounded-xl font-medium text-slate-600 dark:text-slate-400">
@@ -184,7 +184,7 @@ export default function Home() {
         <section id="about" className="relative pt-36 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
           {/* Background Elements */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 overflow-hidden">
-            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-100/50 dark:bg-blue-900/10 rounded-full blur-[120px]" />
+            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 dark:bg-primary/10 rounded-full blur-[120px]" />
             <div className="absolute bottom-[10%] right-[-10%] w-[40%] h-[40%] bg-orange-100/50 dark:bg-orange-900/10 rounded-full blur-[120px]" />
           </div>
 
@@ -196,7 +196,7 @@ export default function Home() {
               className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-600 dark:from-white dark:to-slate-400"
             >
               Connect with your <br className="hidden md:block" />
-              <span className="text-blue-600">Alumni Legacy</span>
+              <span className="text-primary">Alumni Legacy</span>
             </motion.h1>
 
             <motion.p
@@ -214,7 +214,7 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
             >
-              <Button asChild size="lg" className="rounded-full px-8 py-7 text-lg font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-xl shadow-blue-500/25 transition-all hover:scale-105">
+              <Button asChild size="lg" className="rounded-full px-8 py-7 text-lg font-semibold bg-primary hover:bg-primary/90 text-primary-foreground shadow-xl shadow-primary/25 transition-all hover:scale-105">
                 <Link href="/home">
                   Go to Home <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
@@ -232,7 +232,7 @@ export default function Home() {
               className="relative max-w-5xl mx-auto"
             >
               <div className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-2xl bg-white dark:bg-slate-900/50 backdrop-blur-sm p-2 md:p-4 group">
-                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 <div className="relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-inner">
                   <Image 
                     src="/dashboard-hero.png" 
@@ -244,12 +244,12 @@ export default function Home() {
                   />
                 </div>
                 {/* Hero Glow in Dark Mode */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000 group-hover:duration-200 hidden dark:block -z-10"></div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary to-purple-600 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-1000 group-hover:duration-200 hidden dark:block -z-10"></div>
               </div>
               
               {/* Decorative elements */}
               <div className="absolute -top-12 -right-12 w-48 h-48 bg-orange-500/10 blur-3xl rounded-full -z-10" />
-              <div className="absolute -bottom-12 -left-12 w-64 h-64 bg-blue-500/10 blur-3xl rounded-full -z-10" />
+              <div className="absolute -bottom-12 -left-12 w-64 h-64 bg-primary/10 blur-3xl rounded-full -z-10" />
             </motion.div>
           </div>
         </section>
@@ -274,7 +274,7 @@ export default function Home() {
                   transition={{ duration: 0.8 }}
                   className="w-full md:w-1/2 max-w-md relative flex"
                 >
-                  <div className="absolute inset-0 bg-blue-500/10 blur-3xl rounded-full -z-10" />
+                  <div className="absolute inset-0 bg-primary/10 blur-3xl rounded-full -z-10" />
                   <div className="rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl w-full flex">
                     <Image 
                       src="/mentor.png" 
@@ -292,8 +292,8 @@ export default function Home() {
                   transition={{ duration: 0.8 }}
                   className="w-full md:w-1/2 max-w-xl space-y-6 flex flex-col justify-center"
                 >
-                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
-                    <Users className="w-6 h-6 text-blue-600" />
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                    <Users className="w-6 h-6 text-primary" />
                   </div>
                   <h3 className="text-3xl md:text-5xl font-bold">Alumni Directory</h3>
                   <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
@@ -416,7 +416,7 @@ export default function Home() {
                   transition={{ duration: 0.8 }}
                   className="w-full md:w-1/2 max-w-lg relative flex"
                 >
-                  <div className="absolute inset-0 bg-blue-500/10 blur-3xl rounded-full -z-10" />
+                  <div className="absolute inset-0 bg-primary/10 blur-3xl rounded-full -z-10" />
                   <div className="rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl w-full flex">
                     <Image src="/community.png" alt="Global Community" width={800} height={600} className="w-full h-auto object-contain bg-slate-50 dark:bg-slate-900" />
                   </div>
@@ -428,8 +428,8 @@ export default function Home() {
                   transition={{ duration: 0.8 }}
                   className="w-full md:w-1/2 max-w-xl space-y-6 flex flex-col justify-center"
                 >
-                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
-                    <Globe className="w-6 h-6 text-blue-600" />
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                    <Globe className="w-6 h-6 text-primary" />
                   </div>
                   <h3 className="text-3xl md:text-5xl font-bold">Global Community</h3>
                   <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
@@ -447,19 +447,19 @@ export default function Home() {
         {/* Call to Action */}
         <section id="community" className="py-24 bg-slate-50/50 dark:bg-slate-900/20">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="relative overflow-hidden bg-blue-600 rounded-[2.5rem] p-8 md:p-16 text-center text-white shadow-2xl shadow-blue-500/20">
-              <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl" />
-              <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-96 h-96 bg-blue-700/20 rounded-full blur-3xl" />
+            <div className="relative overflow-hidden bg-primary rounded-[2.5rem] p-8 md:p-16 text-center text-primary-foreground shadow-2xl shadow-primary/20">
+              <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-primary-foreground/20 rounded-full blur-3xl" />
+              <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-96 h-96 bg-black/20 rounded-full blur-3xl" />
               
               <h2 className="text-3xl md:text-5xl font-bold mb-6 relative z-10">Ready to join your community?</h2>
-              <p className="text-blue-100 mb-10 text-lg max-w-xl mx-auto relative z-10">
+              <p className="text-primary-foreground/80 mb-10 text-lg max-w-xl mx-auto relative z-10">
                 Join thousands of alumni already connecting and growing on Grad Loop. Your next opportunity is just a click away.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6 relative z-10">
-                <Button asChild size="lg" className="rounded-full px-10 py-7 text-lg font-bold bg-white text-blue-600 hover:bg-blue-50 shadow-xl transition-all hover:scale-105">
+                <Button asChild size="lg" className="rounded-full px-10 py-7 text-lg font-bold bg-primary-foreground text-primary hover:bg-primary-foreground/90 shadow-xl transition-all hover:scale-105">
                   <Link href="/sign-up">Create Account</Link>
                 </Button>
-                <Link href="/sign-in" className="text-white font-medium hover:underline underline-offset-4 decoration-white/30 hover:decoration-white transition-all">
+                <Link href="/sign-in" className="text-primary-foreground font-medium hover:underline underline-offset-4 decoration-white/30 hover:decoration-white transition-all">
                   Already have an account? Log in
                 </Link>
               </div>
@@ -478,9 +478,9 @@ export default function Home() {
             </div>
             
             <div className="flex gap-8 text-sm text-slate-500 dark:text-slate-400">
-              <Link href="#" className="hover:text-blue-600 transition-colors">Privacy Policy</Link>
-              <Link href="#" className="hover:text-blue-600 transition-colors">Terms of Service</Link>
-              <Link href="#" className="hover:text-blue-600 transition-colors">Contact Us</Link>
+              <Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link>
+              <Link href="#" className="hover:text-primary transition-colors">Terms of Service</Link>
+              <Link href="#" className="hover:text-primary transition-colors">Contact Us</Link>
             </div>
           </div>
           

@@ -64,7 +64,7 @@ export default function OpportunityCard({ opportunity }: OpportunityCardProps) {
             <Link href={`/u/${opportunity.author?.clerkId}`} className="relative shrink-0 group/avatar">
               <div className="size-14 rounded-2xl bg-linear-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center overflow-hidden transition-all duration-500 group-hover/avatar:scale-105 shadow-sm">
                 {opportunity.author?.profile_photo ? (
-                  <Image src={opportunity.author.profile_photo} alt="Avatar" width={56} height={56} className="object-cover w-full h-full" />
+                  <Image src={opportunity.author.profile_photo} alt="Avatar" width={56} height={56} className="object-cover w-full h-full" unoptimized/>
                 ) : (
                   <span className="text-primary font-black text-lg">{authorInitials}</span>
                 )}

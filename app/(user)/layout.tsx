@@ -96,11 +96,11 @@ function LayoutContent({
   ];
 
   const settingsLinks = [
-    {
-      label: "Settings",
-      href: "/settings",
-      icon: <Settings className="h-5 w-5 shrink-0" />,
-    },
+    // {
+    //   label: "Settings",
+    //   href: "/settings",
+    //   icon: <Settings className="h-5 w-5 shrink-0" />,
+    // },
   ];
 
   const isDark = resolvedTheme === "dark";

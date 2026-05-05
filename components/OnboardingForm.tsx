@@ -172,7 +172,7 @@ export default function OnboardingForm() {
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.3 }}
           >
-            <h1 className="bg-linear-to-br from-foreground to-foreground/60 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent sm:text-5xl">
+            <h1 className="bg-linear-to-br from-primary to-primary/60 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent sm:text-5xl">
               {step === 1 ? "Complete your profile" : "Professional details"}
             </h1>
             <p className="mt-3 text-muted-foreground text-base">
@@ -190,7 +190,7 @@ export default function OnboardingForm() {
           initial={{ width: "50%" }}
           animate={{ width: step === 1 ? "50%" : "100%" }}
           transition={{ type: "spring", stiffness: 40, damping: 15 }}
-          className="absolute h-full bg-linear-to-r from-primary via-primary/80 to-primary/60 shadow-[0_0_15px_rgba(var(--primary),0.4)]"
+          className="absolute h-full bg-linear-to-r from-primary via-primary/80 to-primary/60 shadow-lg shadow-primary/40"
         />
         <div className="absolute top-0 flex w-full justify-around px-1 h-full pointer-events-none">
           <div className="h-full w-px bg-foreground/5" />
