@@ -1,7 +1,11 @@
 # Grad-Loop
 
-<div align="center">
+<img width="1280" height="738" alt="WhatsApp Image 2026-05-05 at 09 35 17" src="https://github.com/user-attachments/assets/a05f5139-688d-4e09-acc1-9b6c5b9f7da2" />
 
+<div align="center">
+<br />
+<br />
+  
 **A unified platform to help students and graduates build, analyze, and continuously improve their professional profiles.**  
 Resume creation + analysis, profile recommendations, authentication, and database‑backed persistence — all in one loop.
 
