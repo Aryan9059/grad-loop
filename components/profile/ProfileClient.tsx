@@ -1,14 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { useUser } from "@clerk/nextjs";
 import { Badge } from "@/components/ui/badge";
-import { Briefcase, Building2, GraduationCap, MapPin, Search, Edit3, Share2, Check, Copy } from "lucide-react";
+import { Briefcase, Building2, GraduationCap, MapPin, Search, Edit3, Share2, Check, Copy, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import EditProfileModal from "./EditProfileModal";
 import Image from "next/image";
 
 export default function ProfileClient({ initialUser }: { initialUser: any }) {
   const [user, setUser] = useState(initialUser);
+  const { user: clerkUser } = useUser();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
 
@@ -51,8 +53,8 @@ export default function ProfileClient({ initialUser }: { initialUser: any }) {
             {/* Avatar / Profile Initial Badge */}
             <div className="absolute -top-16 left-6 sm:-top-20 sm:left-12">
               <div className="flex size-32 items-center justify-center rounded-full border-4 border-card bg-muted text-5xl font-bold text-muted-foreground shadow-lg sm:size-40 sm:text-6xl overflow-hidden">
-                 {user.profile_photo ? (
-                    <Image src={user.profile_photo} alt={user.firstName} width={160} height={160} className="w-full h-full object-cover" unoptimized />
+                 {clerkUser?.imageUrl || user.profile_photo ? (
+                    <img src={clerkUser?.imageUrl || user.profile_photo} alt={user.firstName} className="w-full h-full object-cover" />
                  ) : (
                     <span>{user.firstName?.charAt(0)}{user.lastName?.charAt(0)}</span>
                  )}
@@ -67,13 +69,23 @@ export default function ProfileClient({ initialUser }: { initialUser: any }) {
                 <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-foreground">
                   {user.firstName} {user.lastName}
                 </h1>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <span className="font-medium text-primary uppercase text-xs tracking-wider">{user.role}</span>
-                  <span className="text-muted-foreground/30">•</span>
-                  <span className="flex items-center gap-1 text-sm font-medium">
-                    <GraduationCap className="size-4 text-primary/60" />
-                    Class of {user.graduationYear}
-                  </span>
+                <div className="flex flex-col gap-2 mt-2">
+                  <span className="font-semibold text-primary text-sm">{user.roleTitle || "Student"}</span>
+                  
+                  <div className="flex flex-col gap-2 text-muted-foreground text-sm font-medium mt-3">
+                    <span className="flex items-center gap-2">
+                      <GraduationCap className="size-4 text-primary/60" />
+                      {user.university?.name || "University"} • Class of {user.graduationYear}
+                    </span>
+                    <span className="flex items-center gap-2">
+                      <Briefcase className="size-4 text-primary/60" />
+                      {user.company || "Open to opportunities"}
+                    </span>
+                    <span className="flex items-center gap-2">
+                      <Mail className="size-4 text-primary/60" />
+                      {user.email}
+                    </span>
+                  </div>
                 </div>
               </div>
               <div className="flex shrink-0 gap-2">
