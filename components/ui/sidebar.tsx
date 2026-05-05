@@ -67,11 +67,11 @@ export const Sidebar = ({
   );
 };
 
-export const SidebarBody = (props: React.ComponentProps<"div">) => {
+export const SidebarBody = ({ className, children, ...props }: React.ComponentProps<"div">) => {
   return (
     <>
-      <DesktopSidebar {...props} />
-      <MobileSidebar {...props} />
+      <DesktopSidebar className={className} {...props}>{children}</DesktopSidebar>
+      <MobileSidebar>{children}</MobileSidebar>
     </>
   );
 };
@@ -85,7 +85,7 @@ export const DesktopSidebar = ({
   return (
     <motion.aside
       className={cn(
-        "hidden md:flex md:flex-col shrink-0 h-screen sticky top-0 bg-sidebar border-r border-sidebar-border overflow-hidden",
+        "max-md:hidden md:flex md:flex-col shrink-0 h-screen sticky top-0 bg-sidebar border-r border-sidebar-border overflow-hidden",
         className,
       )}
       animate={{
