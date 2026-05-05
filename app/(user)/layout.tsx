@@ -95,7 +95,13 @@ function LayoutContent({
     },
   ];
 
- 
+  const settingsLinks: { label: string; href: string; icon: React.ReactNode }[] = [
+    // {
+    //   label: "Settings",
+    //   href: "/settings",
+    //   icon: <Settings className="h-5 w-5 shrink-0" />,
+    // },
+  ];
 
   const isDark = resolvedTheme === "dark";
 
@@ -181,6 +187,19 @@ function LayoutContent({
             </motion.div>
           )}
 
+          {/* Settings Link at bottom */}
+          {settingsLinks.map((link, idx) => (
+            <SidebarLink
+              key={idx}
+              link={link}
+              className={cn(
+                "py-2.5 px-3 rounded-lg!",
+                pathname === link.href &&
+                  "bg-primary/10 text-primary font-bold!",
+              )}
+              prefetch={false}
+            />
+          ))}
 
           {/* Divider */}
           <div className="border-t border-sidebar-border" />
