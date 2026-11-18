@@ -5,12 +5,87 @@ import Link from "next/link";
 import {
   ArrowLeft, Upload, X, Wand2, Loader2, Download,
   RefreshCw, FileText, Eye, Code2, AlertCircle, CheckCircle2,
-  ChevronRight,
+  Check, Globe, MessagesSquare, Briefcase, Search, Sparkles, Building2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Step = "upload" | "editor";
 type PreviewState = "idle" | "compiling" | "ready" | "error";
+
+const GENERATION_STEPS = [
+  { icon: Globe, label: "Scraping latest resume trends from LinkedIn", ms: 2200 },
+  { icon: MessagesSquare, label: "Reading hiring threads on Reddit (r/resumes, r/cscareerquestions)", ms: 2200 },
+  { icon: Briefcase, label: "Pulling in-demand keywords from Naukri", ms: 2000 },
+  { icon: Building2, label: "Cross-checking Indeed & Glassdoor job listings", ms: 2000 },
+  { icon: Search, label: "Matching ATS keywords to your domain & skills", ms: 2200 },
+  { icon: Sparkles, label: "Writing your tailored LaTeX resume", ms: 0 },
+];
+
+function GeneratingState() {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (active >= GENERATION_STEPS.length - 1) return;
+    const t = setTimeout(() => setActive((a) => a + 1), GENERATION_STEPS[active].ms);
+    return () => clearTimeout(t);
+  }, [active]);
+
+  const progress = Math.round(((active + 1) / GENERATION_STEPS.length) * 100);
+
+  return (
+    <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-sm animate-in fade-in zoom-in-95 duration-300">
+      <div className="flex flex-col items-center text-center mb-6">
+        <div className="relative flex h-16 w-16 items-center justify-center mb-4">
+          <span className="absolute inset-0 rounded-full bg-violet-500/20 animate-ping" />
+          <span className="absolute inset-0 rounded-full border-2 border-violet-500/30 border-t-violet-500 animate-spin" />
+          <Wand2 className="h-6 w-6 text-violet-600 dark:text-violet-400" />
+        </div>
+        <h2 className="text-lg font-semibold">Crafting your resume</h2>
+        <p className="text-xs text-muted-foreground mt-1">
+          Researching what recruiters want right now — this takes a few seconds.
+        </p>
+      </div>
+
+      <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden mb-6">
+        <div
+          className="h-full rounded-full bg-gradient-to-r from-violet-500 to-indigo-500 transition-all duration-700 ease-out"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+
+      <ul className="space-y-3">
+        {GENERATION_STEPS.map((step, i) => {
+          const done = i < active;
+          const current = i === active;
+          const Icon = step.icon;
+          return (
+            <li
+              key={step.label}
+              className={cn(
+                "flex items-center gap-3 text-sm transition-all duration-500",
+                i > active ? "opacity-30" : "opacity-100"
+              )}
+            >
+              <span
+                className={cn(
+                  "flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-colors",
+                  done ? "bg-emerald-500/15 text-emerald-500" :
+                  current ? "bg-violet-500/15 text-violet-600 dark:text-violet-400" :
+                  "bg-muted text-muted-foreground"
+                )}
+              >
+                {done ? <Check className="h-3.5 w-3.5" /> : current ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Icon className="h-3.5 w-3.5" />}
+              </span>
+              <span className={cn(current ? "font-medium text-foreground" : done ? "text-muted-foreground" : "text-muted-foreground")}>
+                {step.label}{current && <span className="animate-pulse">…</span>}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
 
 export default function CreateResumePage() {
   const [step, setStep] = useState<Step>("upload");
@@ -38,11 +113,10 @@ export default function CreateResumePage() {
   const handleFile = useCallback((f: File) => {
     const allowed = [
       "application/pdf",
-      "application/msword",
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     ];
     if (!allowed.includes(f.type)) {
-      setGenError("Only PDF and Word (.doc, .docx) files are supported.");
+      setGenError("Only PDF and Word (.docx) files are supported.");
       return;
     }
     if (f.size > 5 * 1024 * 1024) {
@@ -159,6 +233,7 @@ export default function CreateResumePage() {
         </div>
 
         <div className="max-w-2xl w-full mx-auto space-y-6">
+          {generating ? <GeneratingState /> : (<>
           {/* Upload zone */}
           <div>
             <p className="text-sm font-medium text-foreground mb-2">
@@ -176,7 +251,7 @@ export default function CreateResumePage() {
                 "border-border hover:border-violet-500/50 hover:bg-muted/40 cursor-pointer bg-card"
               )}
             >
-              <input ref={inputRef} type="file" accept=".pdf,.doc,.docx" className="hidden"
+              <input ref={inputRef} type="file" accept=".pdf,.docx" className="hidden"
                 onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
               {file ? (
                 <>
@@ -199,7 +274,7 @@ export default function CreateResumePage() {
                   </div>
                   <div>
                     <p className="font-medium text-foreground">Drop your resume here</p>
-                    <p className="text-xs text-muted-foreground mt-1">PDF, DOC, DOCX · max 5MB</p>
+                    <p className="text-xs text-muted-foreground mt-1">PDF, DOCX · max 5MB</p>
                   </div>
                 </>
               )}
@@ -222,15 +297,12 @@ export default function CreateResumePage() {
 
           <button
             onClick={handleGenerate}
-            disabled={generating}
-            className="w-full h-12 rounded-xl bg-primary text-primary-foreground font-semibold text-sm flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-primary/20"
+            className="w-full h-12 rounded-xl bg-primary text-primary-foreground font-semibold text-sm inline-flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.99] transition-all shadow-lg shadow-primary/20"
           >
-            {generating ? (
-              <><Loader2 className="h-4 w-4 animate-spin" />Generating resume…</>
-            ) : (
-              <><Wand2 className="h-4 w-4" />Generate Resume<ChevronRight className="h-4 w-4 ml-auto" /></>
-            )}
+            <Wand2 className="h-4 w-4" />
+            Generate Resume
           </button>
+          </>)}
         </div>
       </div>
     );

@@ -1,8 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
-import { Mistral } from "@mistralai/mistralai";
+import { getGroq, GROQ_MODEL } from "@/lib/groq";
+import { extractResumeText, SUPPORTED_RESUME_TYPES } from "@/lib/extract-text";
 import { prisma } from "@/lib/prisma";
-import { uploadAndSign } from "@/lib/mistral-upload";
 
 const LATEX_TEMPLATE = String.raw`
 \documentclass[letterpaper,11pt]{article}
@@ -26,23 +26,31 @@ const LATEX_TEMPLATE = String.raw`
 \addtolength{\textheight}{1.2in}
 
 \titleformat{\section}{
-  \vspace{-6pt}\large\bfseries\uppercase
-}{}{0em}{}[\titlerule \vspace{-6pt}]
+  \large\bfseries\uppercase
+}{}{0em}{}[\vspace{-5pt}\titlerule]
+\titlespacing*{\section}{0pt}{9pt}{5pt}
 
-\newcommand{\resumeSubheading}[4]{
-  \vspace{-2pt}
-  \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
-    \textbf{#1} & #2 \\
-    \textit{\small#3} & \textit{\small#4} \\
-  \end{tabular*}\vspace{-6pt}
+% Two-line entry: #1 title, #2 date, #3 subtitle, #4 location
+\newcommand{\resumeSubheading}[4]{%
+  \vspace{4pt}%
+  \noindent\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}
+    \textbf{#1} & #2 \
+    \textit{\small#3} & \textit{\small#4} \
+  \end{tabular*}\par\vspace{1pt}%
 }
 
-\newcommand{\resumeItem}[1]{
-  \item \small{#1 \vspace{-3pt}}
+% One-line entry (projects): #1 title, #2 date
+\newcommand{\resumeProjectHeading}[2]{%
+  \vspace{4pt}%
+  \noindent\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}
+    \textbf{#1} & #2 \
+  \end{tabular*}\par\vspace{1pt}%
 }
 
-\newcommand{\resumeListStart}{\begin{itemize}[leftmargin=*,itemsep=2pt]}
-\newcommand{\resumeListEnd}{\end{itemize}\vspace{-6pt}}
+\newcommand{\resumeItem}[1]{\item \small{#1}}
+
+\newcommand{\resumeListStart}{\begin{itemize}[leftmargin=1.2em,itemsep=1.5pt,topsep=2pt,parsep=0pt,partopsep=0pt]}
+\newcommand{\resumeListEnd}{\end{itemize}}
 
 \begin{document}
 
@@ -56,15 +64,17 @@ const LATEX_TEMPLATE = String.raw`
 
 % ---------- EDUCATION ----------
 \section{Education}
-% entries here
+% \resumeSubheading{University}{Dates}{Degree}{City, State}  (one per entry, no blank lines between)
 
 % ---------- EXPERIENCE ----------
 \section{Experience}
-% entries here
+% \resumeSubheading{Role}{Dates}{Company}{Location}
+% \resumeListStart \resumeItem{...} \resumeListEnd
 
 % ---------- PROJECTS ----------
 \section{Projects}
-% entries here
+% \resumeProjectHeading{Project Name --- Tech}{Dates}
+% \resumeListStart \resumeItem{...} \resumeListEnd
 
 % ---------- SKILLS ----------
 \section{Skills}
@@ -82,7 +92,7 @@ const SYSTEM_PROMPT = `You are an expert resume writer and LaTeX typographer.
 GOAL: Generate a dense, ATS-friendly, ONE-PAGE LaTeX resume that fully utilizes space.
 
 STRICT RULES:
-1. Use EXACTLY the provided template (no package or macro changes).
+1. Use EXACTLY the provided template (no package or macro changes). Use \\resumeSubheading for education/experience entries, \\resumeProjectHeading for projects, and wrap bullets in \\resumeListStart ... \\resumeListEnd. Never put blank lines or \\vspace between entries.
 2. Include ALL user-provided data. NEVER omit, compress away, or ignore any detail.
 3. If data is large, expand bullets intelligently so everything fits naturally.
 4. Write strong, achievement-focused bullets:
@@ -107,8 +117,8 @@ export async function POST(req: NextRequest) {
     const { userId } = await auth();
     if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const apiKey = process.env.MISTRAL_API_KEY;
-    if (!apiKey) return NextResponse.json({ error: "Mistral API key not configured" }, { status: 500 });
+    const groq = getGroq();
+    if (!groq) return NextResponse.json({ error: "Groq API key not configured" }, { status: 500 });
 
     try {
         const formData = await req.formData();
@@ -128,58 +138,39 @@ export async function POST(req: NextRequest) {
             user.skills?.length ? `Skills: ${user.skills.join(", ")}` : null,
         ].filter(Boolean).join("\n");
 
-        const client = new Mistral({ apiKey });
-
-        type UserContentPart =
-            | { type: "text"; text: string }
-            | { type: "document_url"; documentUrl: string };
-
-        const userParts: UserContentPart[] = [];
-
+        let existingResume = "";
         if (file) {
-            const allowed = [
-                "application/pdf",
-                "application/msword",
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            ];
-            if (!allowed.includes(file.type)) {
+            if (!SUPPORTED_RESUME_TYPES.includes(file.type)) {
                 return NextResponse.json({ error: "Only PDF or DOCX resumes are supported" }, { status: 400 });
             }
             if (file.size > 5 * 1024 * 1024) {
                 return NextResponse.json({ error: "File must be under 5MB" }, { status: 400 });
             }
-
-            const { fileId, signedUrl } = await uploadAndSign(file, apiKey);
-            userParts.push({ type: "document_url", documentUrl: signedUrl });
-
-            client.files.delete({ fileId }).catch(() => { });
+            existingResume = await extractResumeText(file);
         }
 
-        userParts.push({
-            type: "text",
-            text: [
-                "Generate a complete LaTeX resume for the following person.",
-                "",
-                "=== PROFILE DATA ===",
-                userContext,
-                file
-                    ? "\n=== EXISTING RESUME ===\nSee the attached document above — use it for experience, projects, and additional details."
-                    : "\n(No existing resume provided — use only profile data above.)",
-                "",
-                "Return ONLY the LaTeX source code, nothing else.",
-            ].join("\n"),
-        });
+        const prompt = [
+            "Generate a complete LaTeX resume for the following person.",
+            "",
+            "=== PROFILE DATA ===",
+            userContext,
+            existingResume
+                ? `\n=== EXISTING RESUME ===\n${existingResume}`
+                : "\n(No existing resume provided — use only profile data above.)",
+            "",
+            "Return ONLY the LaTeX source code, nothing else.",
+        ].join("\n");
 
-        const completion = await client.chat.complete({
-            model: "mistral-large-latest",
+        const completion = await groq.chat.completions.create({
+            model: GROQ_MODEL,
             temperature: 0.3,
             messages: [
                 { role: "system", content: SYSTEM_PROMPT },
-                { role: "user", content: userParts },
+                { role: "user", content: prompt },
             ],
         });
 
-        let latex = (completion.choices?.[0]?.message?.content as string) ?? "";
+        let latex = completion.choices?.[0]?.message?.content ?? "";
         latex = latex
             .replace(/^```latex\s*/i, "")
             .replace(/^```\s*/i, "")

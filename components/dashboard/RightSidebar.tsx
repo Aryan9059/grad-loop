@@ -66,7 +66,7 @@ export default function RightSidebar() {
   return (
     <aside className="hidden xl:flex flex-col w-[320px] shrink-0 h-screen sticky top-0 overflow-y-auto p-5 gap-6 bg-transparent">
       {/* User Profile Summary Card */}
-      <div className="soft-card overflow-hidden">
+      <div className="soft-card overflow-hidden shrink-0">
         {/* Minified Banner */}
         <div className="h-16 w-full bg-linear-to-r from-primary/80 to-primary relative">
           <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
@@ -132,7 +132,7 @@ export default function RightSidebar() {
       </div>
 
       {/* Recommended Mentors Card */}
-      <div className="soft-card p-5">
+      <div className="soft-card p-5 shrink-0">
         <div className="flex items-center justify-between mb-5">
           <h3 className="text-sm font-bold text-foreground tracking-tight">Recommended Mentors</h3>
           <button className="h-7 w-7 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors cursor-pointer">

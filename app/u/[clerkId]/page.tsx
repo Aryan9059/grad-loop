@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
@@ -23,6 +24,7 @@ export default async function PublicProfilePage(
     params: Promise<{ clerkId: string }>;
   }
 ) {
+  await auth.protect();
   const params = await props.params;
   const { clerkId } = params;
 

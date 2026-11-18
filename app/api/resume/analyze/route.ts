@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
-import { Mistral } from "@mistralai/mistralai";
-import { uploadAndSign } from "@/lib/mistral-upload";
+import { getGroq, GROQ_MODEL } from "@/lib/groq";
+import { extractResumeText, SUPPORTED_RESUME_TYPES } from "@/lib/extract-text";
 
 const SYSTEM_PROMPT = `You are an expert ATS (Applicant Tracking System) analyst and resume coach with 15+ years of experience reviewing resumes across tech, finance, consulting, and other industries.
 
@@ -43,8 +43,8 @@ export async function POST(req: NextRequest) {
     const { userId } = await auth();
     if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const apiKey = process.env.MISTRAL_API_KEY;
-    if (!apiKey) return NextResponse.json({ error: "Mistral API key not configured" }, { status: 500 });
+    const groq = getGroq();
+    if (!groq) return NextResponse.json({ error: "Groq API key not configured" }, { status: 500 });
 
     try {
         const formData = await req.formData();
@@ -52,44 +52,35 @@ export async function POST(req: NextRequest) {
 
         if (!file) return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
 
-        const allowedTypes = [
-            "application/pdf",
-            "application/msword",
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        ];
-        if (!allowedTypes.includes(file.type)) {
-            return NextResponse.json({ error: "Only PDF and Word documents (.doc, .docx) are supported" }, { status: 400 });
+        if (!SUPPORTED_RESUME_TYPES.includes(file.type)) {
+            return NextResponse.json({ error: "Only PDF and Word (.docx) documents are supported" }, { status: 400 });
         }
         if (file.size > 5 * 1024 * 1024) {
             return NextResponse.json({ error: "File size must be under 5MB" }, { status: 400 });
         }
 
-        // UPLOAD FILE AND PASS URL
-        const { fileId, signedUrl } = await uploadAndSign(file, apiKey);
-        const client = new Mistral({ apiKey });
+        const resumeText = await extractResumeText(file);
+        if (resumeText.length < 50) {
+            return NextResponse.json({ error: "Could not read text from this file. Try a text-based PDF or DOCX." }, { status: 400 });
+        }
 
-        const response = await client.chat.complete({
-            model: "mistral-large-latest",
-            responseFormat: { type: "json_object" },
+        const response = await groq.chat.completions.create({
+            model: GROQ_MODEL,
+            response_format: { type: "json_object" },
             temperature: 0.3,
             messages: [
                 { role: "system", content: SYSTEM_PROMPT },
                 {
                     role: "user",
-                    content: [
-                        { type: "document_url", documentUrl: signedUrl },
-                        { type: "text", text: "Analyze this resume and return only valid JSON following the structure in the system prompt." },
-                    ],
+                    content: `Analyze this resume and return only valid JSON following the structure in the system prompt.
+
+=== RESUME TEXT ===
+${resumeText}`,
                 },
             ],
         });
 
-        await client.files.delete({ fileId }).catch(() => { });
-
-        const rawText = response.choices?.[0]?.message?.content ?? "";
-        const textContent = Array.isArray(rawText)
-            ? rawText.map((c: { type: string; text?: string }) => (c.type === "text" ? c.text ?? "" : "")).join("")
-            : rawText;
+        const textContent = response.choices?.[0]?.message?.content ?? "";
 
         const cleaned = textContent.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```\s*$/i, "").trim();
 
@@ -97,7 +88,7 @@ export async function POST(req: NextRequest) {
         try {
             analysis = JSON.parse(cleaned);
         } catch {
-            console.error("Failed to parse Mistral response:", textContent);
+            console.error("Failed to parse Groq response:", textContent);
             return NextResponse.json({ error: "Failed to parse AI response" }, { status: 500 });
         }
 
