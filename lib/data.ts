@@ -4,8 +4,16 @@ import { findSimilarProfiles, generateAndUpsertEmbedding } from "./embeddings";
 /**
  * Opportunities are fetched server-side. No client fetch overhead.
  */
-export async function getOpportunities() {
+export async function getOpportunities(clerkId: string) {
+  const user = await prisma.user.findUnique({
+    where: { clerkId },
+    select: { universityId: true }
+  });
+
+  if (!user?.universityId) return [];
+
   return await prisma.opportunity.findMany({
+    where: { universityId: user.universityId },
     include: {
       author: {
         select: {
@@ -90,13 +98,14 @@ export async function getRecommendedUsers(clerkId: string) {
   try {
     await generateAndUpsertEmbedding(user);
     
-    const matches = await findSimilarProfiles(user.id, 8);
+    // Over-fetch, then keep only people from the user's current university
+    const matches = await findSimilarProfiles(user.id, 50);
     
-    if (matches.length === 0) return [];
+    if (matches.length === 0 || !user.universityId) return [];
 
     const matchedUserIds = matches.map((m) => m.user_id);
     const recommendedUsers = await prisma.user.findMany({
-      where: { id: { in: matchedUserIds } },
+      where: { id: { in: matchedUserIds }, universityId: user.universityId },
       select: {
         id: true,
         firstName: true,
@@ -120,7 +129,8 @@ export async function getRecommendedUsers(clerkId: string) {
           similarity: match?.similarity ?? 0,
         };
       })
-      .sort((a, b) => b.similarity - a.similarity);
+      .sort((a, b) => b.similarity - a.similarity)
+      .slice(0, 8);
   } catch (err) {
     console.error("Recommendation error:", err);
     return [];
@@ -179,14 +189,16 @@ export async function getPosts(clerkId: string) {
 export async function getConnectionsList(clerkId: string) {
   const user = await prisma.user.findUnique({
     where: { clerkId },
-    select: { connections: true }
+    select: { connections: true, universityId: true }
   });
 
-  if (!user || user.connections.length === 0) return [];
+  if (!user || !user.universityId || user.connections.length === 0) return [];
 
+  // Only show connections within the current university network
   return await prisma.user.findMany({
     where: {
-      id: { in: user.connections }
+      id: { in: user.connections },
+      universityId: user.universityId,
     },
     select: {
       id: true,

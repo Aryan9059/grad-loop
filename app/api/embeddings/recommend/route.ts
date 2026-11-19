@@ -57,7 +57,7 @@ export async function GET() {
     // Find similar profiles via pgvector cosine similarity
     let matches: { user_id: number; similarity: number }[] = [];
     try {
-      matches = await findSimilarProfiles(user.id, 5);
+      matches = await findSimilarProfiles(user.id, 50);
       console.log(`Found ${matches.length} matches for user ${user.id}`);
       if (matches.length > 0) {
         console.log(`Top matches:`, matches.slice(0, 3).map(m => ({ user_id: m.user_id, similarity: m.similarity })));
@@ -68,14 +68,14 @@ export async function GET() {
       return NextResponse.json({ recommendations: [] });
     }
 
-    if (matches.length === 0) {
+    if (matches.length === 0 || !user.universityId) {
       return NextResponse.json({ recommendations: [] });
     }
 
     // Fetch full user data for matched profiles
     const matchedUserIds = matches.map((m) => m.user_id);
     const recommendedUsers = await prisma.user.findMany({
-      where: { id: { in: matchedUserIds } },
+      where: { id: { in: matchedUserIds }, universityId: user.universityId },
       select: {
         id: true,
         firstName: true,
@@ -100,7 +100,8 @@ export async function GET() {
           similarity: match?.similarity ?? 0,
         };
       })
-      .sort((a, b) => b.similarity - a.similarity);
+      .sort((a, b) => b.similarity - a.similarity)
+      .slice(0, 5);
 
     return NextResponse.json({ recommendations });
   } catch (error) {

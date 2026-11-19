@@ -179,7 +179,12 @@ export default function ProfileClient({ initialUser }: { initialUser: any }) {
         user={user}
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
-        onUpdate={(updated) => setUser(updated)}
+        onUpdate={(updated) => {
+          const switchedUniversity = updated.universityId !== user.universityId;
+          setUser(updated);
+          // Full reload so feed, sidebar & network all reflect the new university
+          if (switchedUniversity) window.location.reload();
+        }}
       />
     </div>
   );

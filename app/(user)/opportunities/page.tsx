@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { auth } from "@clerk/nextjs/server";
 import { getOpportunities } from "@/lib/data";
 import OpportunitiesView from "@/components/opportunities/OpportunitiesView";
 import { Briefcase } from "lucide-react";
@@ -14,7 +15,9 @@ export default async function OpportunitiesPage() {
 }
 
 async function OpportunitiesData() {
-  const opportunities = await getOpportunities();
+  const { userId } = await auth();
+  if (!userId) return null;
+  const opportunities = await getOpportunities(userId);
   return <OpportunitiesView initialOpportunities={opportunities} />;
 }
 

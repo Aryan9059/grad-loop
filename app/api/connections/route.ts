@@ -16,7 +16,7 @@ export async function GET() {
     }
 
     const connections = await prisma.user.findMany({
-      where: { id: { in: currentUser.connections } },
+      where: { id: { in: currentUser.connections }, universityId: currentUser.universityId ?? -1 },
       select: {
         id: true,
         firstName: true,

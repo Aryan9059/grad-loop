@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { X, Check, Loader2, Camera, User, Briefcase, GraduationCap, MapPin, Sparkles } from "lucide-react";
+import { X, Check, Loader2, Camera, User, Briefcase, GraduationCap, MapPin, Sparkles, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
 import Image from "next/image";
@@ -27,7 +27,10 @@ export default function EditProfileModal({ user, isOpen, onClose, onUpdate }: Ed
     openToConnect: user.openToConnect ?? true,
     profile_photo: user.profile_photo || "",
     skills: user.skills || [],
+    universityId: user.universityId ?? "",
   });
+
+  const [universities, setUniversities] = useState<{ id: number; name: string }[]>([]);
 
   const [skillInput, setSkillInput] = useState("");
   const [skillSuggestions, setSkillSuggestions] = useState<string[]>([]);
@@ -35,6 +38,14 @@ export default function EditProfileModal({ user, isOpen, onClose, onUpdate }: Ed
   const [isSubmitting, setIsSubmitting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!isOpen || universities.length > 0) return;
+    fetch("/api/universities")
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => Array.isArray(data) && setUniversities(data))
+      .catch((err) => console.error("Failed to load universities:", err));
+  }, [isOpen, universities.length]);
 
   useEffect(() => {
     if (isOpen) {
@@ -198,6 +209,33 @@ export default function EditProfileModal({ user, isOpen, onClose, onUpdate }: Ed
               placeholder="Tell us about yourself..."
               className={`${inputClasses} resize-none`}
             />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground ml-1">University</label>
+            <div className="relative">
+              <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/60 pointer-events-none" />
+              <select
+                name="universityId"
+                value={formData.universityId}
+                onChange={(e) => setFormData((prev) => ({ ...prev, universityId: Number(e.target.value) }))}
+                className={`${inputClasses} pl-10`}
+                required
+              >
+                <option value="" disabled>Select your university</option>
+                {universities.length === 0 && user.university && (
+                  <option value={user.universityId}>{user.university.name}</option>
+                )}
+                {universities.map((u) => (
+                  <option key={u.id} value={u.id}>{u.name}</option>
+                ))}
+              </select>
+            </div>
+            {formData.universityId !== (user.universityId ?? "") && (
+              <p className="text-xs text-muted-foreground font-medium ml-1">
+                You&apos;ll switch to this university&apos;s feed, alumni, opportunities and network.
+              </p>
+            )}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
