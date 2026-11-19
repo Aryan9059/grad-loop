@@ -146,7 +146,7 @@ export class PrismaClient<
    * Read more in our [docs](https://pris.ly/d/client).
    */
 
-  constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
+  constructor(optionsArg ?: Prisma.PrismaClientConstructorArgs<ClientOptions>);
   $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient;
 
   /**
@@ -219,7 +219,7 @@ export class PrismaClient<
    * 
    * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
-  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
 
@@ -426,8 +426,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.7.0
-   * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
+   * Prisma Client JS version: 7.10.1
+   * Query Engine version: d1b3f377ca835d73fd50954a5e22128b9ebdd6b8
    */
   export type PrismaVersion = {
     client: string
@@ -562,6 +562,19 @@ export namespace Prisma {
   };
 
   /**
+   * Resolved type of the argument passed to the `PrismaClient` constructor.
+   *
+   * When called without a narrower options type (the common case), this resolves
+   * to `PrismaClientOptions` directly, which produces a clear TypeScript error
+   * message (`not assignable to parameter of type 'PrismaClientOptions'`) when
+   * the argument is missing or incomplete. When the user supplies a narrower
+   * options type (e.g. via a literal), it falls back to `Subset` to keep
+   * filtering out unknown properties.
+   */
+  export type PrismaClientConstructorArgs<Options extends PrismaClientOptions> =
+    [PrismaClientOptions] extends [Options] ? PrismaClientOptions : Subset<Options, PrismaClientOptions>;
+
+  /**
    * SelectSubset
    * @desc From `T` pick properties that exist in `U`. Simple version of Intersection.
    * Additionally, it validates, if both select and include are present. If the case, it errors.
@@ -593,7 +606,7 @@ export namespace Prisma {
   type XOR<T, U> =
     T extends object ?
     U extends object ?
-      (Without<T, U> & U) | (Without<U, T> & T)
+      ((Without<T, U> & U) | (Without<U, T> & T)) & object
     : U : T
 
 
@@ -2006,11 +2019,26 @@ export namespace Prisma {
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
     /**
-     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
+     * A driver adapter that PrismaClient uses to connect to your database, such as the ones provided by `@prisma/adapter-pg`, `@prisma/adapter-libsql`, `@prisma/adapter-planetscale`, etc.
+     * 
+     * A driver adapter is **required** unless you connect to your database through Prisma Accelerate (in which case use `accelerateUrl` instead).
+     * 
+     * Learn more: https://pris.ly/d/driver-adapters
+     * 
+     * @example
+     * ```ts
+     * import { PrismaPg } from '@prisma/adapter-pg'
+     * import { PrismaClient } from './generated/prisma/client'
+     * 
+     * const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
+     * const prisma = new PrismaClient({ adapter })
+     * ```
      */
     adapter?: runtime.SqlDriverAdapterFactory
     /**
-     * Prisma Accelerate URL allowing the client to connect through Accelerate instead of a direct database.
+     * The Prisma Accelerate connection URL. Use this option to connect to your database through Prisma Accelerate instead of using a driver adapter to connect directly.
+     * 
+     * Learn more: https://pris.ly/d/accelerate
      */
     accelerateUrl?: string
     /**
@@ -13324,6 +13352,8 @@ export namespace Prisma {
     status: string | null
     requestorId: number | null
     opportunityId: number | null
+    company: string | null
+    message: string | null
     referrerId: number | null
     createdAt: Date | null
   }
@@ -13333,6 +13363,8 @@ export namespace Prisma {
     status: string | null
     requestorId: number | null
     opportunityId: number | null
+    company: string | null
+    message: string | null
     referrerId: number | null
     createdAt: Date | null
   }
@@ -13342,6 +13374,8 @@ export namespace Prisma {
     status: number
     requestorId: number
     opportunityId: number
+    company: number
+    message: number
     referrerId: number
     createdAt: number
     _all: number
@@ -13367,6 +13401,8 @@ export namespace Prisma {
     status?: true
     requestorId?: true
     opportunityId?: true
+    company?: true
+    message?: true
     referrerId?: true
     createdAt?: true
   }
@@ -13376,6 +13412,8 @@ export namespace Prisma {
     status?: true
     requestorId?: true
     opportunityId?: true
+    company?: true
+    message?: true
     referrerId?: true
     createdAt?: true
   }
@@ -13385,6 +13423,8 @@ export namespace Prisma {
     status?: true
     requestorId?: true
     opportunityId?: true
+    company?: true
+    message?: true
     referrerId?: true
     createdAt?: true
     _all?: true
@@ -13480,7 +13520,9 @@ export namespace Prisma {
     id: number
     status: string
     requestorId: number
-    opportunityId: number
+    opportunityId: number | null
+    company: string | null
+    message: string | null
     referrerId: number
     createdAt: Date
     _count: ReferralRequestCountAggregateOutputType | null
@@ -13509,10 +13551,12 @@ export namespace Prisma {
     status?: boolean
     requestorId?: boolean
     opportunityId?: boolean
+    company?: boolean
+    message?: boolean
     referrerId?: boolean
     createdAt?: boolean
     requestor?: boolean | UserDefaultArgs<ExtArgs>
-    opportunity?: boolean | OpportunityDefaultArgs<ExtArgs>
+    opportunity?: boolean | ReferralRequest$opportunityArgs<ExtArgs>
     referrer?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["referralRequest"]>
 
@@ -13521,10 +13565,12 @@ export namespace Prisma {
     status?: boolean
     requestorId?: boolean
     opportunityId?: boolean
+    company?: boolean
+    message?: boolean
     referrerId?: boolean
     createdAt?: boolean
     requestor?: boolean | UserDefaultArgs<ExtArgs>
-    opportunity?: boolean | OpportunityDefaultArgs<ExtArgs>
+    opportunity?: boolean | ReferralRequest$opportunityArgs<ExtArgs>
     referrer?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["referralRequest"]>
 
@@ -13533,10 +13579,12 @@ export namespace Prisma {
     status?: boolean
     requestorId?: boolean
     opportunityId?: boolean
+    company?: boolean
+    message?: boolean
     referrerId?: boolean
     createdAt?: boolean
     requestor?: boolean | UserDefaultArgs<ExtArgs>
-    opportunity?: boolean | OpportunityDefaultArgs<ExtArgs>
+    opportunity?: boolean | ReferralRequest$opportunityArgs<ExtArgs>
     referrer?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["referralRequest"]>
 
@@ -13545,24 +13593,26 @@ export namespace Prisma {
     status?: boolean
     requestorId?: boolean
     opportunityId?: boolean
+    company?: boolean
+    message?: boolean
     referrerId?: boolean
     createdAt?: boolean
   }
 
-  export type ReferralRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "status" | "requestorId" | "opportunityId" | "referrerId" | "createdAt", ExtArgs["result"]["referralRequest"]>
+  export type ReferralRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "status" | "requestorId" | "opportunityId" | "company" | "message" | "referrerId" | "createdAt", ExtArgs["result"]["referralRequest"]>
   export type ReferralRequestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     requestor?: boolean | UserDefaultArgs<ExtArgs>
-    opportunity?: boolean | OpportunityDefaultArgs<ExtArgs>
+    opportunity?: boolean | ReferralRequest$opportunityArgs<ExtArgs>
     referrer?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type ReferralRequestIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     requestor?: boolean | UserDefaultArgs<ExtArgs>
-    opportunity?: boolean | OpportunityDefaultArgs<ExtArgs>
+    opportunity?: boolean | ReferralRequest$opportunityArgs<ExtArgs>
     referrer?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type ReferralRequestIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     requestor?: boolean | UserDefaultArgs<ExtArgs>
-    opportunity?: boolean | OpportunityDefaultArgs<ExtArgs>
+    opportunity?: boolean | ReferralRequest$opportunityArgs<ExtArgs>
     referrer?: boolean | UserDefaultArgs<ExtArgs>
   }
 
@@ -13570,14 +13620,16 @@ export namespace Prisma {
     name: "ReferralRequest"
     objects: {
       requestor: Prisma.$UserPayload<ExtArgs>
-      opportunity: Prisma.$OpportunityPayload<ExtArgs>
+      opportunity: Prisma.$OpportunityPayload<ExtArgs> | null
       referrer: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       status: string
       requestorId: number
-      opportunityId: number
+      opportunityId: number | null
+      company: string | null
+      message: string | null
       referrerId: number
       createdAt: Date
     }, ExtArgs["result"]["referralRequest"]>
@@ -13975,7 +14027,7 @@ export namespace Prisma {
   export interface Prisma__ReferralRequestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     requestor<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    opportunity<T extends OpportunityDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OpportunityDefaultArgs<ExtArgs>>): Prisma__OpportunityClient<$Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    opportunity<T extends ReferralRequest$opportunityArgs<ExtArgs> = {}>(args?: Subset<T, ReferralRequest$opportunityArgs<ExtArgs>>): Prisma__OpportunityClient<$Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     referrer<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -14010,6 +14062,8 @@ export namespace Prisma {
     readonly status: FieldRef<"ReferralRequest", 'String'>
     readonly requestorId: FieldRef<"ReferralRequest", 'Int'>
     readonly opportunityId: FieldRef<"ReferralRequest", 'Int'>
+    readonly company: FieldRef<"ReferralRequest", 'String'>
+    readonly message: FieldRef<"ReferralRequest", 'String'>
     readonly referrerId: FieldRef<"ReferralRequest", 'Int'>
     readonly createdAt: FieldRef<"ReferralRequest", 'DateTime'>
   }
@@ -14410,6 +14464,25 @@ export namespace Prisma {
      * Limit how many ReferralRequests to delete.
      */
     limit?: number
+  }
+
+  /**
+   * ReferralRequest.opportunity
+   */
+  export type ReferralRequest$opportunityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Opportunity
+     */
+    select?: OpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Opportunity
+     */
+    omit?: OpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpportunityInclude<ExtArgs> | null
+    where?: OpportunityWhereInput
   }
 
   /**
@@ -19996,6 +20069,8 @@ export namespace Prisma {
     status: 'status',
     requestorId: 'requestorId',
     opportunityId: 'opportunityId',
+    company: 'company',
+    message: 'message',
     referrerId: 'referrerId',
     createdAt: 'createdAt'
   };
@@ -20878,11 +20953,13 @@ export namespace Prisma {
     id?: IntFilter<"ReferralRequest"> | number
     status?: StringFilter<"ReferralRequest"> | string
     requestorId?: IntFilter<"ReferralRequest"> | number
-    opportunityId?: IntFilter<"ReferralRequest"> | number
+    opportunityId?: IntNullableFilter<"ReferralRequest"> | number | null
+    company?: StringNullableFilter<"ReferralRequest"> | string | null
+    message?: StringNullableFilter<"ReferralRequest"> | string | null
     referrerId?: IntFilter<"ReferralRequest"> | number
     createdAt?: DateTimeFilter<"ReferralRequest"> | Date | string
     requestor?: XOR<UserScalarRelationFilter, UserWhereInput>
-    opportunity?: XOR<OpportunityScalarRelationFilter, OpportunityWhereInput>
+    opportunity?: XOR<OpportunityNullableScalarRelationFilter, OpportunityWhereInput> | null
     referrer?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -20890,7 +20967,9 @@ export namespace Prisma {
     id?: SortOrder
     status?: SortOrder
     requestorId?: SortOrder
-    opportunityId?: SortOrder
+    opportunityId?: SortOrderInput | SortOrder
+    company?: SortOrderInput | SortOrder
+    message?: SortOrderInput | SortOrder
     referrerId?: SortOrder
     createdAt?: SortOrder
     requestor?: UserOrderByWithRelationInput
@@ -20905,11 +20984,13 @@ export namespace Prisma {
     NOT?: ReferralRequestWhereInput | ReferralRequestWhereInput[]
     status?: StringFilter<"ReferralRequest"> | string
     requestorId?: IntFilter<"ReferralRequest"> | number
-    opportunityId?: IntFilter<"ReferralRequest"> | number
+    opportunityId?: IntNullableFilter<"ReferralRequest"> | number | null
+    company?: StringNullableFilter<"ReferralRequest"> | string | null
+    message?: StringNullableFilter<"ReferralRequest"> | string | null
     referrerId?: IntFilter<"ReferralRequest"> | number
     createdAt?: DateTimeFilter<"ReferralRequest"> | Date | string
     requestor?: XOR<UserScalarRelationFilter, UserWhereInput>
-    opportunity?: XOR<OpportunityScalarRelationFilter, OpportunityWhereInput>
+    opportunity?: XOR<OpportunityNullableScalarRelationFilter, OpportunityWhereInput> | null
     referrer?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
@@ -20917,7 +20998,9 @@ export namespace Prisma {
     id?: SortOrder
     status?: SortOrder
     requestorId?: SortOrder
-    opportunityId?: SortOrder
+    opportunityId?: SortOrderInput | SortOrder
+    company?: SortOrderInput | SortOrder
+    message?: SortOrderInput | SortOrder
     referrerId?: SortOrder
     createdAt?: SortOrder
     _count?: ReferralRequestCountOrderByAggregateInput
@@ -20934,7 +21017,9 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"ReferralRequest"> | number
     status?: StringWithAggregatesFilter<"ReferralRequest"> | string
     requestorId?: IntWithAggregatesFilter<"ReferralRequest"> | number
-    opportunityId?: IntWithAggregatesFilter<"ReferralRequest"> | number
+    opportunityId?: IntNullableWithAggregatesFilter<"ReferralRequest"> | number | null
+    company?: StringNullableWithAggregatesFilter<"ReferralRequest"> | string | null
+    message?: StringNullableWithAggregatesFilter<"ReferralRequest"> | string | null
     referrerId?: IntWithAggregatesFilter<"ReferralRequest"> | number
     createdAt?: DateTimeWithAggregatesFilter<"ReferralRequest"> | Date | string
   }
@@ -21930,9 +22015,11 @@ export namespace Prisma {
 
   export type ReferralRequestCreateInput = {
     status?: string
+    company?: string | null
+    message?: string | null
     createdAt?: Date | string
     requestor: UserCreateNestedOneWithoutReferralsReqInput
-    opportunity: OpportunityCreateNestedOneWithoutRequestsInput
+    opportunity?: OpportunityCreateNestedOneWithoutRequestsInput
     referrer: UserCreateNestedOneWithoutReferralsMadeInput
   }
 
@@ -21940,16 +22027,20 @@ export namespace Prisma {
     id?: number
     status?: string
     requestorId: number
-    opportunityId: number
+    opportunityId?: number | null
+    company?: string | null
+    message?: string | null
     referrerId: number
     createdAt?: Date | string
   }
 
   export type ReferralRequestUpdateInput = {
     status?: StringFieldUpdateOperationsInput | string
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     requestor?: UserUpdateOneRequiredWithoutReferralsReqNestedInput
-    opportunity?: OpportunityUpdateOneRequiredWithoutRequestsNestedInput
+    opportunity?: OpportunityUpdateOneWithoutRequestsNestedInput
     referrer?: UserUpdateOneRequiredWithoutReferralsMadeNestedInput
   }
 
@@ -21957,7 +22048,9 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     requestorId?: IntFieldUpdateOperationsInput | number
-    opportunityId?: IntFieldUpdateOperationsInput | number
+    opportunityId?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     referrerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -21966,13 +22059,17 @@ export namespace Prisma {
     id?: number
     status?: string
     requestorId: number
-    opportunityId: number
+    opportunityId?: number | null
+    company?: string | null
+    message?: string | null
     referrerId: number
     createdAt?: Date | string
   }
 
   export type ReferralRequestUpdateManyMutationInput = {
     status?: StringFieldUpdateOperationsInput | string
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -21980,7 +22077,9 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     requestorId?: IntFieldUpdateOperationsInput | number
-    opportunityId?: IntFieldUpdateOperationsInput | number
+    opportunityId?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     referrerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23001,9 +23100,9 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type OpportunityScalarRelationFilter = {
-    is?: OpportunityWhereInput
-    isNot?: OpportunityWhereInput
+  export type OpportunityNullableScalarRelationFilter = {
+    is?: OpportunityWhereInput | null
+    isNot?: OpportunityWhereInput | null
   }
 
   export type ReferralRequestCountOrderByAggregateInput = {
@@ -23011,6 +23110,8 @@ export namespace Prisma {
     status?: SortOrder
     requestorId?: SortOrder
     opportunityId?: SortOrder
+    company?: SortOrder
+    message?: SortOrder
     referrerId?: SortOrder
     createdAt?: SortOrder
   }
@@ -23027,6 +23128,8 @@ export namespace Prisma {
     status?: SortOrder
     requestorId?: SortOrder
     opportunityId?: SortOrder
+    company?: SortOrder
+    message?: SortOrder
     referrerId?: SortOrder
     createdAt?: SortOrder
   }
@@ -23036,6 +23139,8 @@ export namespace Prisma {
     status?: SortOrder
     requestorId?: SortOrder
     opportunityId?: SortOrder
+    company?: SortOrder
+    message?: SortOrder
     referrerId?: SortOrder
     createdAt?: SortOrder
   }
@@ -24447,10 +24552,12 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReferralsReqInput, UserUpdateWithoutReferralsReqInput>, UserUncheckedUpdateWithoutReferralsReqInput>
   }
 
-  export type OpportunityUpdateOneRequiredWithoutRequestsNestedInput = {
+  export type OpportunityUpdateOneWithoutRequestsNestedInput = {
     create?: XOR<OpportunityCreateWithoutRequestsInput, OpportunityUncheckedCreateWithoutRequestsInput>
     connectOrCreate?: OpportunityCreateOrConnectWithoutRequestsInput
     upsert?: OpportunityUpsertWithoutRequestsInput
+    disconnect?: OpportunityWhereInput | boolean
+    delete?: OpportunityWhereInput | boolean
     connect?: OpportunityWhereUniqueInput
     update?: XOR<XOR<OpportunityUpdateToOneWithWhereWithoutRequestsInput, OpportunityUpdateWithoutRequestsInput>, OpportunityUncheckedUpdateWithoutRequestsInput>
   }
@@ -25444,16 +25551,20 @@ export namespace Prisma {
 
   export type ReferralRequestCreateWithoutReferrerInput = {
     status?: string
+    company?: string | null
+    message?: string | null
     createdAt?: Date | string
     requestor: UserCreateNestedOneWithoutReferralsReqInput
-    opportunity: OpportunityCreateNestedOneWithoutRequestsInput
+    opportunity?: OpportunityCreateNestedOneWithoutRequestsInput
   }
 
   export type ReferralRequestUncheckedCreateWithoutReferrerInput = {
     id?: number
     status?: string
     requestorId: number
-    opportunityId: number
+    opportunityId?: number | null
+    company?: string | null
+    message?: string | null
     createdAt?: Date | string
   }
 
@@ -25469,15 +25580,19 @@ export namespace Prisma {
 
   export type ReferralRequestCreateWithoutRequestorInput = {
     status?: string
+    company?: string | null
+    message?: string | null
     createdAt?: Date | string
-    opportunity: OpportunityCreateNestedOneWithoutRequestsInput
+    opportunity?: OpportunityCreateNestedOneWithoutRequestsInput
     referrer: UserCreateNestedOneWithoutReferralsMadeInput
   }
 
   export type ReferralRequestUncheckedCreateWithoutRequestorInput = {
     id?: number
     status?: string
-    opportunityId: number
+    opportunityId?: number | null
+    company?: string | null
+    message?: string | null
     referrerId: number
     createdAt?: Date | string
   }
@@ -25739,7 +25854,9 @@ export namespace Prisma {
     id?: IntFilter<"ReferralRequest"> | number
     status?: StringFilter<"ReferralRequest"> | string
     requestorId?: IntFilter<"ReferralRequest"> | number
-    opportunityId?: IntFilter<"ReferralRequest"> | number
+    opportunityId?: IntNullableFilter<"ReferralRequest"> | number | null
+    company?: StringNullableFilter<"ReferralRequest"> | string | null
+    message?: StringNullableFilter<"ReferralRequest"> | string | null
     referrerId?: IntFilter<"ReferralRequest"> | number
     createdAt?: DateTimeFilter<"ReferralRequest"> | Date | string
   }
@@ -27009,6 +27126,8 @@ export namespace Prisma {
 
   export type ReferralRequestCreateWithoutOpportunityInput = {
     status?: string
+    company?: string | null
+    message?: string | null
     createdAt?: Date | string
     requestor: UserCreateNestedOneWithoutReferralsReqInput
     referrer: UserCreateNestedOneWithoutReferralsMadeInput
@@ -27018,6 +27137,8 @@ export namespace Prisma {
     id?: number
     status?: string
     requestorId: number
+    company?: string | null
+    message?: string | null
     referrerId: number
     createdAt?: Date | string
   }
@@ -28659,14 +28780,18 @@ export namespace Prisma {
     id?: number
     status?: string
     requestorId: number
-    opportunityId: number
+    opportunityId?: number | null
+    company?: string | null
+    message?: string | null
     createdAt?: Date | string
   }
 
   export type ReferralRequestCreateManyRequestorInput = {
     id?: number
     status?: string
-    opportunityId: number
+    opportunityId?: number | null
+    company?: string | null
+    message?: string | null
     referrerId: number
     createdAt?: Date | string
   }
@@ -28798,16 +28923,20 @@ export namespace Prisma {
 
   export type ReferralRequestUpdateWithoutReferrerInput = {
     status?: StringFieldUpdateOperationsInput | string
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     requestor?: UserUpdateOneRequiredWithoutReferralsReqNestedInput
-    opportunity?: OpportunityUpdateOneRequiredWithoutRequestsNestedInput
+    opportunity?: OpportunityUpdateOneWithoutRequestsNestedInput
   }
 
   export type ReferralRequestUncheckedUpdateWithoutReferrerInput = {
     id?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     requestorId?: IntFieldUpdateOperationsInput | number
-    opportunityId?: IntFieldUpdateOperationsInput | number
+    opportunityId?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -28815,21 +28944,27 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     requestorId?: IntFieldUpdateOperationsInput | number
-    opportunityId?: IntFieldUpdateOperationsInput | number
+    opportunityId?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ReferralRequestUpdateWithoutRequestorInput = {
     status?: StringFieldUpdateOperationsInput | string
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    opportunity?: OpportunityUpdateOneRequiredWithoutRequestsNestedInput
+    opportunity?: OpportunityUpdateOneWithoutRequestsNestedInput
     referrer?: UserUpdateOneRequiredWithoutReferralsMadeNestedInput
   }
 
   export type ReferralRequestUncheckedUpdateWithoutRequestorInput = {
     id?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
-    opportunityId?: IntFieldUpdateOperationsInput | number
+    opportunityId?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     referrerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -28837,7 +28972,9 @@ export namespace Prisma {
   export type ReferralRequestUncheckedUpdateManyWithoutRequestorInput = {
     id?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
-    opportunityId?: IntFieldUpdateOperationsInput | number
+    opportunityId?: NullableIntFieldUpdateOperationsInput | number | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     referrerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -29068,12 +29205,16 @@ export namespace Prisma {
     id?: number
     status?: string
     requestorId: number
+    company?: string | null
+    message?: string | null
     referrerId: number
     createdAt?: Date | string
   }
 
   export type ReferralRequestUpdateWithoutOpportunityInput = {
     status?: StringFieldUpdateOperationsInput | string
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     requestor?: UserUpdateOneRequiredWithoutReferralsReqNestedInput
     referrer?: UserUpdateOneRequiredWithoutReferralsMadeNestedInput
@@ -29083,6 +29224,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     requestorId?: IntFieldUpdateOperationsInput | number
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     referrerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -29091,6 +29234,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     requestorId?: IntFieldUpdateOperationsInput | number
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     referrerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

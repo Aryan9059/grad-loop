@@ -272,3 +272,85 @@ export async function getPendingRequests(clerkId: string) {
     sent: sent.map(s => ({ id: s.id, createdAt: s.createdAt.toISOString(), receiver: s.receiver }))
   };
 }
+
+const referralUserSelect = {
+  id: true,
+  firstName: true,
+  lastName: true,
+  roleTitle: true,
+  company: true,
+  profile_photo: true,
+  graduationYear: true,
+  clerkId: true,
+} as const;
+
+/**
+ * Referral page data. Students get the alumni of their university + their sent requests;
+ * alumni get the referral requests they've received.
+ */
+export async function getReferralData(clerkId: string) {
+  const me = await prisma.user.findUnique({
+    where: { clerkId },
+    select: { id: true, role: true, universityId: true, university: { select: { name: true } } },
+  });
+
+  if (!me || !me.universityId) return null;
+
+  const universityName = me.university?.name ?? "your university";
+
+  if (me.role === "ALUMNI") {
+    const received = await prisma.referralRequest.findMany({
+      where: { referrerId: me.id },
+      include: {
+        requestor: { select: referralUserSelect },
+        opportunity: { select: { title: true } },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return {
+      role: "ALUMNI" as const,
+      universityName,
+      received: received.map((r) => ({
+        id: r.id,
+        status: r.status,
+        message: r.message,
+        company: r.company,
+        opportunityTitle: r.opportunity?.title ?? null,
+        createdAt: r.createdAt.toISOString(),
+        requestor: r.requestor,
+      })),
+    };
+  }
+
+  const [alumni, sent] = await Promise.all([
+    prisma.user.findMany({
+      where: { universityId: me.universityId, role: "ALUMNI", NOT: { id: me.id } },
+      select: referralUserSelect,
+      orderBy: [{ company: "asc" }, { firstName: "asc" }],
+    }),
+    prisma.referralRequest.findMany({
+      where: { requestorId: me.id },
+      include: {
+        referrer: { select: referralUserSelect },
+        opportunity: { select: { title: true } },
+      },
+      orderBy: { createdAt: "desc" },
+    }),
+  ]);
+
+  return {
+    role: "STUDENT" as const,
+    universityName,
+    alumni,
+    sent: sent.map((r) => ({
+      id: r.id,
+      status: r.status,
+      message: r.message,
+      company: r.company,
+      opportunityTitle: r.opportunity?.title ?? null,
+      createdAt: r.createdAt.toISOString(),
+      referrer: r.referrer,
+    })),
+  };
+}

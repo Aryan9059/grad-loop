@@ -21,6 +21,7 @@ import {
   User,
   LogOut,
   LayoutDashboard,
+  Handshake,
 } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/ui/logo";
@@ -87,6 +88,11 @@ function LayoutContent({
       label: "Opportunities",
       href: "/opportunities",
       icon: <Briefcase className="h-5 w-5 shrink-0" />,
+    },
+    {
+      label: "Referrals",
+      href: "/referrals",
+      icon: <Handshake className="h-5 w-5 shrink-0" />,
     },
     {
       label: "Profile",

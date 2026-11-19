@@ -1,5 +1,5 @@
 {
-  "name": "prisma-client-dd75d2871bfb4d5615bf8ad8a0ff1e2284f895aeb3bd28d27e62bd4d343e208c",
+  "name": "prisma-client-8a3308e5b9ca8628500d96f7b487ad896c0b201585c8f04b2b66340bca27e436",
   "main": "index.js",
   "types": "index.d.ts",
   "browser": "default.js",
@@ -89,11 +89,6 @@
       "import": "./runtime/index-browser.mjs",
       "default": "./runtime/index-browser.mjs"
     },
-    "./generator-build": {
-      "require": "./generator-build/index.js",
-      "import": "./generator-build/index.js",
-      "default": "./generator-build/index.js"
-    },
     "./sql": {
       "require": {
         "types": "./sql.d.ts",
@@ -109,10 +104,10 @@
     },
     "./*": "./*"
   },
-  "version": "7.7.0",
+  "version": "7.10.1",
   "sideEffects": false,
   "dependencies": {
-    "@prisma/client-runtime-utils": "7.7.0"
+    "@prisma/client-runtime-utils": "7.10.1"
   },
   "imports": {
     "#wasm-compiler-loader": {

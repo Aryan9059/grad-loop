@@ -150,8 +150,10 @@ model ReferralRequest {
   status         String      @default("Pending") // "Pending", "Reviewed", "Referred", "Not Now"
   requestorId    Int
   requestor      User        @relation("Requestor", fields: [requestorId], references: [id], onDelete: Cascade)
-  opportunityId  Int
-  opportunity    Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  opportunityId  Int?
+  opportunity    Opportunity? @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  company        String?     // company the referral is requested at (direct requests)
+  message        String?     // note from the requestor
   referrerId     Int
   referrer       User        @relation("Referrer", fields: [referrerId], references: [id], onDelete: Cascade)
   createdAt      DateTime    @default(now())
